@@ -1,0 +1,121 @@
+<div>
+    <!--Breadcrumb-->
+    <ul class="breadcrumb">
+        <li><a href="#/">Home</a></li>
+        <li class="active">Song</li>
+    </ul>
+
+    <div ng-switch on="songCtrl.state">
+        <div ng-switch-default="">
+            <!---------------------------------Manage song------------------------------->
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>Manage Songs</span>
+                    </h2>
+                    <span flex="1"></span>
+                    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.changeStateToAdd()" class="md-icon-button" aria-label="Add">
+                        <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/addShoppingCart.svg"></md-icon>
+                        <span>Add</span>
+                    </md-button>
+                    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.showConfirmDeleteMultiple($event)" class="md-icon-button" aria-label="Delete">
+                        <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/addShoppingCart.svg"></md-icon>
+                        <span>Delete</span>
+                    </md-button>
+                    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.setIsSearch()" class="md-icon-button" aria-label="Search">
+                        <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/addShoppingCart.svg"></md-icon>
+                        <span>Search</span>
+                    </md-button>
+
+                    <div ng-show="songCtrl.showSearch" class="search-wrapper">
+                      <input type="text" placeholder="search" name="focus" class="search-box" ng-model="querySearch"/>
+                      <div class="close-wrapper">
+                        <button ng-click="songCtrl.setIsNotSearch()" class="close-icon">X</button>
+                      </div>
+
+                    </div>
+                </div>
+            </md-toolbar>
+            <!--table song-->
+            <md-content>
+                <table class="table table-bordered">
+                    <thead>
+                        <th><input type="checkbox" ng-model="songCtrl.markAll" ng-click="songCtrl.toggleMarkAll()"></th>
+                        <th>Name</th>
+                        <th>Artist</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody ng-repeat="song in songCtrl.songs | filter: querySearch">
+                        <td>
+                            <input type="checkbox" ng-model="song.check">
+                            {{song.id}}
+                        </td>
+                        <td>
+                            {{song.name}}
+                        </td>
+                        <td>
+                            {{song.artist}}
+                        </td>
+                        <td>
+                            <md-button ng-click="songCtrl.changeStateToEdit(song)" class="md-icon-button" aria-label="Search">
+                                <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/addShoppingCart.svg"></md-icon>
+                                <span>Edit</span>
+                            </md-button>
+                            <md-button ng-click="songCtrl.showConfirmDeleteSingle($event, song)" class="md-icon-button" aria-label="Search">
+                                <md-icon md-svg-icon="bower_components/angular-material/demos/icon/demoLoadSvgIconsFromUrl/img/icons/addShoppingCart.svg"></md-icon>
+                                <span>Delete</span>
+                            </md-button>
+                        </td>
+                    </tbody>
+                </table>
+            </md-content>
+        </div>
+
+        <!-----------------------------Create Song---------------------------------------------->
+        <div ng-switch-when="create">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>Create Songs</span>
+                    </h2>
+                </div>
+            </md-toolbar>
+            <md-content>
+                <form name="projectForm">
+                    <label>Song Name</label>
+                    <input type="text" class="form-control" ng-model="songNew.name" />
+
+                    <label>Artist</label>
+                    <input type="text" class="form-control" ng-model="songNew.artist" />
+
+                    <input type="submit" ng-click="songCtrl.addSong(songNew)" value="Create" />
+                    <input type="button" ng-click="songCtrl.changeStateToManage()" value="Cancer" />
+                </form>
+            </md-content>
+        </div>
+
+        <!-----------------------------Edit Song---------------------------------------------->
+        <div ng-switch-when="edit">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>Edit Songs</span>
+                    </h2>
+                </div>
+            </md-toolbar>
+            <md-content>
+                <form name="projectForm">
+                    <input type="hidden" class="form-control" ng-model="songCtrl.songOld.id" />
+                    <label>Song Name</label>
+                    <input type="text" class="form-control" ng-model="songCtrl.songOld.name" />
+
+                    <label>Artist</label>
+                    <input type="text" class="form-control" ng-model="songCtrl.songOld.artist" />
+
+                    <input type="submit" ng-click="songCtrl.saveSong(songCtrl.songOld)" value="Apply" />
+                    <input type="button" ng-click="songCtrl.changeStateToManage()" value="Cancer" />
+                </form>
+            </md-content>
+        </div>
+    </div>
+</div>

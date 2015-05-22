@@ -1,0 +1,7 @@
+<md-list>
+    <md-list-item ng-repeat="it in songCtrl.menuList">
+        <md-button ng-click="songCtrl.selectMenu(it)" ng-class="{'selected' : it === songCtrl.elected }">
+            {{it}}
+        </md-button>
+    </md-list-item>
+</md-list>

@@ -8,30 +8,65 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
-  <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />-->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 
-  <link rel="stylesheet" href="styles/main.css">
+
+  <link rel="stylesheet" href="scripts/main.css">
+  <link rel="stylesheet" href="scripts/song/song.css">
+  <link rel="stylesheet" href="scripts/playlist/playlist.css">
+  <link rel="stylesheet" href="scripts/directive/search/mySearch.css">
+  <link rel="stylesheet" href="scripts/directive/table/myTable.css">
 
   <!-- endbuild -->
 </head>
-<body ng-app="musicApp">
+<body>
 <!-- Add your site or application content here -->
 <!--<div class="header">-->
   <!--Music Manager-->
-<!--</div>-->3
+<!--</div>-->
 
-<div class="container">
-  <div ng-view=""></div>
+<div ng-app="musicApp" ng-controller="mainController" class="my-container" layout="column">
+  <md-toolbar layout="row">
+    <button ng-click="toggleSidenav('left')" class="menu-Btn">
+      <i class="fa fa-bars"></i>
+      <span class="md-visually-hidden">Menu</span>
+    </button>
+    <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Music Manager</h1>
+  </md-toolbar>
+  <div layout="row" flex class="content-wrapper">
+
+    <!--&lt;!&ndash; choose menu &ndash;&gt;-->
+    <!--<div class="menuSide" layout="column">-->
+    <menu-music layout="column" class="my-side-left"></menu-music>
+    <!--</div>-->
+
+    <div layout="column" flex class="content-wrapper my-manage" id="content">
+      <!--Breadcrumb-->
+      <ul layout="row" class="breadcrumb">
+        <li><a href="#/songs">Home</a></li>
+        <li class="active">{{menus.selectedMenu}}</li>
+      </ul>
+      <md-content flex class="md-padding">
+
+        <div ng-view=""></div>
+
+      </md-content>
+
+    </div>
+  </div>
 </div>
 
-<div class="footer">
-  <div class="container">
-    <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-  </div>
+<!--<div class="my-container">-->
+  <!--<div ng-view=""></div>-->
+<!--</div>-->
+
+<div class="my-footer">
+  <p>Copyright 2015, TMA Solutions</p>
 </div>
 
 
@@ -57,16 +92,31 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
-
-<script src="bower_components/angular-aria/angular-aria.min.js"></script>
-<script src="../bower_components/angular-material/angular-material.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
 <script src="scripts/app.js"></script>
-<script src="scripts/controllers/main.js"></script>
-<script src="scripts/controllers/about.js"></script>
+<script src="scripts/song/song.js"></script>
+<script src="scripts/playlist/playlist.js"></script>
+
+<script src="scripts/song/songService.js"></script>
+<script src="scripts/playlist/playlistService.js"></script>
+
+<script src="scripts/directive/search/mySearch.js"></script>
+<script src="scripts/directive/table/myTable.js"></script>
 <!-- endbuild -->
+
+
+
+<!--<script>-->
+  <!--$(window).scroll(function () {-->
+    <!--console.log('asjdhgaskjgs');-->
+  <!--});-->
+<!--</script>-->
+
 </body>
 </html>

@@ -1,0 +1,52 @@
+
+<table id="table" class="table table-hover table-mc-light-blue my-table">
+    <thead>
+    <tr>
+        <th class="my-th checkbox-song">
+            <md-checkbox ng-model="markAll" ng-change="toggleMarkAll()" md-no-ink=""
+                         aria-label="Checkbox all" class="md-primary">
+            </md-checkbox>
+        </th>
+        <th class="my-th {{title.className}}" ng-repeat="title in column">{{title.name}}</th>
+        <!--<th class="my-th name-song">Name</th>-->
+        <!--<th class="my-th artist-song">Artist</th>-->
+        <th class="my-th action-song">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="data in listData | filter: querySearch.value"
+        ng-class="{'my-select-data' : data.check === true}">
+
+        <td class="my-td checkbox-song">
+            <md-checkbox ng-model="data.check" ng-change="setCheckToShowButtonDelete()"
+                         md-no-ink=""
+                         aria-label="Checkbox" class="md-primary">
+            </md-checkbox>
+        </td>
+
+        <!--<td ng-repeat="title in column"-->
+             <!--class="my-td name-song" ng-click="setChooseSong(song, $event)"-->
+                <!--ng-repeat="(key, value) in data" ng-if="key === title.name">{{data[key]}} + {{title.name}}-->
+        <!--</td>-->
+
+        <td class="my-td name-song" ng-click="setChooseRow(data, $event)">{{data.name}}</td>
+        <td class="my-td artist-song" ng-click="setChooseRow(data, $event)">{{data.description}}</td>
+
+        <td class="my-td action-song">
+            <md-button ng-click="editData(data)" class="md-icon-button my-button"
+                       aria-label="Edit">
+                <i class="fa fa-pencil-square-o"></i>
+                <span class="mobileScreen">Edit</span>
+            </md-button>
+            <md-button ng-click="showConfirmDeleteSingle($event, song)"
+                       class="md-icon-button my-button mobileScreen" aria-label="Delete">
+                <i class="fa fa-trash-o"></i>
+                <span>Delete</span>
+            </md-button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--get songs-->
+<!--query search-->

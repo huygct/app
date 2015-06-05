@@ -1,0 +1,15 @@
+<md-dialog aria-label="List dialog">
+    <md-dialog-content>
+        <h2 class="md-title">Delete Song </h2>
+        <p>Are you sure you want to delete this song? </p>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="comfirmDelete()" class="md-primary">
+            {{items}}
+            Yes
+        </md-button>
+        <md-button ng-click="closeDialog()" class="md-primary">
+            No
+        </md-button>
+    </div>
+</md-dialog>

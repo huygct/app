@@ -1,0 +1,120 @@
+.my-grid-playlist md-icon {
+    width: 50%;
+    height: 50%;
+}
+
+.my-grid-playlist md-icon svg {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.my-grid-playlist .s64 {
+    font-size: 64px;
+}
+
+.my-grid-playlist .s32 {
+    font-size: 48px;
+}
+
+.my-grid-playlist md-icon.fa {
+    display: block;
+    padding-left: 0;
+}
+
+.my-grid-playlist md-icon.s32 span {
+    padding-left: 8px;
+}
+
+.my-grid-playlist md-grid-list {
+    margin: 8px;
+}
+
+.my-grid-playlist .gray {
+    background: #f5f5f5;
+}
+
+.my-grid-playlist .green {
+    background: #b9f6ca;
+}
+
+.my-grid-playlist .yellow {
+    background: #ffff8d;
+}
+
+.my-grid-playlist .blue {
+    background: #84ffff;
+}
+
+.my-grid-playlist .darkBlue {
+    background: #80d8ff;
+}
+
+.my-grid-playlist .deepBlue {
+    background: #448aff;
+}
+
+.my-grid-playlist .purple {
+    background: #b388ff;
+}
+
+.my-grid-playlist .lightPurple {
+    background: #8c9eff;
+}
+
+.my-grid-playlist .red {
+    background: #ff8a80;
+}
+
+.my-grid-playlist .pink {
+    background: #ff80ab;
+}
+
+.my-grid-playlist md-grid-tile {
+    transition: all 300ms ease-out 50ms;
+}
+
+.my-grid-playlist md-grid-tile md-icon {
+    padding-bottom: 32px;
+}
+
+.my-grid-playlist md-grid-tile md-grid-tile-footer {
+    background: rgba(0, 0, 0, 0.68);
+    height: 36px;
+}
+
+.my-grid-playlist md-grid-tile-footer figcaption {
+    width: 100%;
+}
+
+.my-grid-playlist md-grid-tile-footer figcaption h5 {
+    display: inline;
+    margin: 0;
+    font-size: 12px;
+}
+
+.my-grid-playlist .my-checkbox-playlist {
+    display: inline;
+}
+
+.my-grid-playlist .my-edit-playlist {
+    position: absolute;
+    top: 14px;
+    right: 3px;
+}
+.my-wrapper-add-and-delete-playlist {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+.my-input-playlist {
+    display: inline;
+}
+.my-button-delete-playlist {
+    position: absolute;
+    top: 0;
+    right: 8px;
+}
+.my-wrapper-add-and-delete-playlist .my-text-delete-playlist {
+    width: auto;
+}

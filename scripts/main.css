@@ -1,0 +1,109 @@
+/*container*/
+* {
+  margin: 0;
+  padding: 0;
+}
+.my-container {
+  margin-right: 15px;
+  margin-left: 15px;
+  height: 100%;
+  margin-bottom: -70px;
+}
+.my-form-content {
+  overflow: hidden;
+}
+.my-container:after {
+  content: "";
+  display: block;
+}
+.my-footer, .my-container:after {
+  height: 70px;
+}
+.my-footer {
+  /*position: absolute;*/
+  /*bottom: 0px;*/
+  /*left: 0px;*/
+  /*right: 0px;*/
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 5px;
+  border: solid #E8E8E8 3px;
+  text-align: center;
+}
+.my-footer p{
+  margin: 20px;
+}
+.my-manage {
+  border: solid #E8E8E8 3px;
+  margin-top: 5px;
+}
+md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
+  min-width: 200px !important;
+  width: 50vw !important;
+  max-width: 200px !important;
+}
+.my-side-left {
+  box-shadow: none;
+  border: solid #E8E8E8 3px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+.content-wrapper {
+  position: relative;
+}
+nav > a.my-link {
+  border: 0 !important;
+  outline-color: transparent;
+}
+
+/*-----------------------------------------------*/
+.menu-Btn {
+  border: none;
+  margin-left: 16px;
+  background-color: transparent;
+}
+/*normal screen*/
+@media (min-width: 500px) {
+  .menu-Btn {
+    display: none;
+  }
+}
+.selected-menu {
+  color: #ffffff !important;
+  background: rgb(63, 81, 181);
+}
+.md-icon-button.my-button {
+  width: auto;
+  text-transform: none;
+}
+
+/*-------------------------
+	The menu
+--------------------------*/
+
+nav{
+  display: block;
+  /*margin:60px auto 45px;*/
+  /*background-color:#5597b4;*/
+  /*box-shadow:0 1px 1px #ccc;*/
+  /*border-radius:2px;*/
+}
+
+nav a{
+  display:block;
+  padding: 18px 30px;
+  color:#000000 !important;
+  font-weight:bold;
+  font-size:16px;
+  text-decoration:none !important;
+  line-height:1;
+  /*text-transform: uppercase;*/
+
+  -webkit-transition:background-color 0.25s;
+  -moz-transition:background-color 0.25s;
+}
+/*chua chay dc : hixhix*/
+a:hover, a:focus {
+  /*color: transparent;*/
+  /*text-decoration: none;*/
+}

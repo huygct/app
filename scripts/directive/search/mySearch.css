@@ -1,0 +1,37 @@
+/* css for search */
+.search-wrapper {
+    position: relative;
+    padding: 10px;
+}
+.search-wrapper {
+    width: auto;
+}
+.search-box {
+    color: black;
+    width: 100%;
+    height: 30px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    outline: 0;
+    padding: inherit;
+    border-radius: 15px;
+}
+.search-box:focus {
+    border: 2px solid #bebede;
+}
+
+.close-icon {
+    position: absolute;
+    color: black;
+    border: 1px solid transparent;
+    background-color: transparent;
+    display: inline-block;
+    right: 16px;
+    top: 12px;
+    vertical-align: middle;
+    outline: 0;
+    cursor: pointer;
+}
+.fa-times {
+    color: #21b384;
+}

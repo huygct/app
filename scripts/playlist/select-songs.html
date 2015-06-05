@@ -1,0 +1,29 @@
+<md-dialog aria-label="List dialog">
+    <md-dialog-content>
+        <h2 class="md-title">Songs</h2>
+        <!--<p>Let </p>-->
+
+        <md-list>
+            <md-divider></md-divider>
+            <md-list-item ng-repeat="song in songs">
+
+                <md-checkbox ng-model="playlist.check"></md-checkbox>
+                <p>{{song.name}}</p>
+                <p>{{song.artist}}</p>
+            </md-list-item>
+
+            <md-divider></md-divider>
+        </md-list>
+
+
+
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="comfirmDelete()" class="md-primary">
+            Yes
+        </md-button>
+        <md-button ng-click="closeDialog()" class="md-primary">
+            No
+        </md-button>
+    </div>
+</md-dialog>

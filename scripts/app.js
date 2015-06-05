@@ -10,6 +10,7 @@
  */
 angular
     .module('musicApp', [
+        'ngMessages',
         'ngMaterial',
         'ngAnimate',
         'ngCookies',
@@ -20,35 +21,34 @@ angular
     ])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'views/main.html',
+            .when('/songs', {
+                templateUrl: 'scripts/song/song.html',
                 controller: 'SongController',
                 controllerAs: 'songCtrl'
             })
-            .when('/about', {
-                templateUrl: 'views/about.html',
-                controller: 'AboutCtrl'
+            .when('/playlist', {
+                templateUrl: 'scripts/playlist/playlist.html',
+                controller: 'PlaylistController',
+                controllerAs: 'playlistCtrl'
             })
             .otherwise({
                 redirectTo: '/'
             });
     })
-    .directive("menuMusic", function () {
+    .directive('menuMusic', [ function () {
         return {
-            restrict: "E",
-            templateUrl: "views/template/menu-music.html",
-        }
-    })
-    .directive("managerSong", function () {
-        return {
-            restrict: "E",
-            templateUrl: "views/template/manager-song.html"
-        }
-    })
-    .directive("managerPlaylist", function () {
-        return {
-            restrict: "E",
-            templateUrl: "views/template/manager-playlist.html"
-        }
-    })
+            restrict: 'E', // should use 'A'
+            templateUrl: 'scripts/menu-music.html'
+        };
+    }])
+    .controller('mainController', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+        $scope.menus = {};
+        $scope.menus.selectedMenu = 'Song';
+
+        $scope.toggleSidenav = function (menuId, nameMenu) {
+            $mdSidenav(menuId).toggle();
+            $scope.menus.selectedMenu = nameMenu;
+
+        };
+    }])
 ;

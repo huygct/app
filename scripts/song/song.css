@@ -1,0 +1,151 @@
+.top-Manager {
+    height: auto;
+}
+.dataTable {
+
+}
+
+/*table style*/
+.table > thead > tr > th,
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+    vertical-align: middle;
+}
+.table tbody tr:nth-child(even) {
+    background-color: #E8E8E8;
+}
+table.my-table {
+    display: table;
+    width: 100%;
+}
+table.my-table thead, table.my-table tbody {
+    float: left;
+    width: 100%;
+}
+table.my-table tbody {
+    overflow: auto;
+    height: 300px;
+}
+table.my-table tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+table.my-table th.checkbox-song {
+    width: 10%;
+}
+table.my-table th.name-song {
+    width: 40%;
+}
+table.my-table th.artist-song {
+    width: 20%;
+}
+table.my-table th.action-song {
+    width: 30%;
+}
+table.my-table td.checkbox-song {
+    width: 10%;
+}
+table.my-table td.name-song {
+    width: 40%;
+}
+table.my-table td.artist-song {
+    width: 20%;
+}
+table.my-table td.action-song {
+    width: 30%;
+}
+table.my-table th.my-th{
+    padding: 0;
+}
+table.my-table td.my-td{
+    padding: 0;
+    border: 0 !important;
+    outline-color: transparent;
+}
+table.my-table tr.my-select-song {
+    background-color: #00bcd4;;
+    color: white;
+}
+
+/*button*/
+.button-song {
+    text-align: right;
+}
+
+/*change icon of breadcrumb*/
+.breadcrumb > li + li:before {
+    content: " > "
+}
+
+/*mobile screen*/
+.mobileScreen {
+
+}
+
+@media (max-width: 500px) {
+    .mobileScreen {
+        display: none;
+    }
+
+    table {
+        margin-top: 8px;
+        border: 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        margin-bottom: 10px;
+        display: block;
+        position: relative;
+        border: 2px solid #ddd;
+    }
+
+    table td  {
+        display: block;
+        text-align: left;
+        font-size: 13px;
+        margin-left: 80px;
+        margin-right: 80px;
+    }
+
+    table.my-table td.checkbox-song {
+        width: auto;
+    }
+    table.my-table td.name-song {
+        width: auto;
+    }
+    table.my-table td.artist-song {
+        width: auto;
+    }
+    table.my-table td.action-song {
+        width: auto;
+    }
+
+    table td.name-song {
+        font-weight: bold;
+    }
+
+    table td:first-child {
+        font-size: 13px;
+        position: absolute;
+        left: 8px;
+        top: 3px;
+        margin: 0;
+    }
+
+    table td:last-child {
+        font-size: 13px;
+        position: absolute;
+        margin: 0;
+        right: 8px;
+        top: 3px;
+        border-bottom: 0;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+         border-top: hidden;
+    }
+}

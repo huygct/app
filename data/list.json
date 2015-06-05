@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "name": "Ballad",
+    "description": "",
+    "check": false
+  },
+  {
+    "id": 1,
+    "name": "Rock",
+    "description": "",
+    "check": false
+  },
+  {
+    "id": 2,
+    "name": "Pod",
+    "description": "",
+    "check": false
+  },
+  {
+    "id": 3,
+    "name": "Blue",
+    "description": "",
+    "check": false
+  }
+]

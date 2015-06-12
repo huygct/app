@@ -1,51 +1,48 @@
-<div class="top-Manager">
+<div class="my-headerTable-and-table">
     <div ng-switch on="playlistCtrl.state">
-        <div ng-switch-default="">
+        <div ng-switch-default="" ng-show="!playlistCtrl.pageSongs">
             <!---------------------------------Manage song------------------------------->
             <md-toolbar layout="row">
                 <div class="md-toolbar-tools">
                     <h2 show-gt-md="">
-                        <span>Manage Songs</span>
+                        <span>Manage Playlist</span>
                     </h2>
                     <span flex="1"></span>
                     <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.changeStateToAdd()"
-                               class="md-icon-button my-button" aria-label="Add">
+                               class="md-icon-button my-button-accent" aria-label="Add">
                         <i class="fa fa-plus"></i>
                         <span class="mobileScreen" show-gt-md="">Add</span>
                     </md-button>
-                    <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.showConfirmDeleteMultiple($event)"
-                               ng-disabled="!playlistCtrl.checkToShowButtonDelete" class="md-icon-button my-button"
+                    <md-button ng-show="!playlistCtrl.showSearch"
+                               ng-click="playlistCtrl.showConfirmDeleteMultiple($event)"
+                               ng-disabled="!playlistCtrl.checkToShowButtonDelete" class="md-icon-button my-button-accent"
                                aria-label="Delete">
                         <i class="fa fa-trash-o"></i>
                         <span class="mobileScreen">Delete</span>
                     </md-button>
                     <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.setIsSearch()"
-                               class="md-icon-button my-button" aria-label="Search">
+                               class="md-icon-button my-button-accent" aria-label="Search">
                         <i class="fa fa-search"></i>
                         <span class="mobileScreen">Search</span>
                     </md-button>
 
                     <!--search song-------------------------------------------------------->
                     <div ng-show="playlistCtrl.showSearch">
-                        <!--<input type="text" placeholder="search" name="focus" class="search-box"-->
-                        <!--ng-model="playlistCtrl.querySearch.value"/>-->
-                        <!--<button ng-click="playlistCtrl.setIsNotSearch()" class="close-icon">-->
-                        <!--<i class="fa fa-times"></i>-->
-                        <!--</button>-->
-
                         <!--directive search-->
-                        <my-search ng-model="playlistCtrl.querySearch.value" close="playlistCtrl.setIsNotSearch()"></my-search>
+                        <my-search ng-model="playlistCtrl.querySearch.value"
+                                   close="playlistCtrl.setIsNotSearch()"></my-search>
 
                     </div>
                 </div>
             </md-toolbar>
             <!--table song-->
             <md-content flex="50" class="dataTable">
-                <!--truyen vao:-->
-                <!--1. so cot - name cot - la mot cai mag-->
-                <!--2. link truy xuat-->
                 <my-table column="playlistCtrl.column" list-data="playlistCtrl.playlists"
-                          nameTable="song" show-edit="playlistCtrl.changeStateToEdit(data)"></my-table>
+                          name-table="Playlist" when-click-button-edit="playlistCtrl.changeStateToEdit(data)"
+                          when-click-button-delete="playlistCtrl.showConfirmDeleteSingle($event, data)"
+                          when-select-item-of-table="playlistCtrl.setChoosePlaylistOnRow(data)"
+                          query-search="playlistCtrl.querySearch" show-toast="playlistCtrl.showSongsByToast(data)">
+                </my-table>
             </md-content>
         </div>
 
@@ -54,27 +51,39 @@
             <md-toolbar>
                 <div class="md-toolbar-tools">
                     <h2>
-                        <span>Create Songs</span>
+                        <span>Create Playlist</span>
                     </h2>
                 </div>
             </md-toolbar>
             <md-content class="my-form-content">
                 <form name="projectForm" novalidate>
                     <md-input-container>
-                        <label>Song Name</label>
-                        <input required="" name="songName" ng-model="playlistCtrl.newPlaylist.name">
+                        <label>Playlist Name</label>
+                        <input required="" name="playlistName" ng-model="playlistCtrl.newPlaylist.name">
 
-                        <div ng-messages="projectForm.songName.$error">
-                            <div ng-message="required">Song name cannot be empty.</div>
+                        <div ng-messages="projectForm.playlistName.$error">
+                            <div ng-message="required">Playlist name cannot be empty.</div>
                         </div>
                     </md-input-container>
                     <md-input-container>
-                        <label>Artist</label>
-                        <input name="clientName" ng-model="playlistCtrl.newPlaylist.artist">
+                        <label>Description</label>
+                        <input name="clientName" ng-model="playlistCtrl.newPlaylist.description">
                     </md-input-container>
-                    <div class="button-song">
-                        <md-button ng-disabled="!projectForm.$valid" ng-click="playlistCtrl.addPlaylistByClick(playlistCtrl.newPlaylist)"
-                                   class="md-raised">Create
+
+                    <md-button ng-click="playlistCtrl.setSongForPlaylist(playlistCtrl.newPlaylist, $event)"
+                               class="md-raised">Add/Remove
+                    </md-button>
+
+                    <div>
+                        <p class="my-song-of-playlist">
+                            {{playlistCtrl.newPlaylist.listNameSongs}}
+                        </p>
+                    </div>
+
+                    <div class="my-button">
+                        <md-button ng-disabled="!projectForm.$valid"
+                                   ng-click="playlistCtrl.addPlaylistByClick(playlistCtrl.newPlaylist)"
+                                   class="md-raised md-primary">Create
                         </md-button>
                         <md-button ng-click="playlistCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
                     </div>
@@ -87,7 +96,7 @@
             <md-toolbar>
                 <div class="md-toolbar-tools">
                     <h2>
-                        <span>Edit Songs</span>
+                        <span>Edit Playlist</span>
                     </h2>
                 </div>
             </md-toolbar>
@@ -95,108 +104,58 @@
                 <form name="projectForm" novalidate>
                     <input type="hidden" class="form-control" ng-model="playlistCtrl.oldPlaylist.id"/>
                     <md-input-container>
-                        <label>Song Name</label>
-                        <input required="" name="songName" ng-model="playlistCtrl.oldPlaylist.name">
+                        <label>Name playlist</label>
+                        <input required="" name="namePlaylist" ng-model="playlistCtrl.oldPlaylist.name">
 
-                        <div ng-messages="projectForm.songName.$error">
-                            <div ng-message="required">Song name cannot be empty.</div>
+                        <div ng-messages="projectForm.namePlaylist.$error">
+                            <div ng-message="required">Name playlist cannot be empty.</div>
                         </div>
                     </md-input-container>
                     <md-input-container>
-                        <label>Artist</label>
-                        <input name="clientName" ng-model="playlistCtrl.oldPlaylist.description">
+                        <label>Description</label>
+                        <input name="description" ng-model="playlistCtrl.oldPlaylist.description">
                     </md-input-container>
-                    <div class="button-song">
-                        <md-button ng-disabled="!projectForm.$valid" ng-click="playlistCtrl.savePlaylist(playlistCtrl.oldPlaylist)"
-                                   class="md-raised">Apply
+
+                    <md-button ng-click="playlistCtrl.setSongForPlaylist(playlistCtrl.oldPlaylist, $event)"
+                               class="md-raised md-primary">Add/Remove
+                    </md-button>
+                    <div>
+                        <p class="my-song-of-playlist">
+                            {{playlistCtrl.oldPlaylist.listNameSongs}}
+                        </p>
+                    </div>
+
+                    <div class="my-button">
+                        <md-button ng-disabled="!projectForm.$valid"
+                                   ng-click="playlistCtrl.savePlaylist(playlistCtrl.oldPlaylist)"
+                                   class="md-raised md-primary">Apply
                         </md-button>
                         <md-button ng-click="playlistCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
                     </div>
                 </form>
             </md-content>
         </div>
+
+
+        <!-----------------------------show song of playlist---------------------------------------------->
+        <div ng-switch-default="" ng-show="playlistCtrl.pageSongs">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>{{playlistCtrl.currentPlaylist.name}}</span>
+                    </h2>
+                </div>
+            </md-toolbar>
+
+            <md-content class="my-form-content">
+                {{playlistCtrl.currentPlaylist.songs}}
+            </md-content>
+
+            <div class="my-button">
+                <md-button ng-click="playlistCtrl.backToMangePlaylist()"
+                           class="md-raised md-primary">Back
+                </md-button>
+            </div>
+        </div>
     </div>
 </div>
-
-
-
-
-
-
-<!--other style-->
-
-<!--<div class="top-Manager">-->
-    <!--<div ng-switch on="playlistCtrl.state">-->
-        <!--<div ng-switch-default="">-->
-            <!--&lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Manage song-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-            <!--<md-toolbar layout="row">-->
-                <!--<div class="md-toolbar-tools">-->
-                    <!--<h2 show-gt-md="">-->
-                        <!--<span>Manage Playlist</span>-->
-                    <!--</h2>-->
-                    <!--<span flex="1"></span>-->
-                    <!--<md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.setIsSearch()"-->
-                               <!--class="md-icon-button my-button" aria-label="Search">-->
-                        <!--<i class="fa fa-search"></i>-->
-                        <!--<span class="mobileScreen">Search</span>-->
-                    <!--</md-button>-->
-
-                    <!--&lt;!&ndash;search song&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-                    <!--<div ng-show="playlistCtrl.showSearch">-->
-                        <!--<my-search ng-model="playlistCtrl.querySearch.value" close="playlistCtrl.setIsNotSearch()"></my-search>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</md-toolbar>-->
-            <!--&lt;!&ndash;table song&ndash;&gt;-->
-            <!--<md-content flex="" class="my-grid-playlist">-->
-                <!--&lt;!&ndash;list playlist&ndash;&gt;-->
-                <!--&lt;!&ndash;<md-list>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<md-divider></md-divider>&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<md-list-item ng-repeat="playlist in playlistCtrl.playlists">&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<md-checkbox ng-model="playlist.check"></md-checkbox>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<p>{{playlist.name}}</p>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<i aria-label="icon-add" ng-click="playlistCtrl.setSongForPlaylist(playlist, $event)" class="md-secondary fa fa-pencil-square-o"></i>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</md-list-item>&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<md-divider></md-divider>&ndash;&gt;-->
-                <!--&lt;!&ndash;</md-list>&ndash;&gt;-->
-                <!--<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">-->
-
-                    <!--<md-grid-tile ng-repeat="tile in playlistCtrl.playlistsForGrid" md-rowspan="{{tile.span.row}}" md-colspan="{{tile.span.col}}" md-colspan-sm="1" ng-class="tile.background">-->
-                        <!--&lt;!&ndash;<md-checkbox ng-model="playlist.check"></md-checkbox>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<md-icon md-svg-icon="{{tile.icon}}"></md-icon>&ndash;&gt;-->
-                        <!--<md-grid-tile-footer class="my-controller-playlist">-->
-                            <!--<md-checkbox class="my-checkbox-playlist" ng-model="playlist.check" aria-label="checkbox"></md-checkbox>-->
-                            <!--<h5>{{tile.name}}</h5>-->
-                            <!--<i aria-label="icon-add" ng-click="playlistCtrl.setSongForPlaylist(playlist, $event)" class="md-secondary my-edit-playlist fa fa-pencil-square-o"></i>-->
-                        <!--</md-grid-tile-footer>-->
-
-                        <!--<md-grid-tile-header class="my-controller-playlist">-->
-                            <!--<h5>{{tile.name}}</h5>-->
-                        <!--</md-grid-tile-header>-->
-                    <!--</md-grid-tile>-->
-                <!--</md-grid-list>-->
-
-
-
-
-            <!--</md-content>-->
-            <!--<div class="my-wrapper-add-and-delete-playlist">-->
-                <!--<md-input-container md-no-float="">-->
-                    <!--&lt;!&ndash; Use placeholder &ndash;&gt;-->
-                    <!--<md-icon md-svg-src="images/icon/ic_add_circle_outline_black_24px.svg" class="my-input-playlist my-icon-input-playlist"></md-icon>-->
-                    <!--<input ng-model="playlistCtrl.playlist.name" type="text" class="my-input-playlist"-->
-                           <!--placeholder="Let input name playlist to add!" ng-keyup="playlistCtrl.addPlaylist()"/>-->
-                <!--</md-input-container>-->
-                <!--<md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.setIsSearch()"-->
-                           <!--class="md-icon-button my-button-delete-playlist" aria-label="Search">-->
-                    <!--<i class="fa fa-search"></i>-->
-                    <!--<span class="mobileScreen my-text-delete-playlist">Search</span>-->
-                <!--</md-button>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->

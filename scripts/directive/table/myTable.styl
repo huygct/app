@@ -1,90 +1,118 @@
+@import 'constant.styl'
+
 .table-run-data {
   margin: 8px;
 }
+
 /*table style*/
 .table > thead > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > td,
-.table > tfoot > tr > td {
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   vertical-align: middle;
 }
+
+//one row white and one row will set color
+.table tbody tr:nth-child(even) {
+  //background-color: #E8E8E8;
+}
+
 table.my-table {
   display: table;
   width: 100%;
-  color: rgba(0,0,0,0.87);
+  color rgba(0,0,0,0.87);
 }
-table.my-table thead,
-table.my-table tbody {
+
+table.my-table thead, table.my-table tbody {
   float: left;
   width: 100%;
 }
+
 table.my-table tbody {
   overflow: auto;
   height: 400px;
 }
+
 table.my-table tr {
   width: 100%;
   display: table;
   text-align: left;
-  border-bottom: 1px solid #dadada;
+  border-bottom 1px solid #DADADA
 }
+
 table.my-table th.checkbox-col {
   width: 10%;
 }
+
 table.my-table th {
   width: 30%;
-  color: rgba(0,0,0,0.54);
+  color rgba(0,0,0,0.54);
 }
+
 table.my-table th.action-col {
   width: 30%;
 }
+
 table.my-table td.checkbox-col {
   width: 10%;
 }
+
 table.my-table td.checkbox-col md-checkbox {
-  display: inline;
+  display inline
 }
+
 table.my-table td {
   width: 30%;
 }
+
 table.my-table td.action-col {
   width: 30%;
 }
-table.my-table td.action-col .my-icon {
-  color: rgba(0,0,0,0.54);
-}
+
+table.my-table
+  td.action-col
+    .my-icon
+      color rgba(0,0,0,0.54)
+
+
 table.my-table th.my-th {
   padding: 0;
 }
+
 table.my-table th.my-th.checkbox-col {
   padding: 0 8px;
 }
+
 table.my-table td.my-td {
   padding: 0 8px;
   border: 0 !important;
   outline-color: transparent;
 }
+
 table.my-table tr.my-select-data {
-  background-color: #eee;
+  background-color: #EEEEEE;
   color: #212121;
 }
+
 @media (max-width: 500px) {
   .mobileScreen {
     display: none;
   }
+
   table {
     margin-top: 8px;
     border: 0;
   }
+
   table thead {
     display: none;
   }
+
   table tr {
     margin-bottom: 8px;
     display: block;
     position: relative;
     border: 2px solid #ddd;
   }
+
   table td {
     display: block;
     text-align: left;
@@ -92,15 +120,19 @@ table.my-table tr.my-select-data {
     margin-left: 80px;
     margin-right: 80px;
   }
+
   table.my-table td.checkbox-col {
     width: auto;
   }
+
   table.my-table td {
     width: auto;
   }
+
   table.my-table td.action-col {
     width: auto;
   }
+
   table td:first-child {
     font-size: 13px;
     position: absolute;
@@ -108,6 +140,7 @@ table.my-table tr.my-select-data {
     top: 0px;
     margin: 0;
   }
+
   table td:last-child {
     font-size: 13px;
     position: absolute;
@@ -116,25 +149,25 @@ table.my-table tr.my-select-data {
     top: 0px;
     border-bottom: 0;
   }
+
   table.my-table td.my-td {
     padding: 4px;
     border: 0 !important;
     outline-color: transparent;
   }
-  .table > thead > tr > th,
-  .table > tbody > tr > th,
-  .table > tfoot > tr > th,
-  .table > thead > tr > td,
-  .table > tbody > tr > td,
-  .table > tfoot > tr > td {
+
+  .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     border-top: hidden;
   }
 }
+
 .md-button {
-  width: auto !important;
-  font-weight: bold;
+  width auto !important
+  font-weight bold
 }
+
 .md-icon-button.my-button-accent {
   width: auto;
-  font-weight: bold;
+  //color $accent-color !important
+  font-weight bold
 }

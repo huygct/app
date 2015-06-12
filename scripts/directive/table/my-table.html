@@ -1,46 +1,43 @@
-
 <table id="table" class="table table-hover table-mc-light-blue my-table">
     <thead>
     <tr>
-        <th class="my-th checkbox-song">
+        <th class="my-th checkbox-col">
             <md-checkbox ng-model="markAll" ng-change="toggleMarkAll()" md-no-ink=""
                          aria-label="Checkbox all" class="md-primary">
             </md-checkbox>
         </th>
         <th class="my-th {{title.className}}" ng-repeat="title in column">{{title.name}}</th>
-        <!--<th class="my-th name-song">Name</th>-->
-        <!--<th class="my-th artist-song">Artist</th>-->
-        <th class="my-th action-song">Action</th>
+        <th class="my-th action-col">Action</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="data in listData | filter: querySearch.value"
         ng-class="{'my-select-data' : data.check === true}">
 
-        <td class="my-td checkbox-song">
-            <md-checkbox ng-model="data.check" ng-change="setCheckToShowButtonDelete()"
+        <td class="my-td checkbox-col" ng-click="setChooseRow(data, $event)">
+            <md-checkbox ng-model="data.check" ng-change="clickCheckbox()" ng-click="$event.stopPropagation()"
                          md-no-ink=""
                          aria-label="Checkbox" class="md-primary">
             </md-checkbox>
         </td>
 
-        <!--<td ng-repeat="title in column"-->
-             <!--class="my-td name-song" ng-click="setChooseSong(song, $event)"-->
-                <!--ng-repeat="(key, value) in data" ng-if="key === title.name">{{data[key]}} + {{title.name}}-->
-        <!--</td>-->
+        <td class="my-td {{col.className}}" ng-click="setChooseRow(data, $event)" ng-right-click="runData(data, $event)"
+            lick ng-repeat="col in column">{{ data[col.key] }}
 
-        <td class="my-td name-song" ng-click="setChooseRow(data, $event)">{{data.name}}</td>
-        <td class="my-td artist-song" ng-click="setChooseRow(data, $event)">{{data.description}}</td>
+            <!--<md-tooltip>-->
+                <!--Insert Drive-->
+            <!--</md-tooltip>-->
+        </td>
 
-        <td class="my-td action-song">
+        <td class="my-td action-col" ng-click="setChooseRow(data, $event);$event.stopPropagation();">
             <md-button ng-click="editData(data)" class="md-icon-button my-button"
                        aria-label="Edit">
-                <i class="fa fa-pencil-square-o"></i>
+                <i class="fa fa-pencil-square-o fa-2x my-icon"></i>
                 <span class="mobileScreen">Edit</span>
             </md-button>
-            <md-button ng-click="showConfirmDeleteSingle($event, song)"
+            <md-button ng-click="deleteItemFromTable($event, data);$event.stopPropagation();"
                        class="md-icon-button my-button mobileScreen" aria-label="Delete">
-                <i class="fa fa-trash-o"></i>
+                <i class="fa fa-trash-o fa-2x my-icon"></i>
                 <span>Delete</span>
             </md-button>
         </td>

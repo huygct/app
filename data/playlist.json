@@ -2,45 +2,37 @@
   {
     "id": 0,
     "name": "Ballad",
+    "description": "123",
     "image": "",
     "background": "",
-    "span": {
-      "row": 1,
-      "col": 1
-    },
+    "songs": [],
     "check": false
   },
   {
     "id": 1,
     "name": "Rock",
+    "description": "123",
     "image": "",
     "background": "",
-    "span": {
-      "row": 1,
-      "col": 1
-    },
+    "songs": [],
     "check": false
   },
   {
     "id": 2,
     "name": "Pod",
+    "description": "123",
     "image": "",
     "background": "",
-    "span": {
-      "row": 1,
-      "col": 1
-    },
+    "songs": [],
     "check": false
   },
   {
     "id": 3,
     "name": "Blue",
+    "description": "123",
     "image": "",
     "background": "",
-    "span": {
-      "row": 1,
-      "col": 1
-    },
+    "songs": [],
     "check": false
   }
 ]

@@ -1,35 +1,55 @@
+@import '../main/constant.styl'
+
 .my-headerTable-and-table {
   height: auto;
 }
-.my-headerTable-and-table .my-manage-songs .md-toolbar-tools {
-  background-color: #3f51b5;
-  color: #fff;
+
+.my-headerTable-and-table
+  .my-manage-songs
+    .md-toolbar-tools
+      background-color $primary-color
+      color $text-icons
+
+.dataTable {
+
 }
+
 /*table style*/
 table.my-table th.name-song {
   width: 35%;
 }
+
 table.my-table th.artist-song {
   width: 25%;
 }
+
 table.my-table td.name-song {
   width: 35%;
 }
+
 table.my-table td.artist-song {
   width: 25%;
 }
+
 /*button*/
 .my-button {
   text-align: right;
 }
+
 /*mobile screen*/
+.mobileScreen {
+
+}
+
 @media (max-width: 500px) {
   table.my-table td.name-song {
     width: auto;
   }
+
   table.my-table td.artist-song {
     width: auto;
   }
+
   table td.name-song {
     font-weight: bold;
   }

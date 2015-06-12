@@ -1,5 +1,5 @@
-<div class="top-Manager">
-    <div ng-switch on="songCtrl.state">
+<div class="my-headerTable-and-table">
+    <div ng-switch on="songCtrl.state" class="my-manage-songs">
         <div ng-switch-default="">
             <!---------------------------------Manage song------------------------------->
             <md-toolbar layout="row">
@@ -9,30 +9,24 @@
                     </h2>
                     <span flex="1"></span>
                     <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.changeStateToAdd()"
-                               class="md-icon-button my-button" aria-label="Add">
+                               class="md-icon-button my-button-accent" aria-label="Add">
                         <i class="fa fa-plus"></i>
                         <span class="mobileScreen" show-gt-md="">Add</span>
                     </md-button>
                     <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.showConfirmDeleteMultiple($event)"
-                               ng-disabled="!songCtrl.checkToShowButtonDelete" class="md-icon-button my-button"
+                               ng-disabled="!songCtrl.checkToShowButtonDelete" class="md-icon-button my-button-accent"
                                aria-label="Delete">
                         <i class="fa fa-trash-o"></i>
                         <span class="mobileScreen">Delete</span>
                     </md-button>
                     <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.setIsSearch()"
-                               class="md-icon-button my-button" aria-label="Search">
+                               class="md-icon-button my-button-accent" aria-label="Search">
                         <i class="fa fa-search"></i>
                         <span class="mobileScreen">Search</span>
                     </md-button>
 
                     <!--search song-------------------------------------------------------->
                     <div ng-show="songCtrl.showSearch">
-                        <!--<input type="text" placeholder="search" name="focus" class="search-box"-->
-                               <!--ng-model="songCtrl.querySearch.value"/>-->
-                        <!--<button ng-click="songCtrl.setIsNotSearch()" class="close-icon">-->
-                            <!--<i class="fa fa-times"></i>-->
-                        <!--</button>-->
-
                         <!--directive search-->
                         <my-search ng-model="songCtrl.querySearch.value" close="songCtrl.setIsNotSearch()"></my-search>
 
@@ -41,48 +35,12 @@
             </md-toolbar>
             <!--table song-->
             <md-content flex="50" class="dataTable">
-                <table id="table" class="table table-hover table-mc-light-blue my-table">
-                    <thead>
-                    <tr>
-                        <th class="my-th checkbox-song">
-                            <md-checkbox ng-model="songCtrl.markAll" ng-change="songCtrl.toggleMarkAll()" md-no-ink=""
-                                         aria-label="Checkbox all" class="md-primary">
-                            </md-checkbox>
-                        </th>
-                        <th class="my-th name-song">Name</th>
-                        <th class="my-th artist-song">Artist</th>
-                        <th class="my-th action-song">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="song in songCtrl.songs | filter: songCtrl.querySearch.value"
-                        ng-class="{'my-select-song' : song.check === true}">
-
-                        <td class="my-td checkbox-song">
-                            <md-checkbox ng-model="song.check" ng-change="songCtrl.setCheckToShowButtonDelete()"
-                                         md-no-ink=""
-                                         aria-label="Checkbox" class="md-primary">
-                            </md-checkbox>
-                        </td>
-
-                        <td class="my-td name-song" ng-click="songCtrl.setChooseSong(song, $event)">{{song.name}}</td>
-                        <td class="my-td artist-song" ng-click="songCtrl.setChooseSong(song, $event)">{{song.artist}}</td>
-
-                        <td class="my-td action-song" ng-click="songCtrl.setChooseSong(song, $event)">
-                            <md-button ng-click="songCtrl.changeStateToEdit(song)" class="md-icon-button my-button"
-                                       aria-label="Edit">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <span class="mobileScreen">Edit</span>
-                            </md-button>
-                            <md-button ng-click="songCtrl.showConfirmDeleteSingle($event, song)"
-                                       class="md-icon-button my-button mobileScreen" aria-label="Delete">
-                                <i class="fa fa-trash-o"></i>
-                                <span>Delete</span>
-                            </md-button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <my-table column="songCtrl.column" list-data="songCtrl.songs"
+                          name-table="Song" when-click-button-edit="songCtrl.changeStateToEdit(data)"
+                          when-click-button-delete="songCtrl.showConfirmDeleteSingle($event, data)"
+                          when-select-item-of-table="songCtrl.setCheckToShowButtonDelete()"
+                          query-search="songCtrl.querySearch">
+                </my-table>
             </md-content>
         </div>
 
@@ -109,9 +67,16 @@
                         <label>Artist</label>
                         <input name="clientName" ng-model="songCtrl.newSong.artist">
                     </md-input-container>
-                    <div class="button-song">
+
+                    <!--<div class="my-upload-data btn">-->
+                        <!--<span>Upload</span>-->
+                        <!--<input type="file" file-model="songCtrl.newSong.file" class="custom-file-input"/>-->
+                    <!--</div>-->
+                    <!--<input id="uploadFile" placeholder="Choose song" disabled="disabled" value="{{songCtrl.newSong.file.name}}"/>-->
+
+                    <div class="my-button">
                         <md-button ng-disabled="!projectForm.$valid" ng-click="songCtrl.addSong(songCtrl.newSong)"
-                                   class="md-raised">Create
+                                   class="md-raised md-primary">Create
                         </md-button>
                         <md-button ng-click="songCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
                     </div>
@@ -143,9 +108,16 @@
                         <label>Artist</label>
                         <input name="clientName" ng-model="songCtrl.oldSong.artist">
                     </md-input-container>
-                    <div class="button-song">
+
+                    <!--<div class="my-upload-data btn">-->
+                        <!--<span>Upload</span>-->
+                        <!--<input type="file" file-model="songCtrl.oldSong.file" class="custom-file-input"/>-->
+                    <!--</div>-->
+                    <!--<input placeholder="Choose song" disabled="disabled" value="{{songCtrl.oldSong.file.name}}"/>-->
+
+                    <div class="my-button">
                         <md-button ng-disabled="!projectForm.$valid" ng-click="songCtrl.saveSong(songCtrl.oldSong)"
-                                   class="md-raised">Apply
+                                   class="md-raised md-primary">Apply
                         </md-button>
                         <md-button ng-click="songCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
                     </div>

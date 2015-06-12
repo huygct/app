@@ -1,0 +1,17 @@
+<md-dialog aria-label="List dialog">
+    <md-dialog-content>
+        <h2 class="md-title">{{title}}</h2>
+        <md-divider></md-divider>
+        <div class="table-run-data">
+            <audio controls>
+                <source src="{{url}}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="closeDialog()" class="md-primary">
+            Exit
+        </md-button>
+    </div>
+</md-dialog>

@@ -1,0 +1,71 @@
+.my-dialog-select-song {
+  font-size: 12px;
+  height: auto;
+}
+.my-side-left-songsCurrent {
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+}
+.my-side-middle-addAndRemove {
+  display: inline-block;
+  width: 8%;
+  vertical-align: middle;
+  color: #ff9800;
+}
+.my-side-right-songs {
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+}
+.my-side-middle-addAndRemove {
+  margin-top: 32px;
+}
+.my-side-middle-addAndRemove .remove-song {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+}
+.my-side-middle-addAndRemove .add-song {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+}
+.item-list .md-no-style {
+  padding: 0;
+}
+p.song-name {
+  font-weight: bold;
+}
+p.artist-name {
+  font-style: italic;
+  font-size: 12px;
+}
+p.title-list {
+  font-size: 15px;
+  font-weight: bold;
+}
+.item-list .md-list-item-inner > md-checkbox:first-child,
+md-list-item > md-checkbox:first-child {
+  margin-right: 12px;
+  margin-left: 0;
+}
+/*change of material angularjs*/
+md-list-item,
+md-list-item .md-list-item-inner {
+  min-height: 0;
+}
+md-checkbox.md-default-theme.md-checked .md-icon {
+  background-color: rgba(63,81,181,0.87);
+}
+p {
+  margin: 0;
+}
+.title-select-song {
+  font-weight: bold;
+}
+.context-side {
+  overflow: auto;
+  height: 400px;
+  width: 100%;
+}

@@ -1,43 +1,41 @@
-<table id="table" class="table table-hover table-mc-light-blue my-table">
+<table id="table" class="table table-hover table-mc-light-blue my-table" resize-table>
     <thead>
     <tr>
         <th class="my-th checkbox-col">
-            <md-checkbox ng-model="markAll" ng-change="toggleMarkAll()" md-no-ink=""
+            <md-checkbox ng-model="tableCtrl.markAll" ng-change="tableCtrl.toggleMarkAll()" md-no-ink=""
                          aria-label="Checkbox all" class="md-primary">
             </md-checkbox>
         </th>
-        <th class="my-th {{title.className}}" ng-repeat="title in column">{{title.name}}</th>
+        <th class="my-th {{title.className}}" ng-repeat="title in tableCtrl.column">{{title.name}}</th>
         <th class="my-th action-col">Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="data in listData | filter: querySearch.value"
-        ng-class="{'my-select-data' : data.check === true}">
+    <tr ng-repeat="data in tableCtrl.listData | filter: tableCtrl.querySearch.value"
+        ng-class="{'my-select-data' : data.check === true}" ng-click="tableCtrl.setChooseRow(data, $event);$event.stopPropagation();">
 
-        <td class="my-td checkbox-col" ng-click="setChooseRow(data, $event)">
-            <md-checkbox ng-model="data.check" ng-change="clickCheckbox()" ng-click="$event.stopPropagation()"
+        <td class="my-td checkbox-col">
+            <md-checkbox ng-model="data.check" ng-change="tableCtrl.clickCheckbox(data)" ng-click="$event.stopPropagation()"
                          md-no-ink=""
                          aria-label="Checkbox" class="md-primary">
             </md-checkbox>
         </td>
 
-        <td class="my-td {{col.className}}" ng-click="setChooseRow(data, $event)" ng-right-click="runData(data, $event)"
-            lick ng-repeat="col in column">{{ data[col.key] }}
+        <!--ng-right-click="runData(data, $event)"-->
+        <td class="my-td content-table {{col.className}}"
+            ng-repeat="col in tableCtrl.column">{{ data[col.key]}}
 
-            <!--<md-tooltip>-->
-                <!--Insert Drive-->
-            <!--</md-tooltip>-->
         </td>
 
-        <td class="my-td action-col" ng-click="setChooseRow(data, $event);$event.stopPropagation();">
-            <md-button ng-click="editData(data)" class="md-icon-button my-button"
+        <td class="my-td action-col">
+            <md-button ng-click="tableCtrl.editData(data)" class="md-icon-button my-icon-button"
                        aria-label="Edit">
-                <i class="fa fa-pencil-square-o fa-2x my-icon"></i>
+                <i class="fa fa-pencil-square-o my-icon"></i>
                 <span class="mobileScreen">Edit</span>
             </md-button>
-            <md-button ng-click="deleteItemFromTable($event, data);$event.stopPropagation();"
-                       class="md-icon-button my-button mobileScreen" aria-label="Delete">
-                <i class="fa fa-trash-o fa-2x my-icon"></i>
+            <md-button ng-click="tableCtrl.deleteItemFromTable($event, data);$event.stopPropagation();"
+                       class="md-icon-button my-icon-button mobileScreen" aria-label="Delete">
+                <i class="fa fa-trash-o my-icon"></i>
                 <span>Delete</span>
             </md-button>
         </td>

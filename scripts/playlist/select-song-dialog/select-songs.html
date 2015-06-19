@@ -1,0 +1,65 @@
+<md-dialog aria-label="List dialog" class="my-dialog-select-song">
+  <md-dialog-content>
+    <h2 class="md-title title-select-song">Make a choose songs</h2>
+    <md-list class="my-side-left-songsCurrent">
+
+      <md-list-item class="item-list">
+        <md-checkbox ng-model="selectAllInsidePlaylist" ng-change="changeSelectAllInsidePlaylist()" class="checkbox-song"></md-checkbox>
+        <div class="md-list-item-text">
+          <p class="title-list">Playlist's song</p>
+        </div>
+      </md-list-item>
+
+      <md-divider></md-divider>
+      <div class="context-side">
+        <md-list-item ng-repeat="song in songsInsidePlaylist" class="item-list">
+          <md-checkbox ng-model="song.check" ng-change="clickCheckboxInsidePlaylist()" class="checkbox-song"></md-checkbox>
+          <div class="md-list-item-text">
+            <p class="song-name">{{song.name}}</p>
+
+            <p class="artist-name">{{song.artist}}</p>
+          </div>
+        </md-list-item>
+      </div>
+    </md-list>
+    <div class="my-side-middle-addAndRemove">
+      <md-button ng-click="removeSongFromPlaylist()" ng-disabled="checkInsidePlaylist"
+                 class="md-icon-button remove-song" aria-label="addAndRemove">
+        <i class="fa fa-arrow-right icon-select-song"></i>
+      </md-button>
+      <md-button ng-click="addSongToPlaylist()" ng-disabled="checkOutsidePlaylist"
+                 class="md-icon-button add-song" aria-label="addAndRemove">
+        <i class="fa fa-arrow-left icon-select-song"></i>
+      </md-button>
+    </div>
+
+    <md-list class="my-side-right-songs">
+      <md-list-item class="item-list">
+        <md-checkbox ng-model="selectAllOutsidePlaylist" ng-change="changeSelectAllOutsidePlaylist()" class="checkbox-song"></md-checkbox>
+        <div class="md-list-item-text">
+          <p class="title-list">Other song</p>
+        </div>
+      </md-list-item>
+      <md-divider></md-divider>
+      <div class="context-side">
+        <md-list-item ng-repeat="song in songsOutsidePlaylist" class="item-list">
+          <md-checkbox ng-model="song.check" ng-change="clickCheckboxOutsidePlaylist()" class="checkbox-song"></md-checkbox>
+          <div class="md-list-item-text">
+            <p class="song-name">{{song.name}}</p>
+
+            <p class="artist-name">{{song.artist}}</p>
+          </div>
+        </md-list-item>
+      </div>
+    </md-list>
+
+  </md-dialog-content>
+  <div class="md-actions my-button-normal">
+    <md-button ng-click="confirmAddAndRemoveSongForPlaylist()" class="md-raised md-primary">
+      Apply
+    </md-button>
+    <md-button ng-click="closeDialog()" class="md-raised">
+      Cancel
+    </md-button>
+  </div>
+</md-dialog>

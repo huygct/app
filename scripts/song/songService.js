@@ -9,7 +9,7 @@
 
   angular.module('musicApp')
     .service('songService', ['$http', '$q', function ($http, $q) {
-      var wasGetData = false; // mark that it read file json
+      var gotData = false; // mark that it read file json
       var self = this;
 
       var showSearch = false; // cached value showSearch
@@ -23,12 +23,12 @@
       self.getListSong = function () {
         var deferred = $q.defer();
 
-        if (wasGetData === true) {
+        if (gotData) {
           deferred.resolve(songs);
         } else {
           $http.get('data/song.json')
             .success(function (response) {
-              wasGetData = true;
+              gotData = true;
               songs = response;
               deferred.resolve(response);
             })
@@ -39,8 +39,8 @@
         return deferred.promise;
       };
 
-      self.getSong = function (_id) {
-        return findSongById(songs, _id);
+      self.getSong = function (id) {
+        return findSongById(songs, id);
       };
 
       self.getSongs = function (ids) {
@@ -50,35 +50,48 @@
       self.addSong = function (song) {
         if (songs.length !== 0) {
           song.id = songs[songs.length - 1].id + 1;
-          //song.url = file.name;
           songs.push(song);
         } else {
           song.id = 0;
-          //song.url = file.name;
           songs.push(song);
         }
-        //console.log(songs);
       };
 
-      self.saveSong = function (songNew) {
+
+      // start template pattern -------------------------------------------------------------------------------------
+      var NOT_FOUND = -1;
+
+      function findSongIdx (id) {
         for (var i = 0; i < songs.length; i++) {
-          if (songs[i].id === songNew.id) {
-            songs[i] = songNew;
-            console.log('Gia tri i edit');
-            console.log(i);
-            break;
+          if (songs[i].id === id) {
+            return i;
           }
         }
+        return NOT_FOUND;
+      }
+
+      function findSongAndPerformAction(id, actionCallback) {
+        var index = findSongIdx(id);
+
+        if (index !== NOT_FOUND) {
+          actionCallback(index);
+        } else {
+          throw new Error('Can\'t find song with id ' + id);
+        }
+      }
+
+      self.saveSong = function (newSong) {
+        findSongAndPerformAction(newSong.id, function actionCallback(idx) {
+          songs[idx] = newSong;
+        });
       };
 
-      self.deleteOneSong = function (_id) {
-        for (var i = 0; i < songs.length; i++) {
-          if (songs[i].id === _id) {
-            songs.splice(i, 1);
-            break;
-          }
-        }
+      self.deleteOneSong = function (id) {
+        findSongAndPerformAction(id, function actionCallback(idx) {
+          songs.splice(idx, 1);
+        });
       };
+      // end template pattern -------------------------------------------------------------------------------------
 
       self.deleteManySong = function (oldSongs) {
         songs = [];
@@ -117,11 +130,9 @@
 
       // find song By Id
       function findSongById(source, id) {
-        for (var i = 0; i < source.length; i++) {
-          if (source[i].id === id) {
-            return source[i];
-          }
-        }
+        findSongAndPerformAction(id, function actionCallback(idx) {
+          return source(idx);
+        });
         throw new Error('Couldn\'t find object with id: ' + id);
       }
 
@@ -129,12 +140,9 @@
       function findSongsByIds(source, ids) {
         var _songs = [];
         for (var i = 0; i < ids.length; i++) {
-          for (var j = 0; j < source.length; j++) {
-            if (source[j].id === ids[i]) {
-              _songs.push(source[j]);
-              break;
-            }
-          }
+          findSongAndPerformAction(ids[i], function actonCallback(idx) {
+            _songs.push(source[idx]);
+          });
         }
         if (_songs.length !== 0) {
           return _songs;

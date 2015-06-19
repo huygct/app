@@ -1,0 +1,27 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2>
+      <span class="my-title-toolbar">{{playlistCtrl.currentPlaylist.name}}</span>
+    </h2>
+  </div>
+</md-toolbar>
+
+<md-content class="my-form-content">
+  <md-subheader class="md-primary">{{playlistCtrl.currentPlaylist.songs.length}} songs</md-subheader>
+  <md-list class="layout-padding my-listSong-in-playlist" resize type="h" value-Drop="410">
+    <md-list-item class="md-2-line" ng-repeat="song in playlistCtrl.currentPlaylist.songs">
+      <img ng-src="data/images/Dozo.jpg" class="face">
+      <div class="md-list-item-text list-items">
+        <h3 class="name-song-in-playlist">{{ song.name }}</h3>
+        <p class="artist-song-in-playlist">{{song.artist}}</p>
+      </div>
+      <md-divider md-inset ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>
+
+<div class="my-back-button">
+  <md-button ng-click="playlistCtrl.backToState(playlistCtrl.beforeState)"
+             class="md-raised my-button-accent-color">Back
+  </md-button>
+</div>

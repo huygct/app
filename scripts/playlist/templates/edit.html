@@ -1,0 +1,42 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2>
+      <span class="my-title-toolbar">Edit Playlist</span>
+    </h2>
+  </div>
+</md-toolbar>
+<md-content class="my-form-content">
+  <form name="projectForm" novalidate class="my-form">
+    <input type="hidden" class="form-control" ng-model="playlistCtrl.oldPlaylist.id"/>
+    <md-input-container>
+      <label>Name playlist</label>
+      <input required="" name="namePlaylist" ng-model="playlistCtrl.oldPlaylist.name">
+
+      <div ng-messages="projectForm.namePlaylist.$error">
+        <div ng-message="required">Name playlist cannot be empty.</div>
+      </div>
+    </md-input-container>
+    <md-input-container>
+      <label>Description</label>
+      <input name="description" ng-model="playlistCtrl.oldPlaylist.description">
+    </md-input-container>
+
+    <md-button ng-click="playlistCtrl.setSongForPlaylist(playlistCtrl.oldPlaylist, $event)"
+               class="md-raised my-button-accent-color">Add/Remove
+    </md-button>
+
+    <div class="linked-show-songs">
+      <p class="my-song-of-playlist">
+        <a href="" ng-click="playlistCtrl.showSongsOfPlaylist(playlistCtrl.oldPlaylist)">{{playlistCtrl.oldPlaylist.songs.length}} songs</a>
+      </p>
+    </div>
+
+    <div class="my-button-normal">
+      <md-button ng-disabled="!projectForm.$valid"
+                 ng-click="playlistCtrl.savePlaylist(playlistCtrl.oldPlaylist)"
+                 class="md-raised md-primary">Apply
+      </md-button>
+      <md-button ng-click="playlistCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
+    </div>
+  </form>
+</md-content>

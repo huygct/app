@@ -24,11 +24,12 @@ table.my-table {
 table.my-table thead, table.my-table tbody {
   float: left;
   width: 100%;
+  table-layout: fixed;
 }
 
 table.my-table tbody {
   overflow: auto;
-  height: 400px;
+  //height: 600px;
 }
 
 table.my-table tr {
@@ -36,6 +37,7 @@ table.my-table tr {
   display: table;
   text-align: left;
   border-bottom 1px solid #DADADA
+  outline-color: transparent;
 }
 
 table.my-table th.checkbox-col {
@@ -71,6 +73,8 @@ table.my-table
   td.action-col
     .my-icon
       color rgba(0,0,0,0.54)
+      vertical-align middle
+      font-size 24px
 
 
 table.my-table th.my-th {
@@ -92,7 +96,18 @@ table.my-table tr.my-select-data {
   color: #212121;
 }
 
-@media (max-width: 500px) {
+.my-icon-button
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+  padding: 6px !important;
+  line-height: normal !important;
+  margin: 6px !important;
+  height auto !important
+  width auto !important
+
+  span
+    color rgba(0,0,0,0.54)
+
+@media (max-width: 680px) {
   .mobileScreen {
     display: none;
   }
@@ -122,7 +137,7 @@ table.my-table tr.my-select-data {
   }
 
   table.my-table td.checkbox-col {
-    width: auto;
+    width: 40px;
   }
 
   table.my-table td {
@@ -130,14 +145,14 @@ table.my-table tr.my-select-data {
   }
 
   table.my-table td.action-col {
-    width: auto;
+    width: 40px;
   }
 
   table td:first-child {
     font-size: 13px;
     position: absolute;
     left: 8px;
-    top: 0px;
+    top: 10px;
     margin: 0;
   }
 
@@ -156,18 +171,14 @@ table.my-table tr.my-select-data {
     outline-color: transparent;
   }
 
+  .my-icon-button {
+    box-shadow none
+    padding: 0px !important;
+    line-height: normal !important;
+    margin: 0px !important;
+  }
+
   .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     border-top: hidden;
   }
-}
-
-.md-button {
-  width auto !important
-  font-weight bold
-}
-
-.md-icon-button.my-button-accent {
-  width: auto;
-  //color $accent-color !important
-  font-weight bold
 }

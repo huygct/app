@@ -1,14 +1,10 @@
 @import '../main/constant.styl'
 
-.my-headerTable-and-table {
-  height: auto;
-}
-
-.my-headerTable-and-table
-  .my-manage-songs
-    .md-toolbar-tools
-      background-color $primary-color
-      color $text-icons
+//.my-headerTable-and-table
+//  .my-manage-songs
+//    .md-toolbar-tools
+//      background-color $primary-color
+//      //color $text-icons
 
 .dataTable {
 
@@ -25,10 +21,18 @@ table.my-table th.artist-song {
 
 table.my-table td.name-song {
   width: 35%;
+  max-width 0
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 table.my-table td.artist-song {
   width: 25%;
+  max-width 0
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*button*/
@@ -41,13 +45,21 @@ table.my-table td.artist-song {
 
 }
 
-@media (max-width: 500px) {
+@media (max-width: 680px) {
   table.my-table td.name-song {
-    width: auto;
+    width: 120px;
+    max-width none
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   table.my-table td.artist-song {
-    width: auto;
+    width: 120px;
+    max-width none
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   table td.name-song {

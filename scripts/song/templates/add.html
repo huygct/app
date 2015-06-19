@@ -1,0 +1,36 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2>
+      <span class="my-title-toolbar">Create Songs</span>
+    </h2>
+  </div>
+</md-toolbar>
+<md-content class="my-form-content">
+  <form name="projectForm" novalidate class="my-form">
+    <md-input-container>
+      <label>Song Name</label>
+      <input required="" name="songName" ng-model="songCtrl.newSong.name">
+
+      <div ng-messages="projectForm.songName.$error">
+        <div ng-message="required">Song name cannot be empty.</div>
+      </div>
+    </md-input-container>
+    <md-input-container>
+      <label>Artist</label>
+      <input name="clientName" ng-model="songCtrl.newSong.artist">
+    </md-input-container>
+
+    <!--<div class="my-upload-data btn">-->
+    <!--<span>Upload</span>-->
+    <!--<input type="file" file-model="songCtrl.newSong.file" class="custom-file-input"/>-->
+    <!--</div>-->
+    <!--<input id="uploadFile" placeholder="Choose song" disabled="disabled" value="{{songCtrl.newSong.file.name}}"/>-->
+
+    <div class="my-button-normal">
+      <md-button ng-disabled="!projectForm.$valid" ng-click="songCtrl.addSong(songCtrl.newSong)"
+                 class="md-raised md-primary">Create
+      </md-button>
+      <md-button ng-click="songCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
+    </div>
+  </form>
+</md-content>

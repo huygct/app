@@ -48,27 +48,31 @@ angular.module('musicApp')
         }
       );
 
-      if($scope.childmenus.isClickLinkHome === false) {
-        self.showSearch = songService.getShowSearch();
-        self.querySearch = songService.getQuerySearch();
-        self.state = songService.getState();
-        if (self.state === 'create') {
-          self.newSong = songService.getCacheSong();
-        } else if (self.state === 'edit') {
-          self.oldSong = songService.getCacheSong();
-        } else {
-          self.oldSong = {};
-          self.newSong = {};
-        }
+      //if($scope.childmenus.isClickLinkHome === false) {
+      self.showSearch = songService.getShowSearch();
+      self.querySearch = songService.getQuerySearch();
+      self.state = songService.getState();
+      if (self.state === 'create') {
+        self.newSong = songService.getCacheSong();
+      } else if (self.state === 'edit') {
+        self.oldSong = songService.getCacheSong();
       } else {
-        songService.setShowSearch(false);
-        songService.setQuerySearch('');
-        songService.setState(self.state, {});
         self.oldSong = {};
         self.newSong = {};
-
-        $scope.childmenus.isClickLinkHome = false;
       }
+      //} else {
+      //  songService.setShowSearch(false);
+      //  songService.setQuerySearch('');
+      //  songService.setState('', {});
+      //  self.oldSong = {};
+      //  self.newSong = {};
+      //if($scope.childmenus.isClickLinkHome === true) {
+      //  for (var i = 0; i < self.songs.length; i++) {
+      //    self.songs[i].check = false;
+      //  }
+      //  $scope.childmenus.isClickLinkHome = false;
+      //}
+      //}
     }
 
     // set value for 'checkToShowButtonDelete'
@@ -136,6 +140,10 @@ angular.module('musicApp')
       self.newSong = {};
       //var file = song.file;
       //songService.addSong(song, file);
+      song.check = false;
+      if (typeof song.artist === 'undefined') {
+        song.artist = 'none';
+      }
       songService.addSong(song);
 
       self.changeStateToManage();
@@ -252,4 +260,5 @@ angular.module('musicApp')
     }
 
     getListSong();
-  }]);
+  }])
+;

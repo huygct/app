@@ -1,0 +1,79 @@
+<div class="my-headerTable-and-table">
+    <div ng-switch on="playlistCtrl.state">
+        <div ng-switch-default="">
+            <!---------------------------------Manage song------------------------------->
+            <md-toolbar layout="row">
+                <div class="md-toolbar-tools">
+                    <h2 show-gt-md="">
+                        <span>Manage Playlist</span>
+                    </h2>
+                    <span flex="1"></span>
+                    <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.setIsSearch()"
+                               class="md-icon-button my-button" aria-label="Search">
+                        <i class="fa fa-search"></i>
+                        <span class="mobileScreen">Search</span>
+                    </md-button>
+
+                    <!--search song-------------------------------------------------------->
+                    <div ng-show="playlistCtrl.showSearch">
+                        <my-search ng-model="playlistCtrl.querySearch.value"
+                                   close="playlistCtrl.setIsNotSearch()"></my-search>
+                    </div>
+                </div>
+            </md-toolbar>
+            <!--table song-->
+            <md-content flex="" class="my-grid-playlist">
+                <!--list playlist-->
+                <!--<md-list>-->
+                <!--<md-divider></md-divider>-->
+
+                <!--<md-list-item ng-repeat="playlist in playlistCtrl.playlists">-->
+
+                <!--<md-checkbox ng-model="playlist.check"></md-checkbox>-->
+                <!--<p>{{playlist.name}}</p>-->
+                <!--<i aria-label="icon-add" ng-click="playlistCtrl.setSongForPlaylist(playlist, $event)" class="md-secondary fa fa-pencil-square-o"></i>-->
+                <!--</md-list-item>-->
+
+                <!--<md-divider></md-divider>-->
+                <!--</md-list>-->
+                <md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6" md-row-height-gt-md="1:1"
+                              md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+
+                    <md-grid-tile ng-repeat="tile in playlistCtrl.playlistsForGrid" md-rowspan="{{tile.span.row}}"
+                                  md-colspan="{{tile.span.col}}" md-colspan-sm="1" ng-class="tile.background">
+                        <!--<md-checkbox ng-model="playlist.check"></md-checkbox>-->
+                        <!--<md-icon md-svg-icon="{{tile.icon}}"></md-icon>-->
+                        <md-grid-tile-footer class="my-controller-playlist">
+                            <md-checkbox class="my-checkbox-playlist" ng-model="playlist.check"
+                                         aria-label="checkbox"></md-checkbox>
+                            <h5>{{tile.name}}</h5>
+                            <i aria-label="icon-add" ng-click="playlistCtrl.setSongForPlaylist(playlist, $event)"
+                               class="md-secondary my-edit-playlist fa fa-pencil-square-o"></i>
+                        </md-grid-tile-footer>
+
+                        <md-grid-tile-header class="my-controller-playlist">
+                            <h5>{{tile.name}}</h5>
+                        </md-grid-tile-header>
+                    </md-grid-tile>
+                </md-grid-list>
+
+
+            </md-content>
+            <div class="my-wrapper-add-and-delete-playlist">
+                <md-input-container md-no-float="">
+                    <!-- Use placeholder -->
+                    <md-icon md-svg-src="images/icon/ic_add_circle_outline_black_24px.svg"
+                             class="my-input-playlist my-icon-input-playlist"></md-icon>
+                    <input ng-model="playlistCtrl.playlist.name" type="text" class="my-input-playlist"
+                           placeholder="Let input name playlist to add!" ng-keyup="playlistCtrl.addPlaylist()"/>
+                </md-input-container>
+                <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.setIsSearch()"
+                           class="md-icon-button my-button-delete-playlist" aria-label="Search">
+                    <i class="fa fa-search"></i>
+                    <span class="mobileScreen my-text-delete-playlist">Search</span>
+                </md-button>
+            </div>
+
+        </div>
+    </div>
+</div>

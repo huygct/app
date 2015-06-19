@@ -68,8 +68,6 @@
         for (var i = 0; i < playlists.length; i++) {
           if (playlists[i].id === playlistNew.id) {
             playlists[i] = playlistNew;
-            //console.log('Gia tri i edit');
-            //console.log(i);
             break;
           }
         }

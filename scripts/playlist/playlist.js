@@ -41,7 +41,7 @@ angular.module('musicApp')
       // click close 'x' of button search
       self.setIsNotSearch = function () {
         self.showSearch = false;
-        songService.setShowSearch(false);
+        playlistService.setShowSearch(false);
 
         self.querySearch.value = '';
         playlistService.setQuerySearch('');
@@ -50,6 +50,7 @@ angular.module('musicApp')
       // ----------------------------------------------------------
       self.changeStateToAdd = function () {
         self.state = 'create';
+        self.newPlaylist.songs = [];
         playlistService.setState(self.state, self.newPlaylist); // save for song service
       };
 
@@ -66,7 +67,7 @@ angular.module('musicApp')
         //self.oldPlaylist.description = playlist.description;
         //self.oldPlaylist.songs = playlist.songs;
         //self.oldPlaylist.id = playlist.id;
-        self.oldPlaylist = playlist;
+        self.oldPlaylist = angular.copy(playlist);
         self.state = 'edit';
         playlistService.setState(self.state, self.oldPlaylist); // save for song service
       };
@@ -75,6 +76,11 @@ angular.module('musicApp')
       // Add new playlist
       self.addPlaylistByClick = function (playlist) {
         self.newPlaylist = {};
+
+        playlist.check = false;
+        if (typeof playlist.description === 'undefined') {
+          playlist.description = 'none';
+        }
         playlistService.addPlaylist(playlist);
 
         self.changeStateToManage();
@@ -120,46 +126,21 @@ angular.module('musicApp')
         self.checkToShowButtonDelete = checkToShowButtonDelete();
       };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      self.pageSongs = false;
-      self.setChoosePlaylistOnRow = function (data) {
-        self.setCheckToShowButtonDelete();
-        self.currentPlaylist = data;
-        self.pageSongs = true;
+      // click playlist on table
+      self.setChoosePlaylistOnRow = function (playlist, key) {
+        if (key === 'click-checkbox') {
+          self.setCheckToShowButtonDelete();
+        } else {
+          self.currentPlaylist = playlist;
+          self.beforeState = self.state;
+          self.state = 'showSong';
+        }
       };
 
-      self.backToMangePlaylist = function () {
-        self.pageSongs = false;
+      // button back.
+      self.backToState = function (nameState) {
+        self.state = nameState;
       };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       // calculate values of 'checkToShowButtonDelete'
       function checkToShowButtonDelete() {

@@ -20,6 +20,7 @@
   border: 2px solid #bebede;
 }
 .close-icon {
+  z-index: 2;
   position: absolute;
   color: #000;
   border: 1px solid transparent;
@@ -31,6 +32,16 @@
   outline: 0;
   cursor: pointer;
 }
-.fa-times {
-  color: #ff9800;
+.my-color-icon {
+  color: #fff;
+}
+.input-container-search {
+  padding: 0;
+  font-size: 14px;
+}
+.input-container-search.md-default-theme .md-input {
+  color: #fff;
+}
+.input-container-search.md-input-focused input {
+  border-color: #fff !important;
 }

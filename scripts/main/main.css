@@ -5,12 +5,15 @@
   font-family: RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
 }
 .my-container .my-nameApp-bar {
-  background-color: #303f9f;
+  background-color: #512da8;
   color: #fff;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.14), 0 4px 5px 0 rgba(0,0,0,0.098), 0 1px 10px 0 rgba(0,0,0,0.084);
+}
+.my-container .my-nameApp-bar .md-toolbar-tools {
+  font-size: 34px;
+  margin-left: 36px;
 }
 .my-container {
-  margin-right: 8px;
-  margin-left: 8px;
   height: 100%;
 }
 .my-form-content {
@@ -21,17 +24,13 @@
 /*bottom: 0px;*/
 /*left: 0px;*/
 /*right: 0px;*/
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: solid #e8e8e8 3px;
   text-align: center;
+  background-color: #512da8;
+  font-size: 13px;
 }
 .my-footer p {
   margin: 20px;
-}
-.my-content-app {
-  border: solid #e8e8e8 3px;
-  margin-top: 8px;
+  color: #fff;
 }
 md-sidenav,
 md-sidenav.md-locked-open,
@@ -41,26 +40,51 @@ md-sidenav.md-closed.md-locked-open-add-active {
   max-width: 200px !important;
 }
 .my-side-left {
-  box-shadow: none;
-  border: solid #e8e8e8 3px;
-  margin-right: 8px;
-  margin-top: 8px;
+  background-color: #673ab7;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.14), 0 4px 5px 0 rgba(0,0,0,0.098), 0 1px 10px 0 rgba(0,0,0,0.084);
+}
+.my-side-left nav {
+  height: 500px;
+}
+.my-side-left nav > a.my-link {
+  border: 0 !important;
+  outline-color: transparent;
 }
 .my-content-wrapper {
   position: relative;
 }
-nav > a.my-link {
-  border: 0 !important;
-  outline-color: transparent;
-}
 /*-----------------------------------------------*/
 .menu-Btn {
+  position: absolute;
+  top: 8px;
   border: none;
-  margin-left: 16px;
+  width: 48px;
+  height: 48px;
+  margin: 0 8px;
+  outline: none;
   background-color: transparent;
 }
 .my-button-dangerous {
   color: #f00 !important;
+}
+.my-button-normal {
+  margin: 4px;
+  text-align: right;
+  width: auto !important;
+  font-weight: 500;
+}
+.my-button-normal .md-button.md-default-theme.md-primary.md-raised[disabled] {
+  background-color: rgba(0,0,0,0.12);
+}
+.my-button-normal .md-button.md-default-theme.md-primary.md-raised {
+  background-color: #536dfe;
+}
+.my-button-normal .md-button.md-default-theme.md-primary.md-raised:not([disabled]):hover {
+  background-color: #536dfe;
+}
+.my-button-accent-color {
+  color: #fff !important;
+  background-color: #536dfe !important;
 }
 .my-upload-data {
   position: relative;
@@ -81,24 +105,37 @@ nav > a.my-link {
   opacity: 0;
 }
 /*normal screen*/
-@media (min-width: 500px) {
+@media (min-width: 680px) {
   .menu-Btn {
     display: none;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 680px) {
   .my-side-left {
-    border: none;
-    margin: 0px;
+    margin: 0;
+  }
+  .my-side-left md-sidenav {
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.14), 0 4px 5px 0 rgba(0,0,0,0.098), 0 1px 10px 0 rgba(0,0,0,0.084);
   }
 }
-.md-icon-button.my-button-accent {
+md-toolbar.md-default-theme .md-button {
   width: auto;
-  font-weight: bold;
+  color: #fff;
+  font-size: 24px;
+  padding: 0 6px;
+  height: auto;
+  line-height: 0;
+}
+md-toolbar.md-default-theme .md-button i {
+  vertical-align: middle;
+}
+md-toolbar.md-default-theme .md-button span {
+  font-size: 14px;
 }
 /*change icon of breadcrumb*/
 .breadcrumb {
   color: #212121;
+  font-size: 24px;
 }
 .breadcrumb > li + li:before {
   content: " > ";
@@ -116,7 +153,7 @@ nav {
 nav a {
   display: block;
   padding: 18px 30px;
-  color: #000 !important;
+  color: #fff !important;
   font-weight: bold;
   font-size: 16px;
   text-decoration: none !important;
@@ -126,13 +163,37 @@ nav a {
 }
 .selected-menu {
   color: #fff !important;
-  background: #3f51b5;
+  background: #536dfe;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.14), 0 4px 5px 0 rgba(0,0,0,0.098), 0 1px 10px 0 rgba(0,0,0,0.084);
 }
-/*button*/
-.md-button {
-  width: auto;
-  font-weight: bold;
+md-toolbar.md-default-theme {
+  background-color: #673ab7;
 }
-.my-button {
-  text-align: right;
+md-sidenav {
+  background-color: #673ab7;
+}
+.my-title-toolbar {
+  color: #fff;
+  font-size: 20px;
+}
+@media (max-width: 380px) {
+  .title-manage-toolbar {
+    display: none;
+  }
+}
+a {
+  color: #536dfe;
+}
+.my-headerTable-and-table {
+  height: auto;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.14), 0 4px 5px 0 rgba(0,0,0,0.098), 0 1px 10px 0 rgba(0,0,0,0.084);
+}
+form.my-form {
+  margin: 16px;
+}
+form.my-form .md-input-focused input {
+  border-color: #536dfe !important;
+}
+md-checkbox.md-default-theme.md-checked .md-icon {
+  background-color: #536dfe !important;
 }

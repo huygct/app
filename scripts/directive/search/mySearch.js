@@ -6,15 +6,20 @@
 'use strict';
 
 (function () {
-    angular.module('musicApp')
-        .directive('mySearch', [function () {
-            var directive = {};
-            directive.restrict = 'EA';
-            directive.scope = {
-                ngModel: '=',
-                close: '&'
-            };
-            directive.templateUrl = 'scripts/directive/search/my-search.html';
-            return directive;
-        }]);
+  angular.module('musicApp')
+    .directive('mySearch', [function () {
+      var directive = {};
+      directive.restrict = 'EA';
+      directive.scope = {
+        ngModel: '=',
+        close: '&'
+      };
+      directive.controller = [function () {
+
+      }];
+      directive.controllerAs = 'searchCtrl';
+      directive.bindToController = true;
+      directive.templateUrl = 'scripts/directive/search/my-search.html';
+      return directive;
+    }]);
 })();

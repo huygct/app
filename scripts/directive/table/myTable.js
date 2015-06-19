@@ -28,12 +28,13 @@
         showToast: '&'
       };
       directive.templateUrl = 'scripts/directive/table/my-table.html';
-      directive.controller = ['$scope', function ($scope) {
-        $scope.markAll = false; // Declare markAll, give it the value of checkbox on header of table
+      directive.controller = [function () {
+        var self = this;
+        self.markAll = false; // Declare markAll, give it the value of checkbox on header of table
 
         // function to edit data of table
-        $scope.editData = function (data) {
-          $scope.whenClickButtonEdit({data: data});
+        self.editData = function (data) {
+          self.whenClickButtonEdit({data: data});
         };
 
         /**
@@ -41,41 +42,48 @@
          * @param $event use to show dialog
          * @param data that will be delete
          */
-        $scope.deleteItemFromTable = function ($event, data) {
-          $scope.whenClickButtonDelete({
+        self.deleteItemFromTable = function ($event, data) {
+          self.whenClickButtonDelete({
             $event: $event,
             data: data
           });
         };
 
         // Selection all row
-        $scope.toggleMarkAll = function () {
-          angular.forEach($scope.listData, function (data) {
-            data.check = $scope.markAll;
+        self.toggleMarkAll = function () {
+          angular.forEach(self.listData, function (data) {
+            data.check = self.markAll;
           });
-          $scope.whenSelectItemOfTable();
+          self.whenSelectItemOfTable({
+            data: {},
+            key: 'click-checkbox'
+          });
         };
 
         // Check data to set value true or false for markAll
-        function setMarkAll () {
-          for (var i = 0; i < $scope.listData.length; i++) {
-            if ($scope.listData[i].check === false) {
-              $scope.markAll = false;
+        function setMarkAll() {
+          for (var i = 0; i < self.listData.length; i++) {
+            if (self.listData[i].check === false) {
+              self.markAll = false;
               return;
             }
           }
-          $scope.markAll = true;
+          self.markAll = true;
         }
 
         // When select checkbox on row of table
-        $scope.clickCheckbox = function () {
+        self.clickCheckbox = function (data) {
           //console.log('clickCheckbox');
           setMarkAll();
-          $scope.whenSelectItemOfTable();
+
+          self.whenSelectItemOfTable({
+            data: data,
+            key: 'click-checkbox'
+          });
         };
 
         // Make for fun. run a item of data
-        function dialogRunData (scope, $mdDialog, data) {
+        function dialogRunData(scope, $mdDialog, data) {
           scope.url = 'data/song/' + data.url;
           scope.title = data.name;
 
@@ -89,60 +97,64 @@
           };
         }
 
-        $scope.runData = function (data, $event) {
+        self.runData = function (data, $event) {
           //console.log(data);
-          var parentEl = angular.element(document.body);
-          $mdDialog.show({
-            parent: parentEl,
-            targetEvent: $event,
-            locals: {
-              data: data
-            },
-            templateUrl: 'scripts/directive/table/run-data.html',
-            controller: dialogRunData
-          });
+          if (self.nameTable === 'Song') { // only active when table-name is song
+            var parentEl = angular.element(document.body);
+            $mdDialog.show({
+              parent: parentEl,
+              targetEvent: $event,
+              locals: {
+                data: data
+              },
+              templateUrl: 'scripts/directive/table/run-data.html',
+              controller: dialogRunData
+            });
+          } else {
+            console.log('It is not a song');
+          }
         };
 
         // when select a row
-        $scope.setChooseRow = function (data, $event) {
+        self.setChooseRow = function (data, $event) {
           //console.log('setChooseRow');
-          if ($event.shiftKey) {
-            //if (self.chooseBeforeSong.check === true) {
-            //    var songId = self.chooseBeforeSong.id;
-            //    if (songId < song.id) {
-            //        for (var i = songId; i <= song.id; i++) {
-            //                self.songs[i].check = true;
-            //            }
-            //        }
-            //    }
-          } else {
-            if ($event.ctrlKey) {
-              // press ctrl
-              data.check = !data.check;
+          if (self.nameTable === 'Song') { // only active when table-name is song
+            if ($event.shiftKey) {
+              //if (self.chooseBeforeSong.check === true) {
+              //    var songId = self.chooseBeforeSong.id;
+              //    if (songId < song.id) {
+              //        for (var i = songId; i <= song.id; i++) {
+              //                self.songs[i].check = true;
+              //            }
+              //        }
+              //    }
             } else {
-              for (var i = 0; i < $scope.listData.length; i++) {
-                if ($scope.listData[i].id === data.id) {
-                  $scope.listData[i].check = !data.check;
-                } else {
-                  $scope.listData[i].check = false;
+              if ($event.ctrlKey) {
+                // press ctrl
+                data.check = !data.check;
+              } else {
+                for (var i = 0; i < self.listData.length; i++) {
+                  if (self.listData[i].id === data.id) {
+                    self.listData[i].check = !data.check;
+                  } else {
+                    self.listData[i].check = false;
+                  }
                 }
               }
             }
+            setMarkAll();
           }
-
-          setMarkAll();
-          $scope.whenSelectItemOfTable({
+          self.whenSelectItemOfTable({
             data: data
           });
-
-
           // show toast
-          //$scope.showToast({
+          //self.showToast({
           //  data: data
           //});
         };
       }];
-      directive.controllerAs = 'searchCtrl';
+      directive.controllerAs = 'tableCtrl';
+      directive.bindToController = true;
       directive.compile = function () {
         // do one-time configuration of element.
 
@@ -150,9 +162,17 @@
           // bind element to data in $scope
 
           // set markAll is false when data.length is 0
-          $scope.$watch('listData', function (newData) {
-            if(newData.length === 0) {
-              $scope.markAll = false;
+          $scope.$watch('tableCtrl.listData', function (newData) {
+            if (newData.length === 0) {
+              $scope.tableCtrl.markAll = false;
+            } else {
+              for (var i = 0; i < $scope.tableCtrl.listData.length; i++) {
+                if ($scope.tableCtrl.listData[i].check === false) {
+                  $scope.tableCtrl.markAll = false;
+                  return;
+                }
+              }
+              $scope.tableCtrl.markAll = true;
             }
           });
         };

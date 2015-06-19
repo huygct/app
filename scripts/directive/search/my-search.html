@@ -1,9 +1,9 @@
 <!--search song-------------------------------------------------------->
 <div class="search-wrapper">
-    <input type="text" placeholder="search" name="focus" class="search-box"
-           ng-model="ngModel"/>
-
-    <button ng-click="close()" class="close-icon">
-        <i class="fa fa-times"></i>
-    </button>
+  <md-input-container md-no-float="" class="input-container-search">
+    <input ng-model="searchCtrl.ngModel" placeholder="Search...">
+  </md-input-container>
+  <button ng-click="searchCtrl.close()" class="close-icon">
+    <i class="fa fa-times my-color-icon"></i>
+  </button>
 </div>

@@ -1,0 +1,41 @@
+<!---------------------------------Manage song------------------------------->
+<md-toolbar layout="row">
+  <div class="md-toolbar-tools">
+    <h2 show-gt-md="">
+      <span class="my-title-toolbar title-manage-toolbar">Manage Songs</span>
+    </h2>
+    <span flex="1"></span>
+    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.changeStateToAdd()"
+               class="md-icon-button my-button-accent" aria-label="Add">
+      <i class="fa fa-plus"></i>
+      <span class="mobileScreen" show-gt-md="">Add</span>
+    </md-button>
+    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.showConfirmDeleteMultiple($event)"
+               ng-disabled="!songCtrl.checkToShowButtonDelete" class="md-icon-button my-button-accent"
+               aria-label="Delete">
+      <i class="fa fa-trash-o"></i>
+      <span class="mobileScreen">Delete</span>
+    </md-button>
+    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.setIsSearch()"
+               class="md-icon-button my-button-accent" aria-label="Search">
+      <i class="fa fa-search"></i>
+      <span class="mobileScreen">Search</span>
+    </md-button>
+
+    <!--search song-------------------------------------------------------->
+    <div ng-show="songCtrl.showSearch">
+      <!--directive search-->
+      <my-search ng-model="songCtrl.querySearch.value" close="songCtrl.setIsNotSearch()"></my-search>
+
+    </div>
+  </div>
+</md-toolbar>
+<!--table song-->
+<md-content flex="50" class="dataTable">
+  <my-table column="songCtrl.column" list-data="songCtrl.songs"
+            name-table="Song" when-click-button-edit="songCtrl.changeStateToEdit(data)"
+            when-click-button-delete="songCtrl.showConfirmDeleteSingle($event, data)"
+            when-select-item-of-table="songCtrl.setCheckToShowButtonDelete()"
+            query-search="songCtrl.querySearch">
+  </my-table>
+</md-content>

@@ -1,4 +1,14 @@
 /* css for search */
+$dark-primary-color = #512DA8
+$primary-color = #673AB7
+$light-primary = #FFFFFF
+$text-icons = #D1C4E9
+$accent-color = #536DFE
+$primary-text = #212121
+$secondary-text = #727272
+$divider-color = #B6B6B6
+
+
 .search-wrapper {
   position: relative;
   padding: 10px;
@@ -21,6 +31,7 @@
 }
 
 .close-icon {
+  z-index 2
   position: absolute;
   color: black;
   border: 1px solid transparent;
@@ -32,6 +43,74 @@
   outline: 0;
   cursor: pointer;
 }
-.fa-times {
-  color: rgb(255, 152, 0);
+.my-color-icon {
+  color: #fff
 }
+
+.input-container-search
+  padding 0
+  font-size 14px
+
+.input-container-search.md-default-theme .md-input
+  color $light-primary
+
+
+.input-container-search.md-input-focused input
+  border-color white !important
+
+
+//#wrap
+//  display: inline-block;
+//  position: relative;
+//  height: 60px;
+//  float: right;
+//  padding: 0;
+//  position: relative;
+//
+//
+//input[type="text"]
+//  display: inline-block;
+//  //font-family: "Lato";
+//  font-weight: 100;
+//  border: none;
+//  outline: none;
+//  color: #555;
+//  padding: 3px;
+//  padding-right: 60px;
+//  width: 0px;
+//  position: absolute;
+//  top: 0;
+//  right: 0;
+//  background: none;
+//  z-index: 3;
+//  transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
+//  cursor: pointer;
+//
+//
+//input[type="text"]:focus:hover
+//  border-bottom: 1px solid red;
+//
+//
+//input[type="text"]:focus
+//  width: 200px;
+//  z-index: 1;
+//  border-bottom: 1px solid red;
+//  cursor: text;
+//
+//.close-icon {
+//  z-index 2
+//  position: absolute;
+//  color: black;
+//  border: 1px solid transparent;
+//  background-color: transparent;
+//  display: inline-block;
+//  //right: 16px;
+//  //top: 12px;
+//  vertical-align: middle;
+//  outline: 0;
+//  cursor: pointer;
+//}
+//
+//.fa-times {
+//  color: rgb(255, 152, 0);
+//}

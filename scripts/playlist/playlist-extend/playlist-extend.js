@@ -1,5 +1,5 @@
 /**
- * Created by thuynghi on 6/5/2015.
+ * Created by Nghi Tran on 6/5/2015.
  * Extend: Add songs for playlist and show toast
  */
 'use strict';
@@ -7,10 +7,9 @@
 (function () {
 
   angular.module('musicApp')
-    .factory('playListExtend', ['$mdDialog', '$mdToast', '$window', function ($mdDialog, $mdToast, $window) {
+    .factory('playListExtend', ['$mdDialog', function ($mdDialog) {
       return {
         decorator: function ($scope, self) {
-
           /**
            * Controller of dialog set songs for playlist
            * @param scope
@@ -19,17 +18,6 @@
            * @param playlist - playlist was selected
            */
           function dialogSetSongForPlaylist(scope, $mdDialog, songs, playlist) {
-            scope.songs = songs;
-            // check to show or hide button add and remove
-            scope.checkInsidePlaylist = true;
-            scope.checkOutsidePlaylist = true;
-
-            if (typeof playlist.songs === 'undefined') {
-              scope.songsInsidePlaylist = [];
-            } else {
-              scope.songsInsidePlaylist = angular.copy(playlist.songs);
-            }
-
             // Check data to set value true or false for markAll
             function setMarkAll(listData) {
               for (var i = 0; i < listData.length; i++) {
@@ -58,6 +46,17 @@
               return songsOutsidePlaylist;
             }
 
+            scope.songs = songs;
+            // check to show or hide button add and remove
+            scope.checkInsidePlaylist = true;
+            scope.checkOutsidePlaylist = true;
+
+            if (typeof playlist.songs === 'undefined') {
+              scope.songsInsidePlaylist = [];
+            } else {
+              scope.songsInsidePlaylist = angular.copy(playlist.songs);
+            }
+
             scope.songsOutsidePlaylist = setSongOutSidePlaylist(scope.songs, scope.songsInsidePlaylist);
 
             scope.closeDialog = function () {
@@ -67,7 +66,7 @@
             // click checkbox of left side
             scope.clickCheckboxInsidePlaylist = function () {
               for (var i = 0; i < scope.songsInsidePlaylist.length; i++) {
-                if(scope.songsInsidePlaylist[i].check === true) {
+                if (scope.songsInsidePlaylist[i].check === true) {
                   scope.checkInsidePlaylist = false;
                   break;
                 } else {
@@ -80,7 +79,7 @@
             // click checkbox of right side
             scope.clickCheckboxOutsidePlaylist = function () {
               for (var i = 0; i < scope.songsOutsidePlaylist.length; i++) {
-                if(scope.songsOutsidePlaylist[i].check === true) {
+                if (scope.songsOutsidePlaylist[i].check === true) {
                   scope.checkOutsidePlaylist = false;
                   break;
                 } else {
@@ -146,7 +145,7 @@
               for (var i = 0; i < scope.songsInsidePlaylist.length; i++) {
                 scope.songsInsidePlaylist[i].check = false;
                 listNameSongs += scope.songsInsidePlaylist[i].name;
-                if (i !== scope.songsInsidePlaylist.length-1) {
+                if (i !== scope.songsInsidePlaylist.length - 1) {
                   listNameSongs += ', ';
                 }
               }
@@ -158,7 +157,7 @@
 
             //why...................................................
             scope.$watch('songsInsidePlaylist', function () {
-              console.log('aaaaaaaaaaaaaaaaaaaaaaa');
+              //console.log('aaaaaaaaaaaaaaaaaaaaaaa');
               //if ($scope.songsInsidePlaylist.length === 0) {
               //  $scope.selectAllInsidePlaylist = false;
               //} else {
@@ -175,66 +174,19 @@
           // Show dialog to set songs for a playlist
           self.setSongForPlaylist = function (playlist, $event) {
             // show dialog to choose songs if width screen > 680
-            if ($window.innerWidth >= 680) {
-              var parentEl = angular.element(document.body);
-              $mdDialog.show({
-                parent: parentEl,
-                targetEvent: $event,
-                locals: {
-                  songs: angular.copy(self.songs),
-                  playlist: playlist
-                },
-                templateUrl: 'scripts/playlist/select-song-dialog/select-songs.html',
-                controller: dialogSetSongForPlaylist
-              });
-            } else {
-              // when width of screen < 680
-              self.state = 'chooseSong';
 
+            var parentEl = angular.element(document.body);
+            $mdDialog.show({
+              parent: parentEl,
+              targetEvent: $event,
+              locals: {
+                songs: angular.copy(self.songs),
+                playlist: playlist
+              },
+              templateUrl: 'scripts/playlist/select-song-dialog/select-songs.html',
+              controller: dialogSetSongForPlaylist
+            });
 
-            }
-          };
-
-          // page show songs
-          self.showSongsOfPlaylist = function (playlist) {
-            self.currentPlaylist = playlist;
-            self.beforeState = self.state;
-            self.state = 'showSong';
-          };
-
-          // Position to show toast
-          self.toastPosition = {
-            bottom: true,
-            top: false,
-            left: false,
-            right: true
-          };
-
-          // get position of toast
-          self.getToastPosition = function () {
-            return Object.keys(self.toastPosition)
-              .filter(function (pos) {
-                return self.toastPosition[pos];
-              })
-              .join(' ');
-          };
-
-          // show songs of playlist by toast
-          self.showSongsByToast = function (playlist) {
-            var context = '';
-            for (var i = 0; i < playlist.songs.length; i++) {
-              context += playlist.songs[i].name;
-              context += ', ';
-            }
-            if (context === '') {
-              context = 'This playlist don\'t have any the song!!!';
-            }
-            $mdToast.show(
-              $mdToast.simple()
-                .content(context)
-                .position(self.getToastPosition())
-                .hideDelay(3000)
-            );
           };
         }
       };

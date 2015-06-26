@@ -1,68 +1,42 @@
 @import '../main/constant.styl'
 
-//.my-headerTable-and-table
-//  .my-manage-songs
-//    .md-toolbar-tools
-//      background-color $primary-color
-//      //color $text-icons
-
-.dataTable {
-
-}
-
-/*table style*/
-table.my-table th.name-song {
-  width: 35%;
-}
-
-table.my-table th.artist-song {
-  width: 25%;
-}
-
-table.my-table td.name-song {
-  width: 35%;
-  max-width 0
+table.my-table td.name-song
+  width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+  font-weight: bold;
 
-table.my-table td.artist-song {
-  width: 25%;
-  max-width 0
+table.my-table td.artist-song
+  width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
 
 /*button*/
-.my-button {
+.my-button
   text-align: right;
-}
 
-/*mobile screen*/
-.mobileScreen {
+@media (min-width: 700px)
+  /*table style*/
+  table.my-table th.name-song
+    width: 35%;
 
-}
+  table.my-table th.artist-song
+    width: 25%;
 
-@media (max-width: 680px) {
-  table.my-table td.name-song {
-    width: 120px;
-    max-width none
+  table.my-table td.name-song
+    width: 35%;
+    max-width 0
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+    font-weight: normal;
 
-  table.my-table td.artist-song {
-    width: 120px;
-    max-width none
+  table.my-table td.artist-song
+    width: 25%;
+    max-width 0
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
 
-  table td.name-song {
-    font-weight: bold;
-  }
-}

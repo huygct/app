@@ -15,20 +15,8 @@
 (function () {
   angular.module('musicApp')
     .directive('myTable', ['$mdDialog', function ($mdDialog) {
-      var directive = {};
-      directive.restrict = 'EA';
-      directive.scope = {
-        listData: '=',
-        nameTable: '@',
-        column: '=',
-        querySearch: '=',
-        whenClickButtonEdit: '&',
-        whenClickButtonDelete: '&',
-        whenSelectItemOfTable: '&',
-        showToast: '&'
-      };
-      directive.templateUrl = 'scripts/directive/table/my-table.html';
-      directive.controller = [function () {
+
+      function TableController () {
         var self = this;
         self.markAll = false; // Declare markAll, give it the value of checkbox on header of table
 
@@ -61,9 +49,9 @@
         };
 
         // Check data to set value true or false for markAll
-        function setMarkAll() {
-          for (var i = 0; i < self.listData.length; i++) {
-            if (self.listData[i].check === false) {
+        function setMarkAll(listData) {
+          for (var i = 0; i < listData.length; i++) {
+            if (listData[i].check === false) {
               self.markAll = false;
               return;
             }
@@ -74,7 +62,7 @@
         // When select checkbox on row of table
         self.clickCheckbox = function (data) {
           //console.log('clickCheckbox');
-          setMarkAll();
+          setMarkAll(self.listData);
 
           self.whenSelectItemOfTable({
             data: data,
@@ -87,7 +75,7 @@
           scope.url = 'data/song/' + data.url;
           scope.title = data.name;
 
-          console.log(scope.url);
+          //console.log(scope.url);
 
           scope.closeDialog = function () {
             $mdDialog.hide();
@@ -142,23 +130,26 @@
                 }
               }
             }
-            setMarkAll();
+            setMarkAll(self.listData);
           }
           self.whenSelectItemOfTable({
             data: data
           });
+
+          self.filterFn = function () {
+
+          };
           // show toast
           //self.showToast({
           //  data: data
           //});
         };
-      }];
-      directive.controllerAs = 'tableCtrl';
-      directive.bindToController = true;
-      directive.compile = function () {
+      }
+
+      function CompileController() {
         // do one-time configuration of element.
 
-        var linkFunction = function ($scope) {
+        return function ($scope) {
           // bind element to data in $scope
 
           // set markAll is false when data.length is 0
@@ -176,10 +167,27 @@
             }
           });
         };
+      }
 
-        return linkFunction;
+      return {
+        restrict: 'EA',
+        scope: {
+          markAll: '=',
+          listData: '=',
+          nameTable: '@',
+          column: '=',
+          querySearch: '=',
+          whenClickButtonEdit: '&',
+          whenClickButtonDelete: '&',
+          whenSelectItemOfTable: '&',
+          showToast: '&'
+        },
+        templateUrl: 'scripts/directive/table/my-table.html',
+        controller: TableController,
+        controllerAs: 'tableCtrl',
+        bindToController : true,
+        compile: CompileController
       };
-      return directive;
     }]);
 })();
 

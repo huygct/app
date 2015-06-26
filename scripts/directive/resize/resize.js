@@ -27,26 +27,20 @@
             };
           };
           scope.$watch(scope.getWindowDimensions, function (newValue) {
-            //console.log(newValue.h);
-            //console.log(newValue.w);
-
-            scope.windowHeight = newValue.h;
-            scope.windowWidth = newValue.w;
-
             if (scope.type === 'w') {
               element.css({
-                'width': (newValue.w - 50) + 'px'
+                'max-width': (newValue.w - scope.valueDrop) + 'px'
               });
             } else {
               if (scope.type === 'h') {
                 element.css({
-                  'height': (newValue.h - scope.valueDrop) + 'px'
+                  'max-height': (newValue.h - scope.valueDrop) + 'px'
                 });
               } else {
                 if (scope.type === 'wh') {
                   element.css({
-                    'height': (newValue.h - 50) + 'px',
-                    'width': (newValue.w - 50) + 'px'
+                    'max-height': (newValue.h - scope.valueDrop) + 'px',
+                    'max-width': (newValue.w - scope.valueDrop) + 'px'
                   });
                 }
               }

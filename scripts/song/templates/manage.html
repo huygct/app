@@ -1,38 +1,74 @@
 <!---------------------------------Manage song------------------------------->
-<md-toolbar layout="row">
+<md-toolbar layout="row" class="my-toolbar">
   <div class="md-toolbar-tools">
     <h2 show-gt-md="">
-      <span class="my-title-toolbar title-manage-toolbar">Manage Songs</span>
+      <span ng-show="!songCtrl.showSearch" class="my-title-toolbar title-manage-toolbar">Manage Songs</span>
     </h2>
     <span flex="1"></span>
-    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.changeStateToAdd()"
-               class="md-icon-button my-button-accent" aria-label="Add">
-      <i class="fa fa-plus"></i>
-      <span class="mobileScreen" show-gt-md="">Add</span>
-    </md-button>
-    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.showConfirmDeleteMultiple($event)"
-               ng-disabled="!songCtrl.checkToShowButtonDelete" class="md-icon-button my-button-accent"
-               aria-label="Delete">
-      <i class="fa fa-trash-o"></i>
-      <span class="mobileScreen">Delete</span>
-    </md-button>
-    <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.setIsSearch()"
-               class="md-icon-button my-button-accent" aria-label="Search">
-      <i class="fa fa-search"></i>
-      <span class="mobileScreen">Search</span>
-    </md-button>
 
     <!--search song-------------------------------------------------------->
-    <div ng-show="songCtrl.showSearch">
+    <div ng-show="songCtrl.showSearch" class="my-box-search">
       <!--directive search-->
       <my-search ng-model="songCtrl.querySearch.value" close="songCtrl.setIsNotSearch()"></my-search>
-
     </div>
+
+    <div class="my-action-toolbar">
+      <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.changeStateToAdd()"
+                 class="md-icon-button my-button-accent" aria-label="Add">
+        <i class="fa fa-plus"></i>
+        <span class="full-screen" show-gt-md="">Add</span>
+      </md-button>
+      <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.showConfirmDeleteMultiple($event)"
+                 ng-disabled="!songCtrl.checkToShowButtonDelete" class="md-icon-button my-button-accent"
+                 aria-label="Delete">
+        <i class="fa fa-trash-o"></i>
+        <span class="full-screen">Delete</span>
+      </md-button>
+      <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.setIsSearch()"
+                 class="md-icon-button my-button-accent" aria-label="Search">
+        <i class="fa fa-search"></i>
+        <span class="full-screen">Search</span>
+      </md-button>
+    </div>
+
+    <div class="my-drop-down-menu" ng-show="!songCtrl.showSearch" layout="column" flex-sm="100" flex="33" layout-align="center center">
+      <md-menu md-position-mode="target-right target">
+        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu()">
+          <i class="md-menu-origin fa fa-ellipsis-v icon-menu-drop-down"></i>
+          <!--<md-icon md-menu-origin md-svg-icon="call:portable-wifi-off"></md-icon>-->
+        </md-button>
+        <md-menu-content width="2" class="content-of-menu-drop-down">
+          <md-menu-item>
+            <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.changeStateToAdd()"
+                       class="button-of-menu-drop-down" aria-label="Add">
+              <i class="fa fa-plus icon-of-items-menu-drop-down"></i>
+              <span show-gt-md="">Add</span>
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.showConfirmDeleteMultiple($event)"
+                       ng-disabled="!songCtrl.checkToShowButtonDelete"
+                       class="button-of-menu-drop-down" aria-label="Delete">
+              <i class="fa fa-trash-o icon-of-items-menu-drop-down"></i>
+              <span>Delete</span>
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-show="!songCtrl.showSearch" ng-click="songCtrl.setIsSearch()"
+                       class="button-of-menu-drop-down" aria-label="Search">
+              <i class="fa fa-search icon-of-items-menu-drop-down"></i>
+              <span>Search</span>
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </div>
+
   </div>
 </md-toolbar>
 <!--table song-->
 <md-content flex="50" class="dataTable">
-  <my-table column="songCtrl.column" list-data="songCtrl.songs"
+  <my-table column="songCtrl.column" list-data="songCtrl.songs" mark-all="songCtrl.markAll"
             name-table="Song" when-click-button-edit="songCtrl.changeStateToEdit(data)"
             when-click-button-delete="songCtrl.showConfirmDeleteSingle($event, data)"
             when-select-item-of-table="songCtrl.setCheckToShowButtonDelete()"

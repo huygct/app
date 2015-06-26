@@ -1,4 +1,4 @@
-<table id="table" class="table table-hover table-mc-light-blue my-table" resize-table>
+<table id="table" class="table table-hover table-mc-light-blue my-table" resize-table type="{{tableCtrl.nameTable}}">
     <thead>
     <tr>
         <th class="my-th checkbox-col">
@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="data in tableCtrl.listData | filter: tableCtrl.querySearch.value"
+    <tr ng-repeat="data in tableCtrl.listData | filter: {'name' : tableCtrl.querySearch.value}"
         ng-class="{'my-select-data' : data.check === true}" ng-click="tableCtrl.setChooseRow(data, $event);$event.stopPropagation();">
 
         <td class="my-td checkbox-col">
@@ -27,18 +27,22 @@
 
         </td>
 
-        <td class="my-td action-col">
-            <md-button ng-click="tableCtrl.editData(data)" class="md-icon-button my-icon-button"
+        <td class="my-td action-col button-in-action-col">
+            <md-button ng-click="tableCtrl.editData(data)" class="my-icon-button"
                        aria-label="Edit">
                 <i class="fa fa-pencil-square-o my-icon"></i>
-                <span class="mobileScreen">Edit</span>
+                <span class="full-screen">Edit</span>
             </md-button>
             <md-button ng-click="tableCtrl.deleteItemFromTable($event, data);$event.stopPropagation();"
-                       class="md-icon-button my-icon-button mobileScreen" aria-label="Delete">
+                       class="my-icon-button full-screen" aria-label="Delete">
                 <i class="fa fa-trash-o my-icon"></i>
                 <span>Delete</span>
             </md-button>
         </td>
+    </tr>
+
+    <tr ng-if="tableCtrl.listData.length === 0" class="tr-no-data-in-table">
+        <td class="td-no-data-in-table">No {{tableCtrl.nameTable}}</td>
     </tr>
     </tbody>
 </table>

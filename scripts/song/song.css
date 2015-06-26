@@ -1,20 +1,12 @@
-/*table style*/
-table.my-table th.name-song {
-  width: 35%;
-}
-table.my-table th.artist-song {
-  width: 25%;
-}
 table.my-table td.name-song {
-  width: 35%;
-  max-width: 0;
+  width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
 }
 table.my-table td.artist-song {
-  width: 25%;
-  max-width: 0;
+  width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -23,23 +15,26 @@ table.my-table td.artist-song {
 .my-button {
   text-align: right;
 }
-/*mobile screen*/
-@media (max-width: 680px) {
+@media (min-width: 700px) {
+  table.my-table th.name-song {
+    width: 35%;
+  }
+  table.my-table th.artist-song {
+    width: 25%;
+  }
   table.my-table td.name-song {
-    width: 120px;
-    max-width: none;
+    width: 35%;
+    max-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: normal;
   }
   table.my-table td.artist-song {
-    width: 120px;
-    max-width: none;
+    width: 25%;
+    max-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  table td.name-song {
-    font-weight: bold;
   }
 }

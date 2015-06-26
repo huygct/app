@@ -19,6 +19,38 @@
 
       var songs = [];
 
+      // start template pattern -------------------------------------------------------------------------------------
+      var NOT_FOUND = -1;
+
+      function findSongIdx(id) {
+        for (var i = 0; i < songs.length; i++) {
+          if (songs[i].id === id) {
+            return i;
+          }
+        }
+        return NOT_FOUND;
+      }
+
+      function findSongAndPerformAction(id, actionCallback) {
+        var index = findSongIdx(id);
+
+        if (index !== NOT_FOUND) {
+          actionCallback(index);
+        } else {
+          throw new Error('Can\'t find song with id ' + id);
+        }
+      }
+
+      // end template pattern -------------------------------------------------------------------------------------
+
+      // find song By Id
+      function findSongById(source, id) {
+        findSongAndPerformAction(id, function actionCallback(idx) {
+          return source(idx);
+        });
+        throw new Error('Couldn\'t find object with id: ' + id);
+      }
+
       // read file json
       self.getListSong = function () {
         var deferred = $q.defer();
@@ -43,10 +75,6 @@
         return findSongById(songs, id);
       };
 
-      self.getSongs = function (ids) {
-        return findSongsByIds(songs, ids);
-      };
-
       self.addSong = function (song) {
         if (songs.length !== 0) {
           song.id = songs[songs.length - 1].id + 1;
@@ -56,29 +84,6 @@
           songs.push(song);
         }
       };
-
-
-      // start template pattern -------------------------------------------------------------------------------------
-      var NOT_FOUND = -1;
-
-      function findSongIdx (id) {
-        for (var i = 0; i < songs.length; i++) {
-          if (songs[i].id === id) {
-            return i;
-          }
-        }
-        return NOT_FOUND;
-      }
-
-      function findSongAndPerformAction(id, actionCallback) {
-        var index = findSongIdx(id);
-
-        if (index !== NOT_FOUND) {
-          actionCallback(index);
-        } else {
-          throw new Error('Can\'t find song with id ' + id);
-        }
-      }
 
       self.saveSong = function (newSong) {
         findSongAndPerformAction(newSong.id, function actionCallback(idx) {
@@ -91,7 +96,7 @@
           songs.splice(idx, 1);
         });
       };
-      // end template pattern -------------------------------------------------------------------------------------
+
 
       self.deleteManySong = function (oldSongs) {
         songs = [];
@@ -128,27 +133,16 @@
         return cacheSong;
       };
 
-      // find song By Id
-      function findSongById(source, id) {
-        findSongAndPerformAction(id, function actionCallback(idx) {
-          return source(idx);
-        });
-        throw new Error('Couldn\'t find object with id: ' + id);
-      }
+      // remove cached
+      self.removeCached = function () {
+        showSearch = false; // cached value showSearch
+        querySearch = {}; // cached value querySearch
+        state = ''; // cached value state
+        cacheSong = {}; // cached current song
 
-      // find songs By Id
-      function findSongsByIds(source, ids) {
-        var _songs = [];
-        for (var i = 0; i < ids.length; i++) {
-          findSongAndPerformAction(ids[i], function actonCallback(idx) {
-            _songs.push(source[idx]);
-          });
+        for (var i = 0; i < songs.length; i++) {
+          songs[i].check = false;
         }
-        if (_songs.length !== 0) {
-          return _songs;
-        } else {
-          throw new Error('Couldn\'t find object');
-        }
-      }
+      };
     }]);
 })();

@@ -38,8 +38,21 @@
       <i class="fa fa-bars"></i>
       <span class="md-visually-hidden">Menu</span>
     </button>
-    <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Music Manager</h1>
+    <div class="contain-of-top-toolbar">
+      <div class="border-image-of-top-toolbar">
+        <img ng-src="images/violin2.png" class="image-of-top-toolbar">
+      </div>
+      <h1 class="md-toolbar-tools text-of-top-toolbar" layout-align-gt-sm="center">{{'nameWebApp' | i18next}}</h1>
+    </div>
+    <div class="my-language-option">
+      <md-select ng-model="languageWeb">
+        <md-option value="english">English</md-option>
+        <md-option value="vietnam">Tiếng Việt</md-option>
+      </md-select>
+    </div>
   </md-toolbar>
+
+  <!--{{'abc'|i18next}}-->
 
   <div layout="row" flex class="my-content-wrapper">
     <menu-music layout="column" class="my-side-left"></menu-music>
@@ -94,6 +107,9 @@
 <script src="bower_components/angular-aria/angular-aria.min.js"></script>
 <script src="bower_components/angular-material/angular-material.js"></script>
 
+<script src="bower_components/i18next/i18next.js"></script>
+<script src="bower_components/ng-i18next/dist/ng-i18next.js"></script>
+
 <script src="scripts/main/app.js"></script>
 <script src="scripts/main/controllerApp.js"></script>
 
@@ -103,6 +119,7 @@
 <script src="scripts/song/songService.js"></script>
 <script src="scripts/playlist/playlistService.js"></script>
 <script src="scripts/playlist/playlist-extend/playlist-extend.js"></script>
+<script src="scripts/playlist/playlist-extend/playlist-choose-songs.js"></script>
 
 <script src="scripts/directive/search/mySearch.js"></script>
 <script src="scripts/directive/table/myTable.js"></script>

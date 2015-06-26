@@ -8,18 +8,18 @@
 (function () {
   angular.module('musicApp')
     .directive('mySearch', [function () {
-      var directive = {};
-      directive.restrict = 'EA';
-      directive.scope = {
-        ngModel: '=',
-        close: '&'
+      function SearchController () {
+      }
+      return {
+        restrict: 'EA',
+        scope: {
+          ngModel: '=',
+          close: '&'
+        },
+        controller: SearchController,
+        controllerAs: 'searchCtrl',
+        bindToController: true,
+        templateUrl: 'scripts/directive/search/my-search.html'
       };
-      directive.controller = [function () {
-
-      }];
-      directive.controllerAs = 'searchCtrl';
-      directive.bindToController = true;
-      directive.templateUrl = 'scripts/directive/search/my-search.html';
-      return directive;
     }]);
 })();

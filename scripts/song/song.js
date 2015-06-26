@@ -7,258 +7,255 @@
  * # SongController
  */
 angular.module('musicApp')
-  .controller('SongController', ['songService', '$scope', '$mdSidenav', '$mdDialog', function (songService, $scope, $mdSidenav, $mdDialog) {
-    // it is cheat about memory aria of $scope.menus :)
-    $scope.childmenus = $scope.menus;
-    $scope.childmenus.selectedMenu = 'Song';
-
-    var self = this;
-    //self.markAll = false;
-    self.showSearch = false; // show or hide search box
-    self.querySearch = {}; // values to search
-
-    self.songs = []; // array the song
-
-    self.oldSong = {}; // uses to edit
-    self.newSong = {}; // user to add
-
-    self.checkToShowButtonDelete = false;
-    self.state = ''; // state are manage, create or edit
-
-    self.column = [ // column name for table
-      {
-        name: 'Name',
-        key: 'name',
-        className: 'name-song'
-      },
-      {
-        name: 'Artist ',
-        key: 'artist',
-        className: 'artist-song'
-      }];
-
-    // get songs from service and some values was cached
-    function getListSong() {
-      songService.getListSong()
-        .then(function successCallback(data) {
-          self.songs = data;
-          self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
-        }, function errorCallback(result) {
-          console.log('Fail to get songs' + result);
+  .controller('SongController', ['songService', 'playlistService', '$scope', '$mdSidenav', '$mdDialog',
+    function (songService, playlistService, $scope, $mdSidenav, $mdDialog) {
+      var self = this;
+      // -----------------------------------------------------------------------
+      var NOT_FOUND = -1;//hoisting , declaration time < running time
+      function findObjectIsCheck(value, objects) {
+        for (var i = 0; i < objects.length; i++) {
+          if (objects[i].check === value) {
+            return i;
+          }
         }
-      );
-
-      //if($scope.childmenus.isClickLinkHome === false) {
-      self.showSearch = songService.getShowSearch();
-      self.querySearch = songService.getQuerySearch();
-      self.state = songService.getState();
-      if (self.state === 'create') {
-        self.newSong = songService.getCacheSong();
-      } else if (self.state === 'edit') {
-        self.oldSong = songService.getCacheSong();
-      } else {
-        self.oldSong = {};
-        self.newSong = {};
+        return NOT_FOUND;
       }
-      //} else {
-      //  songService.setShowSearch(false);
-      //  songService.setQuerySearch('');
-      //  songService.setState('', {});
-      //  self.oldSong = {};
-      //  self.newSong = {};
-      //if($scope.childmenus.isClickLinkHome === true) {
-      //  for (var i = 0; i < self.songs.length; i++) {
-      //    self.songs[i].check = false;
-      //  }
-      //  $scope.childmenus.isClickLinkHome = false;
-      //}
-      //}
-    }
-
-    // set value for 'checkToShowButtonDelete'
-    self.setCheckToShowButtonDelete = function () {
-      self.checkToShowButtonDelete = checkToShowButtonDelete();
-    };
-
-    // calculate value of 'checkToShowButtonDelete'
-    function checkToShowButtonDelete() {
-      for (var i = 0; i < self.songs.length; i++) {
-        if (self.songs[i].check === true) {
-          return true;
-        }
+      // -----------------------------------------------------------------------
+      // calculate value of 'checkToShowButtonDelete'
+      function checkToShowButtonDelete() {
+        return findObjectIsCheck(true, self.songs) !== NOT_FOUND;
       }
-      return false;
-    }
+      // get songs from service and some values was cached
+      function getListSong() {
+        songService.getListSong()
+          .then(function successCallback(data) {
+            self.songs = data;
+            self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
+          }, function errorCallback(result) {
+            console.log('Fail to get songs' + result);
+          }
+        );
 
-    // select song when click row and press ctrl to choose songs
-    self.setChooseSong = function (song, $event) {
-      console.log($event.ctrlKey);
-      if ($event.shiftKey) {
-
-      } else {
-        if ($event.ctrlKey) {
-          // press ctrl
-          song.check = !song.check;
+        self.showSearch = songService.getShowSearch();
+        self.querySearch = songService.getQuerySearch();
+        self.state = songService.getState();
+        if (self.state === 'create') {
+          self.newSong = songService.getCacheSong();
+        } else if (self.state === 'edit') {
+          self.oldSong = songService.getCacheSong();
         } else {
-          for (var i = 0; i < self.songs.length; i++) {
-            if (self.songs[i].id === song.id) {
-              self.songs[i].check = !song.check;
-            } else {
-              self.songs[i].check = false;
+          self.oldSong = {};
+          self.newSong = {};
+        }
+      }
+
+      // Controller for dialog deletes a song
+      function dialogControllerForDeleteSingle(scope, $mdDialog, song, title, context) {
+        scope.song = song;
+        scope.title = title;
+        scope.context = context;
+        scope.closeDialog = function () {
+          $mdDialog.hide();
+        };
+        scope.comfirmDelete = function () {
+          songService.deleteOneSong(song.id);
+
+          self.state = '';
+          songService.setState(self.state, {}); // save for song service
+          getListSong();
+
+          self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
+          $mdDialog.hide();
+        };
+      }
+
+      // Controller for dialog deletes multiple song
+      function dialogControllerForDeleteMultiple(scope, $mdDialog, title, context) {
+        scope.title = title;
+        scope.context = context;
+        scope.closeDialog = function () {
+          $mdDialog.hide();
+        };
+        scope.comfirmDeleteAll = function () {
+          songService.deleteManySong(self.songs);
+
+          self.state = '';
+          songService.setState(self.state, {}); // save for song service
+
+          getListSong();
+
+          self.checkToShowButtonDelete = false; // check status of button delete
+          $mdDialog.hide();
+        };
+      }
+
+      // it is cheat about memory aria of $scope.menus :)
+      $scope.childMenus = $scope.menus;
+      $scope.childMenus.selectedMenu = 'Songs';
+
+      self.showSearch = false; // show or hide search box
+      self.querySearch = {}; // values to search
+      self.markAll = false; // set choose all songs
+
+      self.songs = []; // array the song
+
+      self.oldSong = {}; // uses to edit
+      self.newSong = {}; // user to add
+
+      self.checkToShowButtonDelete = false;
+      self.state = ''; // state are manage, create or edit
+
+      self.column = [ // column name for table
+        {
+          name: 'Name',
+          key: 'name',
+          className: 'name-song'
+        },
+        {
+          name: 'Artist ',
+          key: 'artist',
+          className: 'artist-song'
+        }];
+
+      // set value for 'checkToShowButtonDelete'
+      self.setCheckToShowButtonDelete = function () {
+        self.checkToShowButtonDelete = checkToShowButtonDelete();
+      };
+
+      // select song when click row and press ctrl to choose songs
+      self.setChooseSong = function (song, $event) {
+        console.log($event.ctrlKey);
+        if ($event.shiftKey) {
+
+        } else {
+          if ($event.ctrlKey) {
+            // press ctrl
+            song.check = !song.check;
+          } else {
+            for (var i = 0; i < self.songs.length; i++) {
+              if (self.songs[i].id === song.id) {
+                self.songs[i].check = !song.check;
+              } else {
+                self.songs[i].check = false;
+              }
             }
           }
         }
-      }
-
-      self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
-    };
-
-    // ----------------------------------------------------------
-    self.changeStateToAdd = function () {
-      self.state = 'create';
-      songService.setState(self.state, self.newSong); // save for song service
-    };
-
-    self.changeStateToManage = function () {
-      self.oldSong = {};
-      self.newSong = {};
-
-      self.state = '';
-      songService.setState(self.state, {}); // save for song service
-    };
-
-    self.changeStateToEdit = function (song) {
-      self.oldSong.name = song.name;
-      self.oldSong.artist = song.artist;
-      self.oldSong.id = song.id;
-      self.state = 'edit';
-      songService.setState(self.state, self.oldSong); // save for song service
-    };
-    //-------------------------------------------------------------
-    // add song
-    self.addSong = function (song) {
-      self.newSong = {};
-      //var file = song.file;
-      //songService.addSong(song, file);
-      song.check = false;
-      if (typeof song.artist === 'undefined') {
-        song.artist = 'none';
-      }
-      songService.addSong(song);
-
-      self.changeStateToManage();
-
-      getListSong();
-    };
-
-    // save song
-    self.saveSong = function (song) {
-      self.oldSong = {};
-      //self.songs.splice(song.id, 1, song);
-      songService.saveSong(song);
-
-      self.state = '';
-      songService.setState(self.state, {}); // save for song service
-
-      getListSong();
-    };
-
-    // dialog for delete a song
-    self.showConfirmDeleteSingle = function (ev, song) {
-      // Appending dialog to document.body to cover sidenav in docs app
-      var parentEl = angular.element(document.body);
-      $mdDialog.show({
-        parent: parentEl,
-        targetEvent: ev,
-        templateUrl: 'scripts/template/delete-single.html',
-        locals: {
-          song: song,
-          title: 'Delete song',
-          context: 'Are you sure you want to delete this song? '
-        },
-        controller: dialogControllerForDeleteSingle
-      });
-
-    };
-
-    // Delete songs
-    self.showConfirmDeleteMultiple = function (ev) {
-      // Appending dialog to document.body to cover sidenav in docs app
-      var parentEl = angular.element(document.body);
-      $mdDialog.show({
-        parent: parentEl,
-        targetEvent: ev,
-        templateUrl: 'scripts/template/delete-multiple.html',
-        locals: {
-          title: 'Delete Multiple Songs',
-          context: 'Are you sure you want to delete selected songs? '
-        },
-        controller: dialogControllerForDeleteMultiple
-      });
-    };
-
-    // click button search
-    self.setIsSearch = function () {
-      self.showSearch = true;
-      songService.setShowSearch(true);
-    };
-
-    // click close 'x' in search box
-    self.setIsNotSearch = function () {
-      self.showSearch = false;
-      songService.setShowSearch(false);
-
-      self.querySearch.value = '';
-      songService.setQuerySearch('');
-    };
-
-    // catch event when destroy page song
-    $scope.$on('$destroy', function () {
-      console.log('scope destroy!');
-    });
-
-    // Controller for dialog deletes a song
-    function dialogControllerForDeleteSingle(scope, $mdDialog, song, title, context) {
-      scope.song = song;
-      scope.title = title;
-      scope.context = context;
-      scope.closeDialog = function () {
-        $mdDialog.hide();
-      };
-      scope.comfirmDelete = function () {
-        //console.log(song.id);
-        //self.songs.splice(song.id, 1);
-        songService.deleteOneSong(song.id);
-
-        self.state = '';
-        songService.setState(self.state, {}); // save for song service
-        getListSong();
 
         self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
-        $mdDialog.hide();
       };
-    }
 
-    // Controller for dialog deletes multiple song
-    function dialogControllerForDeleteMultiple(scope, $mdDialog, title, context) {
-      scope.title = title;
-      scope.context = context;
-      scope.closeDialog = function () {
-        $mdDialog.hide();
+      // ----------------------------------------------------------
+      self.changeStateToAdd = function () {
+        self.state = 'create';
+        songService.setState(self.state, self.newSong); // save for song service
       };
-      scope.comfirmDeleteAll = function () {
-        songService.deleteManySong(self.songs);
+
+      self.changeStateToManage = function () {
+        self.oldSong = {};
+        self.newSong = {};
+
+        self.state = '';
+        songService.setState(self.state, {}); // save for song service
+      };
+
+      self.changeStateToEdit = function (song) {
+        self.oldSong.name = song.name;
+        self.oldSong.artist = song.artist;
+        self.oldSong.id = song.id;
+        self.state = 'edit';
+        songService.setState(self.state, self.oldSong); // save for song service
+      };
+      //-------------------------------------------------------------
+      // add song
+      self.addSong = function (song) {
+        self.newSong = {};
+        //var file = song.file;
+        //songService.addSong(song, file);
+        song.check = false;
+        if (typeof song.artist === 'undefined') {
+          song.artist = 'none';
+        }
+        songService.addSong(song);
+
+        self.changeStateToManage();
+
+        getListSong();
+      };
+
+      // save song
+      self.saveSong = function (song) {
+        self.oldSong = {};
+        //self.songs.splice(song.id, 1, song);
+        songService.saveSong(song);
 
         self.state = '';
         songService.setState(self.state, {}); // save for song service
 
         getListSong();
-
-        self.checkToShowButtonDelete = false; // check status of button delete
-        $mdDialog.hide();
       };
-    }
 
-    getListSong();
-  }])
+      // dialog for delete a song
+      self.showConfirmDeleteSingle = function (ev, song) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+          parent: parentEl,
+          targetEvent: ev,
+          templateUrl: 'scripts/template/delete-single.html',
+          locals: {
+            song: song,
+            title: 'Delete song',
+            context: 'Are you sure you want to delete this song? '
+          },
+          controller: dialogControllerForDeleteSingle
+        });
+
+      };
+
+      // Delete songs
+      self.showConfirmDeleteMultiple = function (ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+          parent: parentEl,
+          targetEvent: ev,
+          templateUrl: 'scripts/template/delete-multiple.html',
+          locals: {
+            title: 'Delete Multiple Songs',
+            context: 'Are you sure you want to delete selected songs? '
+          },
+          controller: dialogControllerForDeleteMultiple
+        });
+      };
+
+      // click button search
+      self.setIsSearch = function () {
+        self.showSearch = true;
+        songService.setShowSearch(true);
+      };
+
+      // click close 'x' in search box
+      self.setIsNotSearch = function () {
+        self.showSearch = false;
+        songService.setShowSearch(false);
+
+        self.querySearch.value = '';
+        songService.setQuerySearch('');
+      };
+
+      // catch event when destroy page song
+      $scope.$on('$destroy', function () {
+        console.log('scope destroy!');
+      });
+
+      //$scope.$watch('childMenus.isClickLinkHome', function () {
+      //  //console.log('change home');
+      //  self.markAll = false;
+      //  getListSong();
+      //  $scope.childMenus.isClickLinkHome = false;
+      //});
+
+      getListSong();
+    }])
 ;

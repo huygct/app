@@ -2,6 +2,12 @@
   display inline-block
   margin-left 8px
 
+.my-listSong-in-playlist
+  .md-no-style.md-list-item-inner
+    padding 0
+  .item-list-divider
+    left 80px
+
 .my-listSong-in-playlist .face
   border-radius: 30px;
   border: 1px solid #ddd;
@@ -10,80 +16,77 @@
 
 .my-back-button
   text-align right
+  .md-button
+    margin-top 8px
+    margin-bottom 16px
 
-  button
-    margin 16px
+.last-divider
+  box-shadow 0 2px 5px 0 rgba(0, 0, 0, .26)
 
-.my-song-of-playlist {
+.my-song-of-playlist
   display: inline;
   font-style: italic;
-}
 
 .my-listSong-in-playlist
-  height 400px
+  height auto
   overflow auto
   line-height normal
 
 .list-items
-  h3
-    font-size 16px
-    font-weight 500
   .name-song-in-playlist
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    width 90%
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
   .artist-song-in-playlist
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+.my-form-content .header-show-songs
+  .checkbox-add-all-song
+    display inline
 
 //.md-subhead, md-list-item.md-2-line .md-list-item-text h3, md-list-item.md-2-line>.md-no-style .md-list-item-text h3, md-list-item.md-3-line .md-list-item-text h3, md-list-item.md-3-line>.md-no-style .md-list-item-text h3
 //  line-height normal
 //  font-size 14px
 
-table.my-table th.name-playlist {
-  width: 30%;
-}
-
-table.my-table th.description-playlist {
-  width: 30%;
-}
-
-table.my-table td.name-playlist {
-  width: 30%;
-  max-width 0
+table.my-table td.name-playlist
+  width: 120px;
+  max-width none
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+  font-weight: bold;
 
-table.my-table td.description-playlist {
-  width: 30%;
-  max-width 0
+table.my-table td.description-playlist
+  width: 120px;
+  max-width none
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
 
-@media (max-width: 680px) {
-  table.my-table td.name-playlist {
-    width: 120px;
-    max-width none
+@media (min-width: 700px)
+  table.my-table th.name-playlist
+    width: 30%;
+
+  table.my-table th.description-playlist
+    width: 30%;
+
+  table.my-table td.name-playlist
+    width: 30%;
+    max-width 0
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+    font-weight: normal;
 
-  table.my-table td.description-playlist {
-    width: 120px;
-    max-width none
+  table.my-table td.description-playlist
+    width: 30%;
+    max-width 0
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
 
-  table td.name-playlist {
-    font-weight: bold;
-  }
-}
+

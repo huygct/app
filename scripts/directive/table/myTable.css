@@ -1,6 +1,13 @@
 .table-run-data {
   margin: 8px;
 }
+table.my-table tr.tr-no-data-in-table {
+  border: none;
+}
+table.my-table tr.tr-no-data-in-table .td-no-data-in-table {
+  text-align: center;
+  font-style: italic;
+}
 /*table style*/
 .table > thead > tr > th,
 .table > thead > tr > td,
@@ -21,132 +28,142 @@ table.my-table tbody {
 }
 table.my-table tbody {
   overflow: auto;
+  height: auto;
+}
+table.my-table .my-select-data {
+  background-color: #eee;
+  color: #212121;
+}
+table.my-table {
+  margin-top: 8px;
+  border: 0;
+}
+table.my-table thead {
+  display: none;
 }
 table.my-table tr {
-  width: 100%;
-  display: table;
-  text-align: left;
-  border-bottom: 1px solid #dadada;
-  outline-color: transparent;
-}
-table.my-table th.checkbox-col {
-  width: 10%;
-}
-table.my-table th {
-  width: 30%;
-  color: rgba(0,0,0,0.54);
-}
-table.my-table th.action-col {
-  width: 30%;
-}
-table.my-table td.checkbox-col {
-  width: 10%;
-}
-table.my-table td.checkbox-col md-checkbox {
-  display: inline;
+  margin-bottom: 8px;
+  display: block;
+  position: relative;
+  border: 2px solid #ddd;
 }
 table.my-table td {
-  width: 30%;
+  width: auto;
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+table.my-table td.checkbox-col {
+  width: 40px;
 }
 table.my-table td.action-col {
-  width: 30%;
+  width: 40px;
+}
+table.my-table td:first-child {
+  font-size: 13px;
+  position: absolute;
+  left: 8px;
+  top: 0px;
+  margin: 0;
+}
+table.my-table td:last-child {
+  font-size: 13px;
+  position: absolute;
+  margin: 0;
+  right: 8px;
+  top: 12px;
+  border-bottom: 0;
+}
+table.my-table td.my-td {
+  padding: 4px;
+  border: 0;
+  outline-color: transparent;
 }
 table.my-table td.action-col .my-icon {
   color: rgba(0,0,0,0.54);
   vertical-align: middle;
   font-size: 24px;
 }
-table.my-table th.my-th {
+.action-col .md-button {
+  box-shadow: none;
   padding: 0;
+  line-height: normal;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
 }
-table.my-table th.my-th.checkbox-col {
-  padding: 0 8px;
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  border-top: hidden;
 }
-table.my-table td.my-td {
-  padding: 0 8px;
-  border: 0 !important;
-  outline-color: transparent;
-}
-table.my-table tr.my-select-data {
-  background-color: #eee;
-  color: #212121;
-}
-.my-icon-button {
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
-  padding: 6px !important;
-  line-height: normal !important;
-  margin: 6px !important;
-  height: auto !important;
-  width: auto !important;
-}
-.my-icon-button span {
-  color: rgba(0,0,0,0.54);
-}
-@media (max-width: 680px) {
-  .mobileScreen {
-    display: none;
-  }
-  table {
-    margin-top: 8px;
-    border: 0;
-  }
-  table thead {
-    display: none;
-  }
-  table tr {
-    margin-bottom: 8px;
+@media (min-width: 700px) {
+  table.my-table thead {
     display: block;
-    position: relative;
-    border: 2px solid #ddd;
   }
-  table td {
-    display: block;
+  table.my-table tr {
+    width: 100%;
+    display: table;
     text-align: left;
-    font-size: 13px;
-    margin-left: 80px;
-    margin-right: 80px;
+    border: none;
+    border-bottom: 1px solid #dadada;
+    outline-color: transparent;
+    margin: 0;
+  }
+  table.my-table th.checkbox-col {
+    width: 10%;
+    padding: 0 8px;
+  }
+  table.my-table thead > tr > th {
+    width: 30%;
+    color: rgba(0,0,0,0.54);
+    padding: 0;
+  }
+  table.my-table th.action-col {
+    width: 30%;
   }
   table.my-table td.checkbox-col {
-    width: 40px;
+    width: 10%;
+  }
+  table.my-table td.checkbox-col md-checkbox {
+    display: inline;
   }
   table.my-table td {
-    width: auto;
+    width: 30%;
+    display: table-cell;
+    font-size: 14px;
   }
   table.my-table td.action-col {
-    width: 40px;
-  }
-  table td:first-child {
-    font-size: 13px;
-    position: absolute;
-    left: 8px;
-    top: 10px;
-    margin: 0;
-  }
-  table td:last-child {
-    font-size: 13px;
-    position: absolute;
-    margin: 0;
-    right: 8px;
-    top: 0px;
-    border-bottom: 0;
+    width: 30%;
   }
   table.my-table td.my-td {
-    padding: 4px;
-    border: 0 !important;
+    padding: 0;
+    border: 0;
     outline-color: transparent;
   }
-  .my-icon-button {
-    box-shadow: none;
-    padding: 0px !important;
-    line-height: normal !important;
-    margin: 0px !important;
+  table.my-table td:first-child {
+    position: static;
+    padding: 0 8px;
   }
-  .table > thead > tr > th,
-  .table > tbody > tr > th,
-  .table > tfoot > tr > th,
-  .table > thead > tr > td,
-  .table > tbody > tr > td,
-  .table > tfoot > tr > td {
-    border-top: hidden;
+  table.my-table td:last-child {
+    position: static;
+    padding: 0;
+  }
+  .action-col .md-button {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    line-height: normal;
+    margin: 6px;
+    height: auto;
+    width: auto;
+    min-height: 32px;
+    min-width: 84px;
+  }
+  .action-col .md-button span {
+    color: rgba(0,0,0,0.54);
   }
 }

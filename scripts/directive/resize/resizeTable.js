@@ -9,11 +9,11 @@
       return {
         restrict: 'A',
         scope: {
-          'type': '@type',
+          type: '@type',
           valueDrop: '@valueDrop'
         },
 
-        link: function (scope, element) {
+        link: function (scope) {
           var w = angular.element($window);
 
           //console.log(w); // memory leak
@@ -29,9 +29,11 @@
             scope.windowWidth = newValue.width;
 
             $timeout(function () {
-              //if (scope.type === 'song') {
-              if (newValue.width < 679) {
-                var width = (newValue.width - 200) + 'px';
+              var heightBody = window.innerHeight - 360;
+              var tBody = angular.element('table.my-table tbody');
+
+              if (newValue.width < 700) {
+                var width = (newValue.width - 220) + 'px';
 
                 var contentTable = document.getElementsByClassName('content-table');
                 for (var i = 0; i < contentTable.length; i++) {
@@ -39,54 +41,42 @@
                 }
               }
               else {
-                var nameSongs = document.querySelectorAll('.content-table.name-song');
-                var artistSong = document.querySelectorAll('.content-table.artist-song');
+                var actionTable = document.querySelectorAll('.action-col.button-in-action-col');
+                //console.log(scope.type);
+                if (scope.type === 'Song') {
+                  var nameSongs = document.querySelectorAll('.content-table.name-song');
+                  var artistSong = document.querySelectorAll('.content-table.artist-song');
 
-                var wName = 35 + '%';
-                var wArtist = 25 + '%';
-                for (var j = 0; j < nameSongs.length; j++) {
-                  nameSongs[j].style.width = wName;
-                  artistSong[j].style.width = wArtist;
+                  var wName = 35 + '%';
+                  var wArtist = 25 + '%';
+
+                  for (var j = 0; j < nameSongs.length; j++) {
+                    nameSongs[j].style.width = wName;
+                    artistSong[j].style.width = wArtist;
+                    if (tBody[0].clientHeight > heightBody) {
+                      // appear scroll bar
+                      artistSong[j].style.paddingLeft = '8px';
+                      actionTable[j].style.paddingLeft = '8px';
+                    }
+                  }
+                } else {
+                  var descriptionPlist = document.querySelectorAll('.content-table.description-playlist');
+
+                  for (var x = 0; x < descriptionPlist.length; x++) {
+                    if (tBody[0].clientHeight > heightBody) {
+                      // appear scroll bar
+                      descriptionPlist[x].style.paddingLeft = '8px';
+                      actionTable[x].style.paddingLeft = '8px';
+                    }
+                  }
                 }
               }
-              //} else {
-              //  if (scope.type === 'playlist') {
 
-              //}
-              //}
+              tBody.css('max-height', heightBody + 'px');
 
-              var heightBody = (window.innerHeight - 360) + 'px';
-              //var heightListSong = (window.innerHeight - 400) + 'px';
-              //var tBody = document.querySelector('table.my-table tbody');
-              var tBody = angular.element('table.my-table tbody');
-              //var listSongInPlaylist = document.getElementsByClassName('my-listSong-in-playlist');
-              tBody.css('height', heightBody);
-              //listSongInPlaylist[0].style.height = heightListSong;
             });
-
-
-
-            //if (scope.type === 'width') {
-            //  element.css({
-            //    'width': (newValue.width - 50) + 'px'
-            //  });
-            //} else {
-            //  if (scope.type === 'height') {
-            //    element.css({
-            //      'height': (newValue.height - 400) + 'px'
-            //    });
-            //  } else {
-            //    if (scope.type === 'width-height') {
-            //      element.css({
-            //        'height': (newValue.height - 50) + 'px',
-            //        'width': (newValue.width - 50) + 'px'
-            //      });
-            //    }
-            //  }
-            //}
-
           }, true);
-          console.log('bind this!');
+          //console.log('bind this!');
 
           function applyChanges() {
             scope.$apply();

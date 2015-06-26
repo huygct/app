@@ -17,11 +17,12 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'jm.i18next'
     // module A
     // module B
   ])
-  .config(['$routeProvider', function ($routeProvider) {
+  .config(['$routeProvider', '$i18nextProvider', function ($routeProvider, $i18nextProvider) {
     $routeProvider
       .when('/songs', {
         templateUrl: 'scripts/song/song.html',
@@ -36,5 +37,13 @@ angular
       .otherwise({
         redirectTo: '/songs'
       });
+
+    $i18nextProvider.options = {
+      lng: 'en', // If not given, i18n will detect the browser language.
+      fallbackLng: 'en', // Default is dev
+      useCookie: false,
+      useLocalStorage: false,
+      resGetPath: 'language/__lng__/translation.json'
+    };
   }])
 ;

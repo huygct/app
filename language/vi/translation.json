@@ -1,0 +1,55 @@
+{
+  "home": "Home",
+  "nameWebApp": "Âm Nhạc",
+
+  "addButton": "Thêm",
+  "deleteButton": "Xóa",
+  "searchButton": "Tìm",
+  "editButton": "Sửa",
+
+  "createButton": "Create",
+  "applyButton": "Apply",
+  "cancelButton": "Cancel",
+
+  "menu": {
+    "songs": "Songs",
+    "playlsits": "Playlists"
+  },
+
+  "contentWeb": {
+    "songs": {
+      "managerPage": {
+        "title": "Manager Songs"
+      },
+      "createSongs": {
+        "songName": "Song Name",
+        "artistName": "Artist"
+      },
+      "editSongs": {
+        "songName": "Song Name",
+        "artistName": "Artist"
+      },
+      "searchSongs": {
+        "text": "Search..."
+      }
+    },
+    "playlists": {
+      "addRemoveButton": "Add/Remove",
+      "managerPage": {
+        "title": "Manager Playlists"
+      },
+      "createPlaylist": {
+        "playlistName": "Playlists Name",
+        "description": "Description"
+      },
+      "editPlaylist": {
+        "playlistName": "Playlists Name",
+        "description": "Description"
+      },
+      "searchPlaylist": {
+        "text": "Playlists..."
+      }
+    }
+  }
+
+}

@@ -1,109 +1,159 @@
+@import '../../../node_modules/nib/lib/nib'
 @import 'constant.styl'
 
-/*container*/
-* 
-  margin: 0;
-  padding: 0;
+body
   font-family: RobotoDraft, Roboto, 'Helvetica Neue', sans-serif
-
 
 .my-container
   .my-nameApp-bar
     background-color $dark-primary-color
     color $light-primary
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084);
-    .md-toolbar-tools
-      font-size 34px
-      margin-left 36px
 
-.my-container 
+    .my-language-option
+      position absolute
+      right 0
+      width auto
+      font-size 14px
+      .md-select-label
+        width 100px
+      md-select:not([disabled]):focus .md-select-label
+        border-bottom-color $accent-color
+      span
+        color white
+
+    .menu-Btn
+      position absolute
+      top 8px
+      border: none;
+      width 48px
+      height 48px
+      margin: 0 8px;
+      background-color: transparent;
+      z-index 2
+    .menu-Btn:focus
+      outline transparent
+
+    .contain-of-top-toolbar
+      display block
+      width 85%
+      position relative
+      .border-image-of-top-toolbar
+        display none
+      .text-of-top-toolbar
+        font-size 28px
+        margin-left 36px
+        display inline
+        position absolute
+        top 16px
+        left 10px
+
+    @media(min-width 700px)
+      .menu-Btn
+        display none
+      .contain-of-top-toolbar
+        .border-image-of-top-toolbar
+          display block
+          border-radius 50%
+          background-color white
+          overflow hidden
+          height 48px
+          width 48px
+          margin-left 8px
+          position: absolute
+          top 8px
+          .image-of-top-toolbar
+            height 60px
+            width 60px
+        .text-of-top-toolbar
+          top 14px
+          font-size 34px
+
+
+.my-container
   //margin-right: 8px;
   //margin-left: 8px;
   //margin-bottom 60px
   height: 100%;
   //margin-bottom: -60px;
 
+.my-box-search
+  width 100%
 
-.my-form-content 
+.my-form-content
   overflow: hidden;
 
+.my-drop-down-menu
+  display none
 
-//.my-container:after {
-//  content: "";
-//  display: block;
-//}
-//
-//.my-footer, .my-container:after {
-//  height: 60px;
-//}
-
-.my-footer 
-  /*position: absolute;*/
-  /*bottom: 0px;*/
-  /*left: 0px;*/
-  /*right: 0px;*/
-  //position fixed
-  //margin-right: 8px;
-  //margin-left: 8px;
-  //margin-top: 8px;
-  //margin-bottom 8px
-  //border: solid #E8E8E8 3px;
+.my-footer
   text-align: center;
   background-color $dark-primary-color
   font-size 13px
 
 
-.my-footer p 
+.my-footer p
   margin: 20px;
   color $light-primary
 
-
-.my-content-app 
+.my-content-app
   //border: solid #E8E8E8 3px;
   //margin-top: 8px;
 
+.md-sidenav-left[md-component-id="left"]
+  min-width: 200px;
+  max-width: 200px;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084);
 
-md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active 
-  min-width: 200px !important;
-  width: 80vw !important;
-  max-width: 200px !important;
+.full-screen
+  display none
+
+@media(min-width: 700px)
+  .md-sidenav-left[md-component-id="left"]
+    box-shadow none
+
+  @media(min-width: 710px)
+    .full-screen
+      display inline
 
 
-.my-side-left 
+.my-side-left
   background-color $primary-color
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084);
 
-  nav
-    height 500px
+  nav.nav-menu-sidenav
+    height 150px
 
-  nav > a.my-link
-    border: 0 !important;
+  nav.nav-menu-sidenav .my-link
+    border: 0
     outline-color: transparent;
 
+  /*-------------------------
+  The menu
+  --------------------------*/
+  nav
+    display: block;
 
-.my-content-wrapper 
+  nav a
+    display: block;
+    padding: 18px 24px;
+    color: $light-primary
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none
+    line-height: 1;
+
+.my-content-wrapper
   position: relative;
 
-/*-----------------------------------------------*/
-.menu-Btn
-  position absolute
-  top 8px
-  border: none;
-  width 48px
-  height 48px
-  margin: 0 8px;
-  outline none
-  background-color: transparent;
-
-
-.my-button-dangerous 
-  color: red !important;
+.my-button-dangerous
+  color: red
 
 
 .my-button-normal
   margin 4px
   text-align right
-  width auto !important
+  width auto
   font-weight 500
 
   .md-button.md-default-theme.md-primary.md-raised[disabled]
@@ -113,9 +163,15 @@ md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-a
   .md-button.md-default-theme.md-primary.md-raised:not([disabled]):hover
     background-color $accent-color
 
-.my-button-accent-color
-  color $light-primary !important
-  background-color $accent-color !important
+.my-button-accent-color.md-button.md-raised
+  color $light-primary
+  background-color $accent-color
+
+.my-button-accent-color.md-button.md-raised:not([disabled]):hover
+  background-color $accent-color
+
+.my-button-accent-color.md-button.md-raised:not([disabled]).md-focused
+  background-color $accent-color
 
 .my-upload-data
   position: relative;
@@ -126,7 +182,7 @@ md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-a
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .26);
 
 
-.my-upload-data input.custom-file-input 
+.my-upload-data .custom-file-input
   position: absolute;
   top: 0;
   right: 0;
@@ -137,80 +193,38 @@ md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-a
   opacity: 0;
   //filter: alpha(opacity = 0);
 
+.my-toolbar .my-action-toolbar
+  .md-button
+    width: auto;
+    font-size 24px
+    padding 0 6px
+    height auto
+    line-height 0
+    color $light-primary
+    i
+      vertical-align middle
+    span
+      font-size 14px
 
-/*normal screen*/
-@media (min-width: 680px)
-  .menu-Btn
-    display: none
-
-// small screen
-@media (max-width: 680px)
-  .my-side-left
-    margin 0
-
-    md-sidenav
-      box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084);
-
-
-//.md-icon-button.my-button-accent {
-//  width: auto;
-//  color #000000
-//  font-weight bold
-//}
-
-md-toolbar.md-default-theme .md-button
-  width: auto;
-  color $light-primary
-  font-size 24px
-  padding 0 6px
-  height auto
-  line-height 0
-
-  i
-    vertical-align middle
-  span
-    font-size 14px
+  .md-button[disabled]
+    color: rgba(0,0,0,0.26);
+    cursor: not-allowed;
 
 /*change icon of breadcrumb*/
 .breadcrumb
   color $primary-text
   font-size 24px
 
-.breadcrumb > li + li:before 
+.breadcrumb > li + li:before
   content: " > "
 
-
-/*-------------------------
-	The menu
---------------------------*/
-nav 
-  display: block;
-  /*margin:60px auto 45px;*/
-  /*background-color:#5597b4;*/
-  /*box-shadow:0 1px 1px #ccc;*/
-  /*border-radius:2px;*/
-
-
-nav a 
-  display: block;
-  padding: 18px 30px;
-  color: $light-primary !important;
-  font-weight: bold;
-  font-size: 16px;
-  text-decoration: none !important;
-  line-height: 1;
-
-  -webkit-transition: background-color 0.28s;
-  -moz-transition: background-color 0.28s;
-
-
-.selected-menu 
-  color: $light-primary !important;
+.selected-menu
+  color: $light-primary
   background $accent-color
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084)
 
 
-md-toolbar.md-default-theme 
+md-toolbar.md-default-theme
   background-color $primary-color
 
 
@@ -221,8 +235,33 @@ md-sidenav
   color $light-primary
   font-size 20px
 
-@media (max-width: 380px)
-  .title-manage-toolbar
+//menu dropdown
+.my-action-toolbar
+  display none
+
+.my-drop-down-menu
+  display inline
+  text-align right
+  max-width 50px
+  .icon-menu-drop-down
+    color $light-primary
+    font-size 24px
+    vertical-align middle
+.content-of-menu-drop-down
+  color: rgba(0, 0, 0, 0.6);
+  .button-of-menu-drop-down
+    font-size 15px
+    font-weight 500
+    .icon-of-items-menu-drop-down
+      margin 10px 6px
+  .button-of-menu-drop-down[disabled]
+    color: rgba(0,0,0,0.26);
+
+
+@media (min-width: 380px)
+  .my-action-toolbar
+    display block
+  .my-drop-down-menu
     display none
 
 a
@@ -232,11 +271,13 @@ a
   height: auto
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.084)
 
-form.my-form
+.my-form
   margin 16px
-  .md-input-focused input
-    border-color $accent-color !important
-
+  md-input-container:not(.md-input-invalid).md-input-focused .md-input
+    border-color $accent-color
 
 md-checkbox.md-default-theme.md-checked .md-icon
-  background-color $accent-color !important
+  background-color $accent-color
+
+md-checkbox:not([disabled]).md-primary.md-checked .md-icon
+  background-color $accent-color

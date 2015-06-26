@@ -2,6 +2,12 @@
   display: inline-block;
   margin-left: 8px;
 }
+.my-listSong-in-playlist .md-no-style.md-list-item-inner {
+  padding: 0;
+}
+.my-listSong-in-playlist .item-list-divider {
+  left: 80px;
+}
 .my-listSong-in-playlist .face {
   border-radius: 30px;
   border: 1px solid #ddd;
@@ -11,23 +17,24 @@
 .my-back-button {
   text-align: right;
 }
-.my-back-button button {
-  margin: 16px;
+.my-back-button .md-button {
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+.last-divider {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
 }
 .my-song-of-playlist {
   display: inline;
   font-style: italic;
 }
 .my-listSong-in-playlist {
-  height: 400px;
+  height: auto;
   overflow: auto;
   line-height: normal;
 }
-.list-items h3 {
-  font-size: 16px;
-  font-weight: 500;
-}
 .list-items .name-song-in-playlist {
+  width: 90%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -37,42 +44,44 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-table.my-table th.name-playlist {
-  width: 30%;
-}
-table.my-table th.description-playlist {
-  width: 30%;
+.my-form-content .header-show-songs .checkbox-add-all-song {
+  display: inline;
 }
 table.my-table td.name-playlist {
-  width: 30%;
-  max-width: 0;
+  width: 120px;
+  max-width: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
 }
 table.my-table td.description-playlist {
-  width: 30%;
-  max-width: 0;
+  width: 120px;
+  max-width: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-@media (max-width: 680px) {
+@media (min-width: 700px) {
+  table.my-table th.name-playlist {
+    width: 30%;
+  }
+  table.my-table th.description-playlist {
+    width: 30%;
+  }
   table.my-table td.name-playlist {
-    width: 120px;
-    max-width: none;
+    width: 30%;
+    max-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: normal;
   }
   table.my-table td.description-playlist {
-    width: 120px;
-    max-width: none;
+    width: 30%;
+    max-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  table td.name-playlist {
-    font-weight: bold;
   }
 }

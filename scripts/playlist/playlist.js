@@ -1,23 +1,118 @@
 'use strict';
 
 /**
- * @ngdoc function
  * @name musicApp
- * @description
- * # PlaylistController
+ * PlaylistController
  */
 angular.module('musicApp')
-  .controller('PlaylistController', ['playlistService', 'songService', 'playListExtend', '$scope', '$mdDialog',
-    function (playlistService, songService, playListExtend, $scope, $mdDialog) {
-      // it is cheat about memory aria of $scope.menus :)
-      $scope.childmenus = $scope.menus;
-      $scope.childmenus.selectedMenu = 'Playlist'; // set value for breadcrumb is Playlist
+  .controller('PlaylistController', ['playlistService', 'songService', 'playListExtend', 'playListChooseSongs', '$scope', '$mdDialog',
+    function (playlistService, songService, playListExtend, playListChooseSongs, $scope, $mdDialog) {
 
       var self = this;
+
+      // get songs from service
+      function getListSong() {
+        songService.getListSong()
+          .then(function successCallback(data) {
+            self.songs = angular.copy(data);
+            // set check of all songs is false
+            for (var j = 0; j < self.songs.length; j++) {
+              self.songs[j].check = false;
+            }
+          }, function errorCallback(result) {
+            console.log('Fail to get songs' + result);
+          }
+        );
+      }
+
+      // get playlist from service
+      function getPlayLists() {
+        playlistService.getListPlaylist('data/playlist.json')
+          .then(function successCallback(data) {
+            self.playlists = data;
+            self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
+          }, function errorCallback(result) {
+            console.log('Fail to get playlist' + result);
+          }
+        );
+      }
+
+      // is called when starts playlist page
+      function startPlaylist() {
+        getPlayLists();
+        getListSong();
+
+        self.showSearch = playlistService.getShowSearch();
+        self.querySearch = playlistService.getQuerySearch();
+        self.state = playlistService.getState();
+        if (self.state === 'create') {
+          self.newPlaylist = playlistService.getCachePlaylist();
+        } else if (self.state === 'edit') {
+          self.oldPlaylist = playlistService.getCachePlaylist();
+        } else {
+          self.oldPlaylist = {};
+          self.newPlaylist = {};
+        }
+      }
+
+      // calculate values of 'checkToShowButtonDelete'
+      function checkToShowButtonDelete() {
+        for (var i = 0; i < self.playlists.length; i++) {
+          if (self.playlists[i].check === true) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      // Deletes a playlist
+      function dialogControllerForDeleteSingle(scope, $mdDialog, playlist, title, context) {
+        scope.title = title;
+        scope.context = context;
+        scope.closeDialog = function () {
+          $mdDialog.hide();
+        };
+        scope.comfirmDelete = function () {
+          playlistService.deleteOnePlaylist(playlist.id);
+
+          self.state = '';
+          playlistService.setState(self.state, {}); // save for playlist service
+          getPlayLists();
+
+          self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
+          $mdDialog.hide();
+        };
+      }
+
+      // Deletes some playlist
+      function dialogControllerForDeleteMultiple(scope, $mdDialog, title, context) {
+        scope.title = title;
+        scope.context = context;
+        scope.closeDialog = function () {
+          $mdDialog.hide();
+        };
+        scope.comfirmDeleteAll = function () {
+          playlistService.deleteManyPlaylist(self.playlists);
+
+          self.state = '';
+          playlistService.setState(self.state, {}); // save for song service
+
+          getPlayLists();
+
+          //self.markAll = false;
+          self.checkToShowButtonDelete = false; // check status of button delete
+          $mdDialog.hide();
+        };
+      }
+
+      // it is cheat about memory aria of $scope.menus :)
+      $scope.childMenus = $scope.menus;
+      $scope.childMenus.selectedMenu = 'Playlists'; // set value for breadcrumb is Playlist
+
       self.songs = []; // Declare array songs
       self.playlists = []; // Declare array playlist
 
-      //self.markAll = false;
+      self.markAll = false;
       self.showSearch = false; // hide or show search box
       self.querySearch = {}; // a string to search
 
@@ -63,10 +158,6 @@ angular.module('musicApp')
       };
 
       self.changeStateToEdit = function (playlist) {
-        //self.oldPlaylist.name = playlist.name;
-        //self.oldPlaylist.description = playlist.description;
-        //self.oldPlaylist.songs = playlist.songs;
-        //self.oldPlaylist.id = playlist.id;
         self.oldPlaylist = angular.copy(playlist);
         self.state = 'edit';
         playlistService.setState(self.state, self.oldPlaylist); // save for song service
@@ -98,24 +189,6 @@ angular.module('musicApp')
         getPlayLists();
       };
 
-      // is called when starts playlist page
-      function startPlaylist() {
-        getPlayLists();
-        getListSong();
-
-        self.showSearch = playlistService.getShowSearch();
-        self.querySearch = playlistService.getQuerySearch();
-        self.state = playlistService.getState();
-        if (self.state === 'create') {
-          self.newPlaylist = playlistService.getCachePlaylist();
-        } else if (self.state === 'edit') {
-          self.oldPlaylist = playlistService.getCachePlaylist();
-        } else {
-          self.oldPlaylist = {};
-          self.newPlaylist = {};
-        }
-      }
-
       // add by press enter on keyboard
       self.addPlaylist = function () {
         console.log('Press enter on keyboard!!!');
@@ -139,47 +212,14 @@ angular.module('musicApp')
 
       // button back.
       self.backToState = function (nameState) {
+        //console.log(nameState);
         self.state = nameState;
       };
-
-      // calculate values of 'checkToShowButtonDelete'
-      function checkToShowButtonDelete() {
-        for (var i = 0; i < self.playlists.length; i++) {
-          if (self.playlists[i].check === true) {
-            return true;
-          }
-        }
-        return false;
-      }
-
-      // Deletes a playlist
-      function dialogControllerForDeleteSingle(scope, $mdDialog, playlist, title, context) {
-        //scope.playlist = playlist;
-        scope.title = title;
-        scope.context = context;
-        scope.closeDialog = function () {
-          $mdDialog.hide();
-        };
-        scope.comfirmDelete = function () {
-          //console.log(song.id);
-          //self.songs.splice(song.id, 1);
-          playlistService.deleteOnePlaylist(playlist.id);
-
-          self.state = '';
-          playlistService.setState(self.state, {}); // save for playlist service
-          getPlayLists();
-
-          self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
-          $mdDialog.hide();
-        };
-      }
 
       // Show dialog deletes a playlist
       self.showConfirmDeleteSingle = function (event, playlist) {
         // Appending dialog to document.body to cover sidenav in docs app
-        var parentEl = angular.element(document.body);
         $mdDialog.show({
-          parent: parentEl,
           targetEvent: event,
           templateUrl: 'scripts/template/delete-single.html',
           locals: {
@@ -191,27 +231,6 @@ angular.module('musicApp')
         });
 
       };
-
-      // Deletes some playlist
-      function dialogControllerForDeleteMultiple(scope, $mdDialog, title, context) {
-        scope.title = title;
-        scope.context = context;
-        scope.closeDialog = function () {
-          $mdDialog.hide();
-        };
-        scope.comfirmDeleteAll = function () {
-          playlistService.deleteManyPlaylist(self.playlists);
-
-          self.state = '';
-          playlistService.setState(self.state, {}); // save for song service
-
-          getPlayLists();
-
-          //self.markAll = false;
-          self.checkToShowButtonDelete = false; // check status of button delete
-          $mdDialog.hide();
-        };
-      }
 
       // Show dialog delete multiple playlist
       self.showConfirmDeleteMultiple = function (event) {
@@ -228,34 +247,12 @@ angular.module('musicApp')
         });
       };
 
-      // get songs from service
-      function getListSong() {
-        songService.getListSong()
-          .then(function successCallback(data) {
-            self.songs = data;
-          }, function errorCallback(result) {
-            console.log('Fail to get songs' + result);
-          }
-        );
-      }
-
-      // get playlist from service
-      function getPlayLists() {
-        playlistService.getListPlaylist('data/playlist.json')
-          .then(function successCallback(data) {
-            self.playlists = data;
-            self.checkToShowButtonDelete = checkToShowButtonDelete(); // check status of button delete
-          }, function errorCallback(result) {
-            console.log('Fail to get playlist' + result);
-          }
-        );
-      }
-
       startPlaylist();
 
       /**
        * Extend for playlist.js
        */
       playListExtend.decorator($scope, self);
+      playListChooseSongs.decorator($scope, self);
     }])
 ;

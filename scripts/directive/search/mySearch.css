@@ -1,4 +1,7 @@
 /* css for search */
+my-search:focus {
+  outline-color: transparent;
+}
 .search-wrapper {
   position: relative;
   padding: 10px;
@@ -6,18 +9,20 @@
 .search-wrapper {
   width: auto;
 }
+.search-wrapper:focus {
+  outline: 0;
+  outline-color: transparent;
+}
 .search-box {
   color: #000;
   width: 100%;
   height: 30px;
   font-size: 12px;
-  border: 1px solid #ccc;
-  outline: 0;
-  padding: inherit;
   border-radius: 15px;
 }
 .search-box:focus {
-  border: 2px solid #bebede;
+  outline: 0;
+  outline-color: transparent;
 }
 .close-icon {
   z-index: 2;
@@ -29,8 +34,11 @@
   right: 16px;
   top: 12px;
   vertical-align: middle;
-  outline: 0;
   cursor: pointer;
+}
+.close-icon:focus {
+  outline: 0;
+  outline-color: transparent;
 }
 .my-color-icon {
   color: #fff;
@@ -39,9 +47,9 @@
   padding: 0;
   font-size: 14px;
 }
-.input-container-search.md-default-theme .md-input {
+.input-container-search .md-input {
   color: #fff;
 }
-.input-container-search.md-input-focused input {
-  border-color: #fff !important;
+md-input-container:not(.md-input-invalid).input-container-search .md-input {
+  border-color: #fff;
 }

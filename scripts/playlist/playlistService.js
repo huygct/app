@@ -11,8 +11,7 @@
 
   angular.module('musicApp')
     .service('playlistService', ['$http', '$q', function ($http, $q) {
-
-      var isGetPlaylist = false;  // Check to read file json
+      var gotData = false;  // Check to read file json
       var self = this;
 
       var showSearch = false; // use to save value showSearch of playlist
@@ -22,15 +21,42 @@
 
       var playlists = [];
 
+      var NOT_FOUND = -1;
+
+      function findObjectById(id, objects) {
+        for (var i = 0; i < objects.length; i++) {
+          if(objects[i].id === id) {
+            return i;
+          }
+        }
+        return NOT_FOUND;
+      }
+
+      function findObjectAndPerformAction(id, objects, actionCallback) {
+        var index = findObjectById(id, objects);
+
+        if(index !== NOT_FOUND) {
+          actionCallback(index);
+        } else {
+          throw new Error('Can\'t find object with id ' + id);
+        }
+      }
+
+      function findPlaylistById(playlists, id) {
+        findObjectAndPerformAction(id, playlists, function (idx) {
+          return playlists[idx];
+        });
+      }
+
       // read file json
       self.getListPlaylist = function (url) {
         var deferred = $q.defer();
-        if (isGetPlaylist === true) {
+        if (gotData === true) {
           deferred.resolve(playlists);
         } else {
           $http.get(url)
             .success(function (response) {
-              isGetPlaylist = true;
+              gotData = true;
               playlists = response;
               deferred.resolve(response);
             })
@@ -40,7 +66,6 @@
         }
         return deferred.promise;
       };
-
       // get playlist by id
       self.getPlaylist = function (_id) {
         return findPlaylistById(playlists, _id);
@@ -64,22 +89,16 @@
       };
 
       //----------------------------------------------------
-      self.savePlaylist = function (playlistNew) {
-        for (var i = 0; i < playlists.length; i++) {
-          if (playlists[i].id === playlistNew.id) {
-            playlists[i] = playlistNew;
-            break;
-          }
-        }
+      self.savePlaylist = function (newPlaylist) {
+        findObjectAndPerformAction(newPlaylist.id, playlists, function (idx) {
+          playlists[idx] = newPlaylist;
+        });
       };
 
-      self.deleteOnePlaylist = function (_id) {
-        for (var i = 0; i < playlists.length; i++) {
-          if (playlists[i].id === _id) {
-            playlists.splice(i, 1);
-            break;
-          }
-        }
+      self.deleteOnePlaylist = function (id) {
+        findObjectAndPerformAction(id, playlists, function (idx) {
+          playlists.splice(idx, 1);
+        });
       };
 
       self.deleteManyPlaylist = function (oldplaylists) {
@@ -89,16 +108,14 @@
             playlists.push(playlist);
           }
         });
-        console.log(playlists);
+        //console.log(playlists);
       };
 
       // add and remove song for playlist
       self.addAndRemoveSongForPlaylist = function (playlist, songs) {
-        for (var i = 0; i < playlists.length; i++) {
-          if (playlists[i].id === playlist.id) {
-            playlists[i].songs = songs;
-          }
-        }
+        findObjectAndPerformAction(playlist.id, playlists, function (idx) {
+          playlists[idx].songs = songs;
+        });
       };
 
       // cache data
@@ -126,15 +143,17 @@
         return cachePlaylist;
       };
 
+      // remove cached
+      self.removeCached = function () {
+        showSearch = false; // use to save value showSearch of playlist
+        querySearch = {}; // use to save value querySearch of playlist
+        state = ''; // use to save value state of playlist
+        cachePlaylist = {}; // use to save value current playlist
 
-      function findPlaylistById(playlists, _id) {
-        for (var i = 0; i < playlists.length; i++) {
-          if (playlists[i].id === _id) {
-            return playlists[i];
-          }
+        for(var i = 0; i < playlists.length; i++) {
+          playlists[i].check = false;
         }
-        throw new Error('Couldn\'t find object with id: ' + _id);
-      }
+      };
     }]);
 
 })();

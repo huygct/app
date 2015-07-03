@@ -1,0 +1,14 @@
+<md-sidenav class="md-sidenav-left" md-component-id="left"
+            md-is-locked-open="$mdMedia('min-width: 700px')">
+
+  <nav class="nav-menu-sidenav">
+
+    <!-- When a link in the menu is clicked, we set the active variable -->
+
+    <a href="#/songs" class="my-link my-songs" ng-click="toggleSidenav('left');setSelectedMenu('Songs')"
+       ng-class="{'selected-menu' : menus.selectedMenu === 'Songs'}">{{'menu.songs' | i18next}}</a>
+    <a href="#/playlist" class="my-link my-playlists" ng-click="toggleSidenav('left');setSelectedMenu('Playlists')"
+       ng-class="{'selected-menu' : menus.selectedMenu === 'Playlists'}">{{'menu.playlsits' | i18next}}</a>
+  </nav>
+
+</md-sidenav>

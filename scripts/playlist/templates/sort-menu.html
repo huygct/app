@@ -1,0 +1,27 @@
+<!--menu drop down sort-->
+<div class="my-drop-down-for-sort" ng-show="!playlistCtrl.showSearch" layout="column" flex-sm="100" flex="33" layout-align="center center">
+  <md-menu md-position-mode="target-right target">
+    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu()">
+      <i class="md-menu-origin fa fa-sort icon-menu-drop-down"></i>
+      <!--<md-icon md-menu-origin md-svg-icon="call:portable-wifi-off"></md-icon>-->
+    </md-button>
+    <md-menu-content width="2" class="content-of-sort-menu-drop-down">
+      <md-menu-item>
+        <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.changeSortType('name')"
+                   class="button-of-menu-drop-down" aria-label="sortByName">
+          <i ng-show="playlistCtrl.sortType == 'name' && !playlistCtrl.sortReverse" class="fa fa-long-arrow-up icon-of-sort-menu"></i>
+          <i ng-show="playlistCtrl.sortType == 'name' && playlistCtrl.sortReverse" class="fa fa-long-arrow-down icon-of-sort-menu"></i>
+          <span show-gt-md="">{{'contentWeb.playlists.sort.sortByName' | i18next}}</span>
+        </md-button>
+      </md-menu-item>
+      <md-menu-item>
+        <md-button ng-show="!playlistCtrl.showSearch" ng-click="playlistCtrl.changeSortType('description')"
+                   class="button-of-menu-drop-down" aria-label="sortByDescription">
+          <i ng-show="playlistCtrl.sortType == 'description' && !playlistCtrl.sortReverse" class="fa fa-long-arrow-up icon-of-sort-menu"></i>
+          <i ng-show="playlistCtrl.sortType == 'description' && playlistCtrl.sortReverse" class="fa fa-long-arrow-down icon-of-sort-menu"></i>
+          <span>{{'contentWeb.playlists.sort.sortByDescription' | i18next}}</span>
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+</div>

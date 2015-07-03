@@ -1,7 +1,7 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <h2>
-      <span class="my-title-toolbar">Edit Playlist</span>
+      <span class="my-title-toolbar">{{'contentWeb.playlists.editPlaylist.title' | i18next}}</span>
     </h2>
   </div>
 </md-toolbar>
@@ -9,34 +9,35 @@
   <form name="projectForm" novalidate class="my-form">
     <input type="hidden" class="form-control" ng-model="playlistCtrl.oldPlaylist.id"/>
     <md-input-container>
-      <label>Name playlist</label>
+      <label>{{'contentWeb.playlists.editPlaylist.playlistName' | i18next}}</label>
       <input required="" name="namePlaylist" ng-model="playlistCtrl.oldPlaylist.name">
 
       <div ng-messages="projectForm.namePlaylist.$error">
-        <div ng-message="required">Name playlist cannot be empty.</div>
+        <div ng-message="required">{{'contentWeb.playlists.editPlaylist.requiredPlaylistName' | i18next}}</div>
       </div>
     </md-input-container>
     <md-input-container>
-      <label>Description</label>
+      <label>{{'contentWeb.playlists.editPlaylist.description' | i18next}}</label>
       <input name="description" ng-model="playlistCtrl.oldPlaylist.description">
     </md-input-container>
 
     <md-button ng-click="playlistCtrl.setSongForPlaylistWithPage(playlistCtrl.oldPlaylist, $event)"
-               class="md-raised my-button-accent-color">Add/Remove
+               class="md-raised my-button-accent-color">{{'contentWeb.playlists.addRemoveButton' | i18next}}
     </md-button>
 
     <div class="linked-show-songs">
       <p class="my-song-of-playlist">
-        <a href="" ng-click="playlistCtrl.showSongsOfPlaylist(playlistCtrl.oldPlaylist)">{{playlistCtrl.oldPlaylist.songs.length}} songs</a>
+        <a href="" ng-click="playlistCtrl.showSongsOfPlaylist(playlistCtrl.oldPlaylist)">{{playlistCtrl.oldPlaylist.songs.length}}
+          {{'contentWeb.playlists.songs' | i18next}}</a>
       </p>
     </div>
 
     <div class="my-button-normal">
       <md-button ng-disabled="!projectForm.$valid"
                  ng-click="playlistCtrl.savePlaylist(playlistCtrl.oldPlaylist)"
-                 class="md-raised md-primary">Apply
+                 class="md-raised md-primary">{{'applyButton' | i18next}}
       </md-button>
-      <md-button ng-click="playlistCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
+      <md-button ng-click="playlistCtrl.changeStateToManage()" class="md-raised">{{'cancelButton' | i18next}}</md-button>
     </div>
   </form>
 </md-content>

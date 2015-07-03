@@ -1,22 +1,22 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <h2>
-      <span class="my-title-toolbar">Create Songs</span>
+      <span class="my-title-toolbar">{{'contentWeb.songs.createSongs.title' | i18next}}</span>
     </h2>
   </div>
 </md-toolbar>
 <md-content class="my-form-content">
   <form name="projectForm" novalidate class="my-form">
     <md-input-container>
-      <label>Song Name</label>
+      <label>{{'contentWeb.songs.createSongs.songName' | i18next}}</label>
       <input required="" name="songName" ng-model="songCtrl.newSong.name">
 
       <div ng-messages="projectForm.songName.$error">
-        <div ng-message="required">Song name cannot be empty.</div>
+        <div ng-message="required">{{'contentWeb.songs.createSongs.requiredSongName' | i18next}}</div>
       </div>
     </md-input-container>
     <md-input-container>
-      <label>Artist</label>
+      <label>{{'contentWeb.songs.createSongs.artistName' | i18next}}</label>
       <input name="clientName" ng-model="songCtrl.newSong.artist">
     </md-input-container>
 
@@ -28,9 +28,9 @@
 
     <div class="my-button-normal">
       <md-button ng-disabled="!projectForm.$valid" ng-click="songCtrl.addSong(songCtrl.newSong)"
-                 class="md-raised md-primary">Create
+                 class="md-raised md-primary">{{'createButton' | i18next}}
       </md-button>
-      <md-button ng-click="songCtrl.changeStateToManage()" class="md-raised">Cancel</md-button>
+      <md-button ng-click="songCtrl.changeStateToManage()" class="md-raised">{{'cancelButton' | i18next}}</md-button>
     </div>
   </form>
 </md-content>

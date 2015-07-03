@@ -1,50 +1,64 @@
-<table id="table" class="table table-hover table-mc-light-blue my-table" resize-table type="{{tableCtrl.nameTable}}">
-    <thead>
-    <tr>
-        <th class="my-th checkbox-col">
-            <md-checkbox ng-model="tableCtrl.markAll" ng-change="tableCtrl.toggleMarkAll()" md-no-ink=""
-                         aria-label="Checkbox all" class="md-primary">
-            </md-checkbox>
-        </th>
-        <th class="my-th {{title.className}}" ng-repeat="title in tableCtrl.column">{{title.name}}</th>
-        <th class="my-th action-col">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="data in tableCtrl.listData | filter: {'name' : tableCtrl.querySearch.value}"
-        ng-class="{'my-select-data' : data.check === true}" ng-click="tableCtrl.setChooseRow(data, $event);$event.stopPropagation();">
+<table class="table table-hover table-mc-light-blue my-table" resize-table type="{{tableCtrl.nameTable}}">
+  <thead>
+  <tr>
+    <th class="my-th checkbox-col">
+      <md-checkbox ng-model="tableCtrl.markAll" ng-change="tableCtrl.toggleMarkAll()" md-no-ink=""
+                   aria-label="Checkbox all" class="md-primary">
+      </md-checkbox>
+    </th>
+    <th class="my-th {{title.className}}" ng-repeat="title in tableCtrl.columns">
+      <span ng-show="tableCtrl.sortType == title.key && !tableCtrl.sortReverse" class="fa fa-long-arrow-up"></span>
+      <span ng-show="tableCtrl.sortType == title.key && tableCtrl.sortReverse" class="fa fa-long-arrow-down"></span>
+      <a ng-class="{'link-asc-or-desc-of-header-table':tableCtrl.countSort !== 3 && tableCtrl.countSort !== 0 && tableCtrl.sortType == title.key}" href="" ng-click="tableCtrl.changeSortType(title.key)">
+        {{title.name | i18next}}
+      </a>
+    </th>
+    <th class="my-th action-col">{{'contentWeb.actions' | i18next}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+    ng-repeat="data in tableCtrl.listData | orderBy:tableCtrl.natural(tableCtrl.sortType):tableCtrl.sortReverse | filter: {'name' : tableCtrl.querySearch.value}"
+    ng-class="{'my-select-data' : data.check === true}"
+    ng-click="tableCtrl.setChooseRow(data, $event);$event.stopPropagation();">
 
-        <td class="my-td checkbox-col">
-            <md-checkbox ng-model="data.check" ng-change="tableCtrl.clickCheckbox(data)" ng-click="$event.stopPropagation()"
-                         md-no-ink=""
-                         aria-label="Checkbox" class="md-primary">
-            </md-checkbox>
-        </td>
+    <td class="my-td checkbox-col">
+      <md-checkbox ng-model="data.check" ng-change="tableCtrl.clickCheckbox(data)" ng-click="$event.stopPropagation()"
+                   md-no-ink=""
+                   aria-label="Checkbox" class="md-primary">
+      </md-checkbox>
+    </td>
 
-        <!--ng-right-click="runData(data, $event)"-->
-        <td class="my-td content-table {{col.className}}"
-            ng-repeat="col in tableCtrl.column">{{ data[col.key]}}
+    <!--ng-right-click="runData(data, $event)"-->
+    <td class="my-td content-table {{col.className}}"
+        ng-repeat="col in tableCtrl.columns">{{ data[col.key]}}
+    </td>
 
-        </td>
+    <td class="my-td action-col button-in-action-col">
+      <md-button ng-click="tableCtrl.editData(data)" class="my-icon-button button-edit-of-table"
+                 aria-label="Edit">
+        <i class="fa fa-pencil-square-o my-icon"></i>
+        <span class="full-screen">{{'editButton' | i18next}}</span>
+      </md-button>
+      <md-button ng-click="tableCtrl.deleteItemFromTable($event, data);$event.stopPropagation();"
+                 class="my-icon-button button-delete-of-table full-screen" aria-label="Delete">
+        <i class="fa fa-trash-o my-icon"></i>
+        <span>{{'deleteButton' | i18next}}</span>
+      </md-button>
+    </td>
+  </tr>
 
-        <td class="my-td action-col button-in-action-col">
-            <md-button ng-click="tableCtrl.editData(data)" class="my-icon-button"
-                       aria-label="Edit">
-                <i class="fa fa-pencil-square-o my-icon"></i>
-                <span class="full-screen">Edit</span>
-            </md-button>
-            <md-button ng-click="tableCtrl.deleteItemFromTable($event, data);$event.stopPropagation();"
-                       class="my-icon-button full-screen" aria-label="Delete">
-                <i class="fa fa-trash-o my-icon"></i>
-                <span>Delete</span>
-            </md-button>
-        </td>
-    </tr>
+  <tr ng-if="tableCtrl.listData.length === 0" class="tr-no-data-in-table">
+    <td class="td-no-data-in-table">No {{tableCtrl.nameTable}}</td>
+  </tr>
+  </tbody>
 
-    <tr ng-if="tableCtrl.listData.length === 0" class="tr-no-data-in-table">
-        <td class="td-no-data-in-table">No {{tableCtrl.nameTable}}</td>
-    </tr>
-    </tbody>
+  <tfoot>
+  <tr>
+    <th class="my-th text-of-footer-table">{{'total' | i18next}}: {{tableCtrl.listData.length}}</th>
+    <th class="my-th action-col"></th>
+  </tr>
+  </tfoot>
 </table>
 
 <!--get songs-->

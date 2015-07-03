@@ -1,3 +1,4 @@
+@import '../../../../node_modules/nib/lib/nib'
 @import 'constant.styl'
 
 .table-run-data
@@ -21,6 +22,12 @@ table.my-table
   display: table;
   width: 100%;
   color rgba(0, 0, 0, 0.87);
+  .text-of-footer-table
+    color rgba(0, 0, 0, 0.54);
+  a
+    color rgba(0, 0, 0, 0.54);
+  a.link-asc-or-desc-of-header-table
+    color rgba(0, 0, 0, 0.87);
 
 table.my-table thead, table.my-table tbody
   float: left;
@@ -37,8 +44,8 @@ table.my-table .my-select-data
 
 //@media (max-width: 700px)
 table.my-table
-  margin-top: 8px;
-  border: 0;
+  margin 0
+  border 0
 
 table.my-table thead
   display: none;
@@ -47,7 +54,7 @@ table.my-table tr
   margin-bottom: 8px;
   display: block;
   position: relative;
-  border: 2px solid #ddd;
+  border-top: 2px solid #ddd;
 
 table.my-table td
   width: auto;
@@ -113,6 +120,11 @@ table.my-table
     border-bottom 1px solid #DADADA
     outline-color: transparent;
     margin 0
+
+  table.my-table tfoot
+    border-top 2px solid rgb(221, 221, 221)
+  table.my-table tfoot > tr
+    border none
 
   table.my-table th.checkbox-col
     width: 10%;

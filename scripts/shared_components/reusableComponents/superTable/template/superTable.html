@@ -1,0 +1,27 @@
+<table class="table table-hover table-mc-light-blue my-table">
+  <thead>
+    <th class="my-th" ng-repeat="columnDef in superTableCtrl.tableOptions.columnDefs">
+      <div ng-if="!columnDef.headerTemplateUrl">{{columnDef.name}}</div>
+      <div ng-if="columnDef.headerTemplateUrl" ng-include="columnDef.headerTemplateUrl"></div>
+    </th>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="row in superTableCtrl.tableOptions.data"
+        ng-if=""
+
+      >
+      <td class="my-td" ng-repeat="columnDef in superTableCtrl.tableOptions.columnDefs">
+        <div ng-if="!columnDef.cellTemplateUrl">{{row[columnDef.key]}}</div>
+        <div ng-if="columnDef.cellTemplateUrl" ng-include="columnDef.cellTemplateUrl"></div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <th class="my-th text-of-footer-table">{{superTableCtrl.tableOptions.data[0].check}}</th>
+    </tr>
+  </tfoot>
+
+</table>

@@ -29,7 +29,7 @@
             scope.windowWidth = newValue.width;
 
             $timeout(function () {
-              var heightBody = window.innerHeight - 360;
+              var heightBody = window.innerHeight - 384;
               var tBody = angular.element('table.my-table tbody');
 
               if (newValue.width < 700) {

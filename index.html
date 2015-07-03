@@ -8,21 +8,30 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
-  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
 
-  <link rel="stylesheet" href="scripts/main/main.css">
-  <link rel="stylesheet" href="scripts/song/song.css">
-  <link rel="stylesheet" href="scripts/playlist/playlist.css">
+  <link rel="stylesheet" href="scripts/shared_components/reusableComponents/superTable/styles/superTable.css">
   <link rel="stylesheet" href="scripts/directive/search/mySearch.css">
   <link rel="stylesheet" href="scripts/directive/table/myTable.css">
+
+  <link rel="stylesheet" href="scripts/common/styles/common.css">
+
+  <link rel="stylesheet" href="scripts/song/song.css">
+  <link rel="stylesheet" href="scripts/playlist/playlist.css">
   <link rel="stylesheet" href="scripts/playlist/select-song-dialog/select-songs.css">
+
+  <link rel="stylesheet" href="scripts/main/styles/main.css">
+
+
+
+
+
 
   <!-- endbuild -->
 </head>
@@ -45,9 +54,9 @@
       <h1 class="md-toolbar-tools text-of-top-toolbar" layout-align-gt-sm="center">{{'nameWebApp' | i18next}}</h1>
     </div>
     <div class="my-language-option">
-      <md-select ng-model="languageWeb">
-        <md-option value="english">English</md-option>
-        <md-option value="vietnam">Tiếng Việt</md-option>
+      <md-select ng-model="languageWeb" class="selected-language-of-web">
+        <md-option value="en">English</md-option>
+        <md-option value="vi">Tiếng Việt</md-option>
       </md-select>
     </div>
   </md-toolbar>
@@ -59,8 +68,8 @@
     <div layout="column" flex class="my-content-app" id="content">
       <!--Breadcrumb-->
       <ul layout="row" class="breadcrumb">
-        <li><a href="#/songs" ng-click="clickLinkHome()">Home</a></li>
-        <li class="active">{{menus.selectedMenu}}</li>
+        <li><a href="#/songs" ng-click="clickLinkHome()">{{'menu.home' | i18next}}</a></li>
+        <li class="active">{{menus.nameCurrentMenu | i18next}}</li>
       </ul>
       <md-content flex class="md-padding">
         <div ng-view=""></div>
@@ -110,7 +119,7 @@
 <script src="bower_components/i18next/i18next.js"></script>
 <script src="bower_components/ng-i18next/dist/ng-i18next.js"></script>
 
-<script src="scripts/main/app.js"></script>
+<script src="scripts/app.js"></script>
 <script src="scripts/main/controllerApp.js"></script>
 
 <script src="scripts/song/song.js"></script>
@@ -125,6 +134,22 @@
 <script src="scripts/directive/table/myTable.js"></script>
 <script src="scripts/directive/resize/resize.js"></script>
 <script src="scripts/directive/resize/resizeTable.js"></script>
+
+<script src="scripts/shared_components/naturalSort.js"></script>
+
+<script src="scripts/shared_components/reusableComponents/reusableComponents.module.js"></script>
+<script src="scripts/shared_components/reusableComponents/superTable/superTable.directive.js"></script>
+
+
+
+<!--test-->
+<script src="scripts/demo/test.js"></script>
+<script src="scripts/demo/services/animalService.js"></script>
+<script src="scripts/demo/controllers/RowController.js"></script>
+<script src="scripts/demo/controllers/CheckboxHeaderController.js"></script>
+<script src="scripts/demo/controllers/CheckboxRowController.js"></script>
+
+
 <!-- endbuild -->
 
 

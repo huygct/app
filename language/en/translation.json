@@ -10,41 +10,90 @@
   "createButton": "Create",
   "applyButton": "Apply",
   "cancelButton": "Cancel",
+  "backButton": "Back",
+
+  "yesButton": "Yes",
+  "noButton": "No",
+
+  "total": "Total",
+
+  "deleteDialog": {
+    "songs": {
+      "multiple": {
+        "title": "Delete Multiple Songs",
+        "context": "Are you sure you want to delete selected songs? "
+      },
+      "single": {
+        "title": "Delete song",
+        "context": "Are you sure you want to delete this song? "
+      }
+    }
+  },
+
 
   "menu": {
+    "home": "Home",
     "songs": "Songs",
     "playlsits": "Playlists"
   },
 
   "contentWeb": {
+    "actions": "Action",
     "songs": {
       "managerPage": {
         "title": "Manager Songs"
       },
       "createSongs": {
+        "title": "Create Songs",
         "songName": "Song Name",
+        "requiredSongName": "Song name cannot be empty.",
         "artistName": "Artist"
       },
       "editSongs": {
+        "title": "Edit Songs",
         "songName": "Song Name",
+        "requiredSongName": "Song name cannot be empty.",
         "artistName": "Artist"
+      },
+      "songTable": {
+        "name": "Name",
+        "artist": "Artist"
+      },
+      "sort": {
+        "sortByName": "Sort By Name",
+        "sortByArtist": "Sort By Artist"
       },
       "searchSongs": {
         "text": "Search..."
       }
     },
     "playlists": {
+      "songs": "songs",
+      "chooseSongs": "Choose Songs",
+      "addAllSongs": "Add all song",
       "addRemoveButton": "Add/Remove",
       "managerPage": {
         "title": "Manager Playlists"
       },
       "createPlaylist": {
+        "title": "Create Playlists",
         "playlistName": "Playlists Name",
+        "requiredPlaylistName": "Playlists name cannot be empty.",
         "description": "Description"
       },
       "editPlaylist": {
+        "title": "Edit Playlists",
         "playlistName": "Playlists Name",
+        "requiredPlaylistName": "Playlists name cannot be empty.",
         "description": "Description"
+      },
+      "playlistTable": {
+        "name": "Name",
+        "description": "Description"
+      },
+      "sort": {
+        "sortByName": "Sort By Name",
+        "sortByArtist": "Sort By Artist"
       },
       "searchPlaylist": {
         "text": "Playlists..."

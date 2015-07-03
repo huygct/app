@@ -7,9 +7,13 @@
  * # SongController
  */
 angular.module('musicApp')
-  .controller('SongController', ['songService', 'playlistService', '$scope', '$mdSidenav', '$mdDialog',
-    function (songService, playlistService, $scope, $mdSidenav, $mdDialog) {
+  .controller('SongController', ['songService', 'playlistService', '$scope', '$mdSidenav', '$mdDialog', '$i18next',
+    function (songService, playlistService, $scope, $mdSidenav, $mdDialog, $i18next) {
       var self = this;
+
+      var countSort = 0; // count to check sort type
+      var keySorting = ''; // save value sorting
+
       // -----------------------------------------------------------------------
       var NOT_FOUND = -1;//hoisting , declaration time < running time
       function findObjectIsCheck(value, objects) {
@@ -91,6 +95,7 @@ angular.module('musicApp')
 
       // it is cheat about memory aria of $scope.menus :)
       $scope.childMenus = $scope.menus;
+      $scope.childMenus.nameCurrentMenu = 'menu.songs';
       $scope.childMenus.selectedMenu = 'Songs';
 
       self.showSearch = false; // show or hide search box
@@ -105,14 +110,17 @@ angular.module('musicApp')
       self.checkToShowButtonDelete = false;
       self.state = ''; // state are manage, create or edit
 
+      self.sortType = ''; // is name column of table, it uses to sort.
+      self.sortReverse = false; // sort-asc or sort-desc
+
       self.column = [ // column name for table
         {
-          name: 'Name',
+          name: 'contentWeb.songs.songTable.name',
           key: 'name',
           className: 'name-song'
         },
         {
-          name: 'Artist ',
+          name: 'contentWeb.songs.songTable.artist',
           key: 'artist',
           className: 'artist-song'
         }];
@@ -205,8 +213,8 @@ angular.module('musicApp')
           templateUrl: 'scripts/template/delete-single.html',
           locals: {
             song: song,
-            title: 'Delete song',
-            context: 'Are you sure you want to delete this song? '
+            title: $i18next('deleteDialog.songs.single.title'),
+            context: $i18next('deleteDialog.songs.single.context')
           },
           controller: dialogControllerForDeleteSingle
         });
@@ -222,8 +230,8 @@ angular.module('musicApp')
           targetEvent: ev,
           templateUrl: 'scripts/template/delete-multiple.html',
           locals: {
-            title: 'Delete Multiple Songs',
-            context: 'Are you sure you want to delete selected songs? '
+            title: $i18next('deleteDialog.songs.multiple.title'),
+            context: $i18next('deleteDialog.songs.multiple.context')
           },
           controller: dialogControllerForDeleteMultiple
         });
@@ -244,17 +252,50 @@ angular.module('musicApp')
         songService.setQuerySearch('');
       };
 
+      // set value for sortType
+      self.changeSortType = function (sortType) {
+        countSort++;
+        if (keySorting !== sortType) {
+          keySorting = sortType;
+          self.sortReverse = false;
+          countSort = 1;
+
+          if (countSort !== 3) {
+            self.sortType = sortType;
+            self.sortReverse = !self.sortReverse;
+          } else {
+            self.sortType = '';
+            self.sortReverse = false;
+            countSort = 0;
+          }
+        } else {
+          if (countSort !== 3) {
+            self.sortType = sortType;
+            self.sortReverse = !self.sortReverse;
+          } else {
+            self.sortType = '';
+            self.sortReverse = false;
+            countSort = 0;
+          }
+        }
+      };
+
       // catch event when destroy page song
       $scope.$on('$destroy', function () {
-        console.log('scope destroy!');
+        //console.log('scope destroy!');
       });
 
+      //function onLangChange() {
+      //  $scope.childMenus.nameCurrentMenu = $i18next('menu.songs');
+      //}
+      //$scope.$on('i18nextLanguageChange', onLangChange);
       //$scope.$watch('childMenus.isClickLinkHome', function () {
       //  //console.log('change home');
       //  self.markAll = false;
       //  getListSong();
       //  $scope.childMenus.isClickLinkHome = false;
       //});
+
 
       getListSong();
     }])

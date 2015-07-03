@@ -1,23 +1,31 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <h2>
-      <span class="my-title-toolbar">Choose Songs</span>
+      <span class="my-title-toolbar">{{'contentWeb.playlists.chooseSongs' | i18next}}</span>
     </h2>
   </div>
 </md-toolbar>
 <md-content class="my-form-content">
   <md-subheader class="md-primary header-show-songs">
-    {{playlistCtrl.numberSelectedSongs}} songs
+    {{playlistCtrl.numberSelectedSongs}} {{'contentWeb.playlists.songs' | i18next}}
     <md-checkbox class="checkbox-add-all-song" ng-model="playlistCtrl.selectedAllSongs"
-                 ng-change="playlistCtrl.clickCheckboxSelectedAllSongsOnPageChooseSongs()">Add all song
+                 ng-change="playlistCtrl.clickCheckboxSelectedAllSongsOnPageChooseSongs()">{{'contentWeb.playlists.addAllSongs' | i18next}}
     </md-checkbox>
   </md-subheader>
   <md-list class="layout-padding my-listSong-in-playlist" resize type="h" value-Drop="420">
     <md-list-item class="md-2-line" ng-repeat="song in playlistCtrl.allSongCopy">
-      <img ng-src="images/Dozo.jpg" class="face" ng-show="!song.check">
-      <img ng-src="images/checkbox.jpg" class="face" ng-show="song.check">
+      <div class="card effect__click" ng-class="{'flipped' : song.check}">
+        <div class="card__front">
+          <img ng-src="images/Dozo.jpg" class="face">
+        </div>
+        <div class="card__back">
+          <!--<img ng-src="images/checkbox.jpg" class="face">-->
+          <!--<i class="fa fa-check face checkbox-of-list-item"></i>-->
+          <div class="checkbox-create-by-border"></div>
+        </div>
+      </div>
 
-      <div class="md-list-item-text list-items">
+      <div class="md-list-item-text list-items-of-page-choose-songs">
         <md-checkbox class="md-secondary" ng-model="song.check"
                      ng-change="playlistCtrl.clickCheckboxOfSongOnPageChooseSongs(song.check)" ng-show="false"></md-checkbox>
         <h3 class="name-song-in-playlist">{{ song.name }}</h3>
@@ -30,9 +38,9 @@
 <md-divider class="last-divider"></md-divider>
 <div class="my-back-button my-button-normal">
   <md-button ng-click="playlistCtrl.applyChooseSongs(playlistCtrl.beforeState, playlistCtrl.allSongCopy)"
-             class="md-raised my-button-accent-color">Apply
+             class="md-raised my-button-accent-color">{{'applyButton' | i18next}}
   </md-button>
   <md-button ng-click="playlistCtrl.cancelChooseSongs(playlistCtrl.beforeState)"
-             class="md-raised">Cancel
+             class="md-raised">{{'cancelButton' | i18next}}
   </md-button>
 </div>

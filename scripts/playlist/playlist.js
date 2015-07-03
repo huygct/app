@@ -5,10 +5,13 @@
  * PlaylistController
  */
 angular.module('musicApp')
-  .controller('PlaylistController', ['playlistService', 'songService', 'playListExtend', 'playListChooseSongs', '$scope', '$mdDialog',
-    function (playlistService, songService, playListExtend, playListChooseSongs, $scope, $mdDialog) {
+  .controller('PlaylistController', ['playlistService', 'songService', 'playListExtend', 'playListChooseSongs', '$scope', '$mdDialog', '$i18next',
+    function (playlistService, songService, playListExtend, playListChooseSongs, $scope, $mdDialog, $i18next) {
 
       var self = this;
+
+      var countSort = 0; // count to check sort type
+      var keySorting = ''; // save value sorting
 
       // get songs from service
       function getListSong() {
@@ -107,6 +110,7 @@ angular.module('musicApp')
 
       // it is cheat about memory aria of $scope.menus :)
       $scope.childMenus = $scope.menus;
+      $scope.childMenus.nameCurrentMenu = 'menu.playlsits'; // set value for breadcrumb is Playlist
       $scope.childMenus.selectedMenu = 'Playlists'; // set value for breadcrumb is Playlist
 
       self.songs = []; // Declare array songs
@@ -122,10 +126,13 @@ angular.module('musicApp')
       self.checkToShowButtonDelete = false; // disabled button delete all or not
       self.state = ''; // state are manage, create or edit
 
+      self.sortType = ''; // is name column of table, it uses to sort.
+      self.sortReverse = false; // sort-asc or sort-desc
+
       // array column name
       self.column = [
-        {name: 'Name', key: 'name', className: 'name-playlist'},
-        {name: 'Description ', key: 'description', className: 'description-playlist'}];
+        {name: 'contentWeb.playlists.playlistTable.name', key: 'name', className: 'name-playlist'},
+        {name: 'contentWeb.playlists.playlistTable.description', key: 'description', className: 'description-playlist'}];
 
       // click button search
       self.setIsSearch = function () {
@@ -245,6 +252,34 @@ angular.module('musicApp')
           },
           controller: dialogControllerForDeleteMultiple
         });
+      };
+
+      // set value for sortType
+      self.changeSortType = function (sortType) {
+        countSort++;
+        if (keySorting !== sortType) {
+          keySorting = sortType;
+          self.sortReverse = false;
+          countSort = 1;
+
+          if (countSort !== 3) {
+            self.sortType = sortType;
+            self.sortReverse = !self.sortReverse;
+          } else {
+            self.sortType = '';
+            self.sortReverse = false;
+            countSort = 0;
+          }
+        } else {
+          if (countSort !== 3) {
+            self.sortType = sortType;
+            self.sortReverse = !self.sortReverse;
+          } else {
+            self.sortType = '';
+            self.sortReverse = false;
+            countSort = 0;
+          }
+        }
       };
 
       startPlaylist();

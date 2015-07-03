@@ -4,7 +4,7 @@
  * input:
  *  1. listData: data
  *  2. nameTable: name of table
- *  3. column: array column that include column name
+ *  3. columns: array columns that include columns name
  *  4. querySearch: two data binding with query, use to search
  *  5. whenClickButtonEdit: event when click button edit on table
  *  6. whenClickButtonDelete: event when click button delete on table
@@ -14,11 +14,24 @@
 'use strict';
 (function () {
   angular.module('musicApp')
-    .directive('myTable', ['$mdDialog', function ($mdDialog) {
+    .directive('myTable', ['$mdDialog', 'naturalService', function ($mdDialog, naturalService) {
 
       function TableController () {
         var self = this;
+
+        self.countSort = 0; // count to check sort type
+        var keySorting = ''; // save value sorting
+        //self.sortType = self.columns[0].key; // set the default sort type
+        //self.sortReverse = false; // set the default sort order
+
         self.markAll = false; // Declare markAll, give it the value of checkbox on header of table
+
+        // sort array with field
+        self.natural = function (field) {
+          return function (item) {
+            return naturalService.naturalValue(item[field]);
+          };
+        };
 
         // function to edit data of table
         self.editData = function (data) {
@@ -144,29 +157,53 @@
           //  data: data
           //});
         };
+
+        // set value for sortType
+        self.changeSortType = function (sortType) {
+          self.countSort++;
+          if (keySorting !== sortType) {
+            keySorting = sortType;
+            self.sortReverse = false;
+            self.countSort = 1;
+
+            if (self.countSort !== 3) {
+              self.sortType = sortType;
+              self.sortReverse = !self.sortReverse;
+            } else {
+              self.sortType = '';
+              self.sortReverse = false;
+              self.countSort = 0;
+            }
+          } else {
+            if (self.countSort !== 3) {
+              self.sortType = sortType;
+              self.sortReverse = !self.sortReverse;
+            } else {
+              self.sortType = '';
+              self.sortReverse = false;
+              self.countSort = 0;
+            }
+          }
+        };
       }
 
-      function CompileController() {
-        // do one-time configuration of element.
+      function linkFn($scope) {
+        // bind element to data in $scope
 
-        return function ($scope) {
-          // bind element to data in $scope
-
-          // set markAll is false when data.length is 0
-          $scope.$watch('tableCtrl.listData', function (newData) {
-            if (newData.length === 0) {
-              $scope.tableCtrl.markAll = false;
-            } else {
-              for (var i = 0; i < $scope.tableCtrl.listData.length; i++) {
-                if ($scope.tableCtrl.listData[i].check === false) {
-                  $scope.tableCtrl.markAll = false;
-                  return;
-                }
+        // set markAll is false when data.length is 0
+        $scope.$watch('tableCtrl.listData', function (newData) {
+          if (newData.length === 0) {
+            $scope.tableCtrl.markAll = false;
+          } else {
+            for (var i = 0; i < $scope.tableCtrl.listData.length; i++) {
+              if ($scope.tableCtrl.listData[i].check === false) {
+                $scope.tableCtrl.markAll = false;
+                return;
               }
-              $scope.tableCtrl.markAll = true;
             }
-          });
-        };
+            $scope.tableCtrl.markAll = true;
+          }
+        });
       }
 
       return {
@@ -175,21 +212,22 @@
           markAll: '=',
           listData: '=',
           nameTable: '@',
-          column: '=',
+          columns: '=',
           querySearch: '=',
           whenClickButtonEdit: '&',
           whenClickButtonDelete: '&',
           whenSelectItemOfTable: '&',
+          sortType: '=',
+          sortReverse: '=',
           showToast: '&'
         },
         templateUrl: 'scripts/directive/table/my-table.html',
         controller: TableController,
         controllerAs: 'tableCtrl',
         bindToController : true,
-        compile: CompileController
+        link: linkFn
       };
     }]);
 })();
-
 
 //<my-table table-formal="playlistCtrl.tableStyle" link-data="playlistCtrl.link"></my-table>
